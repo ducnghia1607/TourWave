@@ -12,6 +12,7 @@ builder.Services.AddDbContext<TourContext>(opt =>{
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddTransient<ITourRepository,TourRepository>();
+builder.Services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
