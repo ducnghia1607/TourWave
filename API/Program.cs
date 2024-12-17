@@ -1,3 +1,5 @@
+using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,11 +11,24 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TourContext>(opt =>{
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddTransient<ITourRepository,TourRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseAuthorization();
 
 app.MapControllers();
-
+try
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<TourContext>();
+    await context.Database.MigrateAsync();
+    await TourContextSeed.SeedAsync(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    throw;
+}
 app.Run();

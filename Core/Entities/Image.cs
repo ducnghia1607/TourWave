@@ -8,5 +8,5 @@ public class Image : BaseEntity
 
     public string ? PublicId{ get; set; }
     public int TourId { get; set; }
-    public  required Tour Tour {get;set;}
+    public Tour Tour {get;set;}
 }

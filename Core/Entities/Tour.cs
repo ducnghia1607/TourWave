@@ -12,12 +12,9 @@ public class Tour : BaseEntity
  public decimal PriceChild { get; set; }
 
 public required string Duration { get; set; }
-public required string Destination { get; set; }
+public required string Departure { get; set; }
 public bool Availability { get; set; }
-public List<TourType> TourTypes {get;set;} = new ();
- public List<Image> Images { get; set; } = new ();
-
+public List<Image> Images { get; set; } = new ();
  public List<string> Itinerary { get; set; } = new ();
-
-
+ public ICollection<TourWithType>  TourWithTypes {get;set; } = [];
 }

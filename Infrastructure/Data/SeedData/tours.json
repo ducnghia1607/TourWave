@@ -1,0 +1,138 @@
+[
+  {
+    "Title": "Tour Cao Cấp Nam Cát Tiên 2N1Đ: Thiên Nhiên Hoang Sơ Rừng Nam Cát Tiên",
+    "Description": "Hành trình đến Vườn Quốc gia Nam Cát Tiên mở ra cánh cửa tới một thế giới thiên nhiên hoang sơ và hùng vĩ, nơi bạn có thể trải nghiệm cuộc sống rừng nhiệt đới đầy màu sắc. Khám phá đêm rừng qua các tour xem thú, thư giãn bên dòng Suối Mơ, và tận hưởng sự nghỉ dưỡng cao cấp giữa lòng thiên nhiên​​.Cùng khám phá ngay hôm nay!",
+    "PriceAdult": 2386000,
+    "PriceChild": 1800000,
+    "Duration": "2N1Đ",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối"
+    ]
+  },
+  {
+    "Title": "Tour Tết Phú Yên - Quy Nhơn 3N3Đ: Khám Phá Mũi Điện - Gành Đá Đĩa - Kỳ Co - Tháp Nghinh Phong",
+    "Description": "- Gành Đá Đĩa: Tuyệt tác thiên nhiên với những trụ đá lăng trụ kỳ diệu.- Tháp Nghinh Phong: Biểu tượng văn hóa và thiết kế độc nhất tại Phú Yên. - Check-in Mũi Điện: Chạm đến Cực Đông, nơi đón bình minh đầu tiên của Việt Nam.- Kỳ Co và Eo Gió: Thiên đường biển xanh, điểm ngắm hoàng hôn và bình minh đẹp mê hồn.- Ghềnh Ráng và Nhà Thờ Mằng Lăng: Sự kết hợp giữa thơ mộng và kiến trúc Gothic cổ kính.",
+    "PriceAdult": 3490000,
+    "PriceChild": 3490000,
+    "Departure": "Hồ Chí Minh",
+    "Duration": "3N1D",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối",
+      "Ngày 3: Tháp Nghinh Phong - Nhà Thờ Mằng Lăng - HCM (Ăn Sáng, Trưa)"
+    ]
+  },
+  {
+    "Title": "Tour Đà Nẵng 4N3Đ: HCM - Đà Nẵng - Bà Nà - Hội An - Động Phong Nha - Kinh Thành Huế",
+    "Description": "- Bà Nà Hills: Chiêm ngưỡng Cầu Vàng và tận hưởng khí hậu bốn mùa độc đáo.- Khám phá Động Phong Nha: Trải nghiệm vẻ đẹp kỳ vĩ của hệ thống thạch nhũ và thiên nhiên hoang sơ. - Dạo Phố Cổ Hội An: Ngắm nhìn Chùa Cầu, đèn lồng lung linh và thưởng thức đặc sản địa phương.- Chùa Thiên Mụ: Chiêm ngưỡng ngôi chùa cổ kính bên dòng sông Hương thơ mộng.- Đại Nội Huế: Khám phá di sản cố đô với kiến trúc triều Nguyễn uy nghiêm.",
+    "PriceAdult": 7590000,
+    "PriceChild": 4590000,
+    "Duration": "4N3Đ",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối",
+      "Ngày 3: Tháp Nghinh Phong - Nhà Thờ Mằng Lăng - HCM (Ăn Sáng, Trưa)",
+      "Ngày 4: Tháp Nghinh Phong - Nhà Thờ Mằng Lăng - HCM (Ăn Sáng, Trưa)"
+    ]
+  },
+  {
+    "Title": "Tour Miền Tây 2N1Đ: Làng Hoa Sa Đéc - Chợ Quê - KDL Xẻo Quýt",
+    "Description": "KDL Xẻo Quýt: Khám phá rừng tràm hoang sơ và hệ sinh thái phong phú.- Làng hoa Sa Đéc: Thủ phủ hoa kiểng miền Tây, sắc màu rực rỡ quanh năm.- Chùa Phước Kiểng: Độc đáo với lá sen khổng lồ 'cõng' người giữa hồ nước tĩnh lặng.- Chợ Quê & đặc sản: Trải nghiệm văn hóa miền Tây và thưởng thức đặc sản trứ danh.- Vườn Quýt Hồng Lai Vung: Vương quốc quýt hồng căng mọng, biểu tượng Tết miền sông nước.",
+    "PriceAdult": 1790000,
+    "PriceChild": 1800000,
+    "Duration": "2N1Đ",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối"
+    ]
+  },
+  {
+    "Title": "Tour Đà Lạt 3N3D: Tea Resort Thác Prenn - Puppy Farm - God Valley",
+    "Description": "- Chiêm ngưỡng vẻ đẹp hùng vĩ của Thác Prenn.- Thư giãn tại Tea Resort với không gian xanh mát.- Vui chơi, check-in cùng cún đáng yêu tại Puppy Farm.- Khám phá God Valley với tượng thần thoại khổng lồ sống động.- Tham quan Nhà thờ Con Gà và tận hưởng vẻ đẹp Đà Lạt ngàn hoa.",
+    "PriceAdult": 2986000,
+    "PriceChild": 1493000,
+    "Duration": "3N3D",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối"
+    ]
+  },
+  {
+    "Title": "Tour Cao Cấp Nam Cát Tiên 2N1Đ: Thiên Nhiên Hoang Sơ Rừng Nam Cát Tiên",
+    "Description": "Hành trình đến Vườn Quốc gia Nam Cát Tiên mở ra cánh cửa tới một thế giới thiên nhiên hoang sơ và hùng vĩ, nơi bạn có thể trải nghiệm cuộc sống rừng nhiệt đới đầy màu sắc. Khám phá đêm rừng qua các tour xem thú, thư giãn bên dòng Suối Mơ, và tận hưởng sự nghỉ dưỡng cao cấp giữa lòng thiên nhiên​​.Cùng khám phá ngay hôm nay!",
+    "PriceAdult": 2386000,
+    "PriceChild": 1800000,
+    "Duration": "2N1Đ",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối"
+    ]
+  },
+  {
+    "Title": "Tour Cao Cấp Nam Cát Tiên 2N1Đ: Thiên Nhiên Hoang Sơ Rừng Nam Cát Tiên",
+    "Description": "Hành trình đến Vườn Quốc gia Nam Cát Tiên mở ra cánh cửa tới một thế giới thiên nhiên hoang sơ và hùng vĩ, nơi bạn có thể trải nghiệm cuộc sống rừng nhiệt đới đầy màu sắc. Khám phá đêm rừng qua các tour xem thú, thư giãn bên dòng Suối Mơ, và tận hưởng sự nghỉ dưỡng cao cấp giữa lòng thiên nhiên​​.Cùng khám phá ngay hôm nay!",
+    "PriceAdult": 2386000,
+    "PriceChild": 1800000,
+    "Duration": "2N1Đ",
+    "Departure": "Hồ Chí Minh",
+    "Availability": true,
+    "Images": [
+      {
+        "Url": "https://source.unsplash.com/random/300x200?sig=${Math.random()}"
+      }
+    ],
+    "Itinerary": [
+      "Đêm ngày 1:Hồ Chí Minh - Phú Yên (Nghỉ Đêm Trên Xe)",
+      "Ngày 1:Bãi Môn - Hải Đăng - Mũi Điện - Gành Đá Dĩa (Ăn Sáng, Trưa, Tối",
+      "Ngày 2:Kỳ Co - Eo Gió - KDL Ghềnh Ráng (Ăn Sáng, Trưa, Tối"
+    ]
+  }
+]

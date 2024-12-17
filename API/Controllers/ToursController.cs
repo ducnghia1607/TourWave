@@ -1,5 +1,6 @@
 using System;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,22 +8,17 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers;
 
 
-public class ToursController : BaseApiController
+public class ToursController(ITourRepository repo) : BaseApiController
 {
-    private readonly TourContext _context;
-    public ToursController(TourContext context)
-    {
-        _context = context;
-    }
 
     [HttpGet]
 
-    public async Task<ActionResult<IEnumerable<Tour>>> GetTours(){
-        return await _context.Tours.ToListAsync();
+    public async Task<ActionResult<IReadOnlyList<Tour>>> GetTours(){
+        return Ok(await repo.GetToursAsync());
     }
     [HttpGet("{id:int}")] // api/tours/2
     public async Task<ActionResult<Tour>> GetTour(int id){
-        var tour = await _context.Tours.FindAsync(id);
+        var tour = await repo.GetTourByIdAsync(id);
         if(tour == null){
             return NotFound();
         }
@@ -31,9 +27,11 @@ public class ToursController : BaseApiController
 
     [HttpPost]
     public async Task<ActionResult<Tour>> CreateTour(Tour tour){
-        await _context.Tours.AddAsync(tour);
-        await _context.SaveChangesAsync();
-                return tour;
+        repo.AddTour(tour);
+        if(await repo.SaveChangesAsync()){
+            return CreatedAtAction("GetTour",new {id = tour.Id},tour);
+        };
+        return BadRequest("Problem creating new tour");
     }
 
     [HttpPut("{id:int}")] // api/
@@ -41,23 +39,27 @@ public class ToursController : BaseApiController
         if(tour.Id != id || !TourExists(id)){
             return BadRequest("Cannot update tour");
         }
-        _context.Entry(tour).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-        return NoContent();
+        repo.UpdateTour(tour);
+        if(await repo.SaveChangesAsync()){
+            return NoContent();
+        }
+        return BadRequest("Problem updating the tour");
     }
 
         [HttpDelete("{id:int}")] // api/
-    public async Task<ActionResult> DeleteProduct(int id){
-        var tour = await _context.Tours.FindAsync(id);
+    public async Task<ActionResult> DeleteTour(int id){
+        var tour = await repo.GetTourByIdAsync(id);
         if(tour == null){
             return NotFound();
         }
-        _context.Tours.Remove(tour);
-        await _context.SaveChangesAsync();
-        return NoContent();
+        repo.DeleteTour(tour);
+        if(await repo.SaveChangesAsync()){
+            return NoContent();
+        }
+        return BadRequest("Problem deleting the tour");
     }
 
     public bool TourExists(int id){
-        return _context.Tours.Any(x => x.Id == id);
+        return repo.TourExists(id);
     }
 }
