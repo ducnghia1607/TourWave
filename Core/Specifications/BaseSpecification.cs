@@ -11,10 +11,29 @@ public class BaseSpecification<T>(Expression<Func<T, bool>> criteria) : ISpecifi
     public Expression<Func<T, object>>? OrderBy {get;private set;}
 
     public Expression<Func<T, object>>? OrderByDescending {get;private set;}
-    public void AddOrderBy(Expression<Func<T, object>> orderByExpression){
+
+    public int Skip {get;private set;}
+
+    public int Take {get;private set;}
+
+    public bool IsPagingEnabled {get;private set;}
+
+    protected void AddOrderBy(Expression<Func<T, object>> orderByExpression){
         OrderBy = orderByExpression;
     }
-    public void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression){
+    protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression){
         OrderByDescending = orderByDescExpression;
+    }
+    protected void ApplyPaging(int skip,int take){
+        IsPagingEnabled = true;
+        Skip = skip;
+        Take = take;
+    }
+    IQueryable<T> ISpecification<T>.ApplyCriteria(IQueryable<T> query)
+    {
+               if(Criteria != null){
+            query = query.Where(Criteria);
+        }
+        return query;
     }
 }

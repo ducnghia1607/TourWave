@@ -17,6 +17,9 @@ public class SpecificationEvaluator<T> where T :BaseEntity
         if(spec.OrderByDescending != null){
             query = query.OrderByDescending(spec.OrderByDescending);
         }
+        if(spec.IsPagingEnabled){
+            query = query.Skip(spec.Skip).Take(spec.Take);
+        }
         return query;
     }
 }

@@ -1,4 +1,7 @@
 using System;
+using API.DataHelpers;
+using Core.Entities;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -8,5 +11,10 @@ namespace API.Controllers;
 
 public class BaseApiController : ControllerBase
 {
-
+    public async Task<ActionResult> CreatePagedResult<T>(IGenericRepository<T> repo,ISpecification<T> spec,int pageIndex,int pageSize) where T :BaseEntity{
+        var items = await repo.ListAsyncWithSpec(spec);
+        var count = await repo.CountAsync(spec);
+       var pagination = new Pagination<T>(pageIndex,pageSize,count,items);
+       return Ok(pagination);
+    }
 }

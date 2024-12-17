@@ -1,7 +1,9 @@
 using System;
+using API.DataHelpers;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specification;
+using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +16,11 @@ public class ToursController(IGenericRepository<Tour> repo) : BaseApiController
 
     [HttpGet]
 
-    public async Task<ActionResult<IReadOnlyList<Tour>>> GetTours(string? departure,string?sort){
-        var spec = new TourSpecification(departure,sort);
-        return Ok(await repo.ListAsyncWithSpec(spec));
+    // public async Task<ActionResult<IReadOnlyList<Tour>>> GetTours(string? departure,string?sort){ : không cần hint vì ko truyền vào 1 object
+    // Bởi vì đang truyền vào 1 object nên ApiController sẽ tìm ở trong body do đó phải tạo hint cho ApiController lấy ở QueryStringQueryString
+    public async Task<ActionResult<IReadOnlyList<Tour>>> GetTours([FromQuery]TourSpecParams specParams){
+        var spec = new TourSpecification(specParams);
+        return await CreatePagedResult(repo,spec,specParams.PageIndex,specParams.PageSize);
     }
     [HttpGet("{id:int}")] // api/tours/2
     public async Task<ActionResult<Tour>> GetTour(int id){
