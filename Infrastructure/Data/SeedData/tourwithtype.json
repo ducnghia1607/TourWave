@@ -1,0 +1,128 @@
+[
+  {
+    "TourId": 1,
+    "TourTypeId": 1
+  },
+  {
+    "TourId": 1,
+    "TourTypeId": 2
+  },
+  {
+    "TourId": 1,
+    "TourTypeId": 3
+  },
+  {
+    "TourId": 1,
+    "TourTypeId": 4
+  },
+  {
+    "TourId": 1,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 1,
+    "TourTypeId": 16
+  },
+  {
+    "TourId": 2,
+    "TourTypeId": 16
+  },
+  {
+    "TourId": 2,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 2,
+    "TourTypeId": 2
+  },
+  {
+    "TourId": 2,
+    "TourTypeId": 4
+  },
+  {
+    "TourId": 2,
+    "TourTypeId": 8
+  },
+
+  {
+    "TourId": 3,
+    "TourTypeId": 16
+  },
+  {
+    "TourId": 3,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 3,
+    "TourTypeId": 7
+  },
+  {
+    "TourId": 3,
+    "TourTypeId": 10
+  },
+  {
+    "TourId": 3,
+    "TourTypeId": 8
+  },
+  {
+    "TourId": 4,
+    "TourTypeId": 7
+  },
+  {
+    "TourId": 4,
+    "TourTypeId": 10
+  },
+  {
+    "TourId": 4,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 4,
+    "TourTypeId": 16
+  },
+  {
+    "TourId": 5,
+    "TourTypeId": 11
+  },
+  {
+    "TourId": 5,
+    "TourTypeId": 12
+  },
+  {
+    "TourId": 5,
+    "TourTypeId": 16
+  },
+  {
+    "TourId": 5,
+    "TourTypeId": 6
+  },
+  {
+    "TourId": 5,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 6,
+    "TourTypeId": 3
+  },
+  {
+    "TourId": 6,
+    "TourTypeId": 15
+  },
+
+  {
+    "TourId": 7,
+    "TourTypeId": 2
+  },
+  {
+    "TourId": 7,
+    "TourTypeId": 3
+  },
+  {
+    "TourId": 7,
+    "TourTypeId": 15
+  },
+  {
+    "TourId": 7,
+    "TourTypeId": 16
+  }
+]

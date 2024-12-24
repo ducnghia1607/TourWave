@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #9d1d1e;
+  --secondary-color: #c02135;
+  --primary-bg-color: linear-gradient(to right, #9d1d1e 0%, #9d1d1e 100%);
+  --secondary-bg-color: linear-gradient(to right, #c02135 0%, #c02135 100%);
+  --warning-color: #f79321;
+  --primary-section-color: #ecf0f5;
+  --secondary-section-color: #f6f8fa;
+  --warning-section-color: #feeec7;
+}
+
+@layer base {
+  html {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 750px;
+    }
+  }
+  @media (min-width: 992px) {
+    .container {
+      max-width: 970px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1170px;
+    }
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("assets/fonts/Helvetica/Helvetica.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif !important;
+}
+
+.content-wapper {
+  padding-top: 70px;
+}
+
+.page-title {
+  font-size: 36px;
+  color: #003c71;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* Ngx Gallery */
+.mat-sidenav-container,
+.mat-sidenav-content,
+.mat-tab-body-content {
+  transform: none !important;
+}

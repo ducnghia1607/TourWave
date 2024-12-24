@@ -13,6 +13,7 @@ public class TourSpecification : BaseSpecification<Tour>
         (specParams.Departure.Count == 0 || specParams.Departure.Contains(t.Departure))
     )
     {
+            AddInclude(t => t.Images);
             ApplyPaging(specParams.PageSize *(specParams.PageIndex - 1),specParams.PageSize);
             switch(specParams.Sort){
                 case "priceAsc":

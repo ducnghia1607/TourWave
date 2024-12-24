@@ -1,5 +1,7 @@
 using System;
+using System.Text.Json.Serialization;
 using API.Errors;
+using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +12,16 @@ namespace API.Extensions;
 public static class ApplicationServicesExtension
 {
     public static IServiceCollection AddServices(this IServiceCollection services,IConfiguration config){
-        services.AddControllers();
+        // services.AddControllers();
+            services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         services.AddDbContext<TourContext>(opt =>{
             opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddTransient<ITourRepository,TourRepository>();
         services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         services.Configure<ApiBehaviorOptions>(options => {
@@ -30,11 +38,11 @@ public static class ApplicationServicesExtension
                 return new BadRequestObjectResult(response);
             };
         });
-        services.AddCors(opt => {
-            opt.AddPolicy("CorsPolicy",policy => {
-                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200","http://localhost:4200");
-            });
-        });
+        // services.AddCors(opt => {
+        //     opt.AddPolicy("CorsPolicy",policy => {
+        //         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200","http://localhost:4200");
+        //     });
+        // });
         return services;
     }
 }

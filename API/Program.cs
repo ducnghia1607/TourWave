@@ -14,8 +14,11 @@ builder.Services.AddServices(builder.Configuration);
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
-// app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200","https://localhost:4200"));
-app.UseCors("CorsPolicy");
+// app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().WithOrigins("https://localhost:4200"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().AllowAnyOrigin());
+// app.UseCors("CorsPolicy");
+app.UseHttpsRedirection();
+
 app.UseAuthorization();
 
 app.MapControllers();

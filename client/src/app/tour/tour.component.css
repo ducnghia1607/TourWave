@@ -1,0 +1,140 @@
+.tourhome-header {
+  background-image: url("../../assets/images/banner2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* height: 500px; */
+}
+
+@media only screen and (min-width: 320px) {
+  .tourhome-header {
+    height: 472px;
+    padding: 30px 0 0;
+  }
+  .btn-search {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .tourhome-header {
+    height: 492px;
+    padding: 50px 0px;
+  }
+  .btn-search {
+    width: 70px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .tourhome-header {
+    height: 520px;
+    padding: 50px 0px;
+  }
+  .btn-search {
+    width: 100px;
+  }
+}
+
+.tourHomeSearchPanel .home-title {
+  margin: 0px;
+  margin-right: 15px;
+  font-weight: bold;
+  font-family: Helvetica;
+  font-size: 40px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  display: inline-block;
+}
+@media only screen and (min-width: 320px) {
+  .tourHomeSearchPanel h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .tourHomeSearchPanel h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+.form-container {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+}
+.tourHomeSearchPanel .search-form {
+  margin-bottom: 15px;
+}
+
+.tourHomeSearchPanel {
+  @apply w-8/12;
+}
+/* Search Form */
+.search-form .search-input {
+  font-size: 16px;
+}
+
+.search-box {
+  padding: 0px 15px;
+  height: 60px;
+}
+
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-mdc-form-field-icon-suffix {
+  position: absolute !important;
+  left: 0px;
+}
+
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-mdc-form-field-infix {
+  margin-left: 40px;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  margin-left: 40px;
+  color: #ffffff;
+}
+
+::ng-deep .material-icons {
+  position: absolute;
+  left: -40px;
+  top: 17px;
+  color: #494b55;
+}
+
+::ng-deep .mat-mdc-option {
+  margin-left: 40px;
+}
+
+.btn-search {
+  height: 56px;
+  background: var(--primary-bg-color);
+  color: #ffffff;
+}
+.btn-search:hover {
+  background: var(--secondary-bg-color);
+}
+
+.tour-section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3f3b3b;
+  margin-bottom: 6px;
+}
+
+.tour-section-subtitle {
+  font-size: 16px;
+  font-weight: normal;
+  color: #717484;
+  display: block;
+  margin-bottom: 22px;
+}

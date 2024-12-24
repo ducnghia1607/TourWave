@@ -1,0 +1,37 @@
+<div class="tour-item">
+  <a class="cursor-pointer" routerLink="/tour/{{ tour.id }}">
+    <div class="card card-compact bg-base-100 shadow-xl">
+      <figure>
+        <img src="{{ tour.imageUrl }}" alt="Shoes" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title line-clamp-2">
+          {{ tour.title }}
+        </h2>
+        <div class="flex justify-between items-center">
+          <span><fa-icon [icon]="faClock"></fa-icon> {{ tour.duration }}</span>
+          <span class="card-transport space-x-2">
+            <span *ngIf="tour.duration.includes('1')"
+              ><fa-icon [icon]="faPlane"></fa-icon
+            ></span>
+            <span *ngIf="tour.duration.includes('2')">
+              <fa-icon [icon]="faCar"></fa-icon
+            ></span>
+            <span *ngIf="tour.duration.includes('3')"
+              ><fa-icon [icon]="faTrain"></fa-icon
+            ></span>
+          </span>
+        </div>
+        <ul class="card-departure">
+          <li>Thế giới băng tuyết</li>
+          <li>Làng Tuyết Hương</li>
+          <li>Nhà Thờ Saint Sophia</li>
+        </ul>
+        <div class="card-actions justify-end relative py-3">
+          <span class="sale-price mb-1">{{ tour.priceAdult }}</span>
+          <span class="price">{{ tour.priceChild }}</span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

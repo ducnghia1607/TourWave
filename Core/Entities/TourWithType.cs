@@ -2,7 +2,7 @@ using System;
 
 namespace Core.Entities;
 
-public class TourWithType
+public class TourWithType : BaseEntity
 {
     public int TourId {get;set;}
     public int TourTypeId {get;set;}

@@ -1,0 +1,51 @@
+.card-body .card-title {
+  color: #003c71;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  margin: 0;
+}
+
+.tour-item .card {
+  transition: all 0.3s ease;
+}
+.tour-item .card:hover {
+  -webkit-box-shadow: 0 0 5px 2px #2196f3;
+  -moz-box-shadow: 0 0 5px 2px #2196f3;
+  box-shadow: 0 0 5px 2px #2196f3;
+}
+.tour-item .card:hover .price {
+  color: var(--secondary-color);
+}
+
+.card-departure > li {
+  color: #26bed6;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.card .price {
+  font-size: 22px;
+  font-weight: bold;
+  float: right;
+  color: #f79321;
+}
+
+.card .sale-price {
+  position: absolute;
+  right: 15px;
+  top: -12px;
+  font-weight: 400;
+  color: #828282;
+  font-size: 15px;
+  text-decoration: line-through;
+}
+
+.tour-item .card figure img {
+  object-fit: cover;
+  max-width: 100%;
+  min-height: 224px;
+  -moz-transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}

@@ -1,0 +1,57 @@
+<header
+  class="flex justify-center items-center main-header z-50"
+  [ngStyle]="navbg"
+>
+  <nav class="navbar flex justify-between items-center container">
+    <div>
+      <img src="../../../assets/images/logo.png" alt="" width="60px" />
+    </div>
+    <div>
+      <ul class="flex justify-between items-center nav space-x-4">
+        <li><a>Khách sạn</a></li>
+        <li><a>Tours</a></li>
+        <li><a>Vé máy bay</a></li>
+        <li><a>Vé vui chơi</a></li>
+        <li><a>Vé tàu</a></li>
+      </ul>
+    </div>
+    <div class="contact">
+      <div class="flex justify-between items-center">
+        <div class="mr-3 flex justify-between items-center">
+          <img
+            src="../../../assets/images/user_default.png"
+            alt=""
+            width="60px"
+          />
+          <div
+            class="dropdown dropdown-bottom"
+            style="color: #fff; font-size: 22px"
+          >
+            <fa-icon tabindex="0" [icon]="faAngleDown"></fa-icon>
+            <ul
+              tabindex="0"
+              class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li><a>Item 1</a></li>
+              <li><a>Item 2</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="hotline flex flex-col justify-end">
+          <a class="hotline-link" href="tel:02839338002">
+            <fa-icon [icon]="faPhone"></fa-icon>
+            (028) 3933 8002
+          </a>
+          <div class="flex justify-end text-white" style="font-size: 12px">
+            <fa-icon [icon]="faClock" class="mx-2"></fa-icon>
+            7h30
+            <fa-icon [icon]="faArrowRight" class="mx-2"></fa-icon>
+            21h
+            <fa-icon [icon]="faLocationArrow" class="mx-2"></fa-icon>
+            Hà Nội
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
