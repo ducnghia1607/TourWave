@@ -1,0 +1,6 @@
+.tour-item-wrapper .tour-content-wrapper {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px 16px;
+}

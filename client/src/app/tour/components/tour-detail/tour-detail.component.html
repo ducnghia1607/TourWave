@@ -1,9 +1,149 @@
-<div class="content-wapper bg-primary-section-color">
-  <div class="container mt-12">
+<div class="content-wapper bg-primary-section-color" *ngIf="tourDetail">
+  <div class="container mt-12 tour-item-wrapper">
     <h1 class="page-title">
       <b>{{ tourDetail.title }}</b>
     </h1>
+    <div class="">
+      <div class="w-3/4">
+        <div class="tour-gallery tour-content-wrapper">
+          <gallery [items]="images" class="gallery"></gallery>
+        </div>
+        <div class="tour-utilities mt-4 tour-content-wrapper">
+          <div
+            class="depature-place flex justify-between items-center border-b-2 pb-3"
+          >
+            <div class="flex">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  class="text-xs"
+                  style="width: 20px"
+                >
+                  <path
+                    d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                    fill="#494b55"
+                  /></svg
+              ></span>
+              <span class="ms-3"
+                >Khởi hành từ:<b class="ms-3">{{ tourDetail.departure }}</b>
+              </span>
+            </div>
+            <span class="card-transport space-x-2">
+              <span *ngIf="tourDetail.duration.includes('1')"
+                ><fa-icon [icon]="faPlane"></fa-icon
+              ></span>
+              <span *ngIf="tourDetail.duration.includes('2')">
+                <fa-icon [icon]="faCar"></fa-icon
+              ></span>
+              <span *ngIf="tourDetail.duration.includes('3')"
+                ><fa-icon [icon]="faTrain"></fa-icon
+              ></span>
+            </span>
+            <span
+              >Mã Tour:<b>{{ tourDetail.tourCode }}</b></span
+            >
+          </div>
+          <div class="mt-4">
+            <h2 class="page-subtitle">Tour Trọn Gói bao gồm</h2>
+            <div class="grid grid-cols-3 mt-4">
+              <span *ngFor="let utility of tourDetail.utilities"
+                ><fa-icon [icon]="faCheck" style="color: #26bed6"></fa-icon>
+                <span class="ms-2">{{ utility }}</span></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="tour-description mt-4 tour-content-wrapper">
+          <h2 class="page-subtitle">Trải nghiệm thú vị trong tour</h2>
+          {{ tourDetail.description }}
+        </div>
+        <div class="tour-itineraries mt-4 tour-content-wrapper"></div>
+        <div class="tour-schedules mt-4 tour-content-wrapper"></div>
+        <div class="tour-notes mt-4 tour-content-wrapper">
+          <h2 class="page-subtitle">Thông tin cần lưu ý</h2>
+          <div role="tablist" class="tabs tabs-lifted">
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              class="tab"
+              aria-label="Giá bao gồm"
+              checked="checked"
+              style="min-width: 160px"
+            />
+            <div
+              role="tabpanel"
+              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              <h3><b>Vận Chuyển:</b></h3>
+              <div>
+                <p>
+                  - Vé máy bay Vietjet Air khứ hồi Sài Gòn – Bangkok – Sài Gòn,
+                  hành lý 07kg xách tay + 20kg hành lý kí gửi.
+                </p>
+                <p>- Xe máy lạnh phục vụ riêng cho đoàn suốt tuyến</p>
+                <p>- Các loại thuế phí sân bay, xăng dầu, an ninh,…</p>
+              </div>
+              <h3><b>Lưu Trú:</b></h3>
+              <div>
+                <p>
+                  - Khách sạn 4 - 5 sao tiêu chuẩn Thái Lan, 2 hoặc 3 khách
+                  người lớn 1 phòng, trường hợp khách đi lẻ sẽ ở ghép với khách
+                  khác hoặc sẽ phụ thu phòng đơn.
+                </p>
+              </div>
+              <h3><b>Khác: </b></h3>
+              <div>
+                <p>
+                  - Ăn uống theo chương trình, 4 bữa sáng Buffet khách sạn, 07
+                  bữa ăn chính.
+                </p>
+                <p>
+                  - Vé tham quan một lần các điểm trong chương trình, HDV tiếng
+                  Việt suốt tuyến
+                </p>
+                <p>
+                  - Nón du lịch, nước phục vụ hàng ngày (01 chai trên xe và 01
+                  chai tại khách sạn)
+                </p>
+                <p>- Bảo hiểm du lịch quốc tế.</p>
+              </div>
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              class="tab"
+              aria-label="Giá không bao gồm"
+              style="min-width: 160px"
+            />
+            <div
+              role="tabpanel"
+              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              Tab content 2
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              class="tab"
+              aria-label="Thông tin visa"
+              style="min-width: 160px"
+            />
+            <div
+              role="tabpanel"
+              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              Tab content 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
   </div>
 </div>
-
-<gallery [items]="images" class="gallery"></gallery>

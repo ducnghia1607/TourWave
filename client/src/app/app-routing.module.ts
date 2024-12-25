@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'tour',
     loadChildren: () => import('./tour/tour.module').then((m) => m.TourModule),
   },
+  {
+    path: 'recommend',
+    loadChildren: () =>
+      import('./recommend/recommend.module').then((m) => m.RecommendModule),
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

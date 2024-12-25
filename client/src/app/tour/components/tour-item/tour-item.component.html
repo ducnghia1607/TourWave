@@ -9,17 +9,18 @@
           {{ tour.title }}
         </h2>
         <div class="flex justify-between items-center">
-          <span><fa-icon [icon]="faClock"></fa-icon> {{ tour.duration }}</span>
+          <!-- <span><fa-icon [icon]="faClock"></fa-icon> {{ tour.duration }}</span> -->
           <span class="card-transport space-x-2">
-            <span *ngIf="tour.duration.includes('1')"
-              ><fa-icon [icon]="faPlane"></fa-icon
-            ></span>
+            <span *ngIf="tour.duration.includes('1')">
+              <!-- <fa-icon [icon]="faPlane"></fa-icon> -->
+            </span>
             <span *ngIf="tour.duration.includes('2')">
-              <fa-icon [icon]="faCar"></fa-icon
-            ></span>
-            <span *ngIf="tour.duration.includes('3')"
-              ><fa-icon [icon]="faTrain"></fa-icon
-            ></span>
+              <!-- <fa-icon [icon]="faCar"></fa-icon -->
+              ></span
+            >
+            <span *ngIf="tour.duration.includes('3')">
+              <!-- <fa-icon [icon]="faTrain"></fa-icon> -->
+            </span>
           </span>
         </div>
         <ul class="card-departure">

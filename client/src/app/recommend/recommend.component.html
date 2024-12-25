@@ -1,0 +1,31 @@
+<div class="content-wapper bg-primary-section-color">
+  <div class="container mt-4 pb-12">
+    <h1 class="page-title"><b>Gợi Ý Các Tour Du Lịch</b></h1>
+    <div class="flex justify-center items-center">
+      <div class="flex flex-col">
+        <mat-form-field>
+          <mat-label>Sở thích</mat-label>
+          <mat-select [formControl]="toppings" multiple>
+            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{
+              topping
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>Số tiền</p>
+        <div>
+          <mat-slider min="200" max="500" width="500px">
+            <input value="300" matSliderStartThumb />
+            <input value="1000" matSliderEndThumb />
+          </mat-slider>
+        </div>
+
+        <button
+          class="bg-primary-color rounded-xl"
+          style="font-size: 36px; color: #fff; max-width: 100px"
+        >
+          Tìm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

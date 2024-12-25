@@ -10,6 +10,8 @@ import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TourDetailComponent } from './tour/components/tour-detail/tour-detail.component';
+import { RecommendModule } from './recommend/recommend.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +22,9 @@ import { TourDetailComponent } from './tour/components/tour-detail/tour-detail.c
     CoreModule,
     HttpClientModule,
     TourDetailComponent,
+    RecommendModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [],
   providers: [
