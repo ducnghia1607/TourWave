@@ -21,4 +21,5 @@ export interface TourDetail extends Tour {
 
 export interface Image {
   url: string;
+  caption: string;
 }

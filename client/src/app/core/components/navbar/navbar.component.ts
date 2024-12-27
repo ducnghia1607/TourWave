@@ -7,6 +7,7 @@ import {
   faCoffee,
   faLocationArrow,
   faPhone,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -21,6 +22,7 @@ export class NavbarComponent {
   faClock = faClock as IconProp;
   faLocationArrow = faLocationArrow as IconProp;
   faArrowRight = faArrowRight as IconProp;
+  faUser = faUser as IconProp;
   title = 'showtime';
   navbg: any = {
     background: 'linear-gradient(to right, #9d1d1e 0%, #9d1d1e 100%)',

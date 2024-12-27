@@ -12,6 +12,10 @@
   --primary-section-color: #ecf0f5;
   --secondary-section-color: #f6f8fa;
   --warning-section-color: #feeec7;
+  --sky-color: #03d8f9;
+  --scream-color: #fff4e6;
+  --yellow-scream-color: #ffebdc;
+  --orange-color: #ffbd00;
 }
 
 @layer base {
@@ -61,6 +65,7 @@ body {
 
 .content-wapper {
   padding-top: 70px;
+  padding-bottom: 70px;
 }
 
 .page-title {
@@ -69,10 +74,10 @@ body {
   margin-top: 0px;
   margin-bottom: 15px;
   font-weight: 500;
+  line-height: 1.1;
 }
 .page-subtitle {
   padding: 10px 0;
-  /* margin-top: 15px; */
   margin-bottom: 10px;
   font-size: 24px;
   font-weight: bold;
@@ -87,5 +92,11 @@ body {
   transform: none !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

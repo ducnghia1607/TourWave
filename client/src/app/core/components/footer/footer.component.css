@@ -1,0 +1,46 @@
+.homePageFooterDiv {
+  background-color: #f9f9f9;
+}
+
+.home-page-footer {
+  background: var(--primary-bg-color);
+  color: #fff;
+}
+
+.hust-logo {
+  height: 72px;
+  aspect-ratio: auto 200 / 72;
+  width: 200px;
+}
+
+.footer-contact {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.footer-panel {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0;
+}
+.footer-link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #ccc;
+  transition: all 0.5ms ease;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.cskh-color {
+  color: #f79321;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.zalo-logo {
+  width: 36px;
+}

@@ -11,6 +11,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [],
@@ -28,6 +34,12 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     ReactiveFormsModule,
     MatSliderModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -41,6 +53,12 @@ import { MatSliderModule } from '@angular/material/slider';
     ReactiveFormsModule,
     FormsModule,
     MatSliderModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule,
   ],
 })
 export class SharedModule {

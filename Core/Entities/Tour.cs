@@ -15,6 +15,10 @@ public required string Departure { get; set; }
 public string? Destination { get; set; }
 public bool Availability { get; set; }
 public string ?Transport {get;set;}
+public DateTime CreatedAt { get; set; }
+public DateTime ModifiedAt { get; set; }
+public string ? CreatedBy { get; set; }
+public string ? ModifiedBy { get; set; }
 public List<Image> Images { get; set; } = new ();
  public List<Itinerary> Itineraries { get; set; } = new ();
  public ICollection<TourWithType>  TourWithTypes {get;set; } = [];

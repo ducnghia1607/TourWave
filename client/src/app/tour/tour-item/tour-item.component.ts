@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faCar,
   faClock,
@@ -13,9 +14,9 @@ import { Tour } from 'src/app/shared/models/Tour';
   styleUrls: ['./tour-item.component.css'],
 })
 export class TourItemComponent {
-  faClock = faClock;
-  faPlane = faPlane;
-  faTrain = faTrain;
-  faCar = faCar;
+  faClock = faClock as IconProp;
+  faPlane = faPlane as IconProp;
+  faTrain = faTrain as IconProp;
+  faCar = faCar as IconProp;
   @Input() tour!: Tour;
 }

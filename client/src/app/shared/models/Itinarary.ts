@@ -1,9 +1,10 @@
 export interface Itinerary {
   timeTravel: string;
   title: string;
-  description: string[];
+  content: string;
   images: Image[];
 }
 export interface Image {
   url: string;
+  caption: string;
 }

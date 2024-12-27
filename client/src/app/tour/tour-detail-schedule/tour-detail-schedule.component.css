@@ -1,0 +1,45 @@
+table th,
+table td {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.demo-table {
+  width: 100%;
+}
+
+.schedules .mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid #c3c3c3;
+  border-top: 1px solid #c3c3c3;
+  cursor: pointer;
+}
+.schedules .mat-mdc-row {
+  font-size: 16px !important;
+  color: #000000;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  line-height: 47px;
+}
+
+.schedules .mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.schedules .row-is-clicked {
+  background-color: #003c71 !important;
+  color: #fff !important;
+}
+
+.schedules th.mat-sort-header-sorted {
+  color: black;
+}
+
+.schedules button.example-custom-date-class {
+  background: orange;
+  border-radius: 100%;
+}
+
+.schedules .mat-mdc-form-field {
+  width: 160px !important;
+}

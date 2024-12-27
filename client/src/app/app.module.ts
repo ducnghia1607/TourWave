@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,10 +9,13 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { TourDetailComponent } from './tour/components/tour-detail/tour-detail.component';
+import { TourDetailComponent } from './tour/tour-detail/tour-detail.component';
 import { RecommendModule } from './recommend/recommend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import localeVi from '@angular/common/locales/vi';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -34,6 +37,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       deps: [MAT_DATE_LOCALE],
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: LOCALE_ID, useValue: 'vi-VN' },
   ],
   bootstrap: [AppComponent],
 })

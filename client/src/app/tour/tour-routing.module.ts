@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TourItemComponent } from './components/tour-item/tour-item.component';
+import { TourItemComponent } from './tour-item/tour-item.component';
 import { TourComponent } from './tour.component';
-import { TourDetailComponent } from './components/tour-detail/tour-detail.component';
+import { TourDetailComponent } from './tour-detail/tour-detail.component';
 
 const routes: Routes = [
   { path: '', component: TourComponent },

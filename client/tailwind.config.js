@@ -11,6 +11,8 @@ module.exports = {
         "primary-section-color": "var(--primary-section-color)",
         "secondary-section-color": "var(--secondary-section-color)",
         "warning-section-color": "var(--warning-section-color)",
+        "sky-color": "var(--sky-color)",
+        "orange-color": "var(--orange-color)",
       },
     },
   },

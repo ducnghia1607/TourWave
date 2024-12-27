@@ -1,0 +1,250 @@
+<div class="content-wapper bg-primary-section-color" *ngIf="tourDetail">
+  <div class="container mt-12 tour-item-wrapper">
+    <h1 class="page-title">
+      <b>{{ tourDetail.title }}</b>
+    </h1>
+    <div class="flex items-start">
+      <div class="w-2/3">
+        <div class="tour-gallery tour-content-wrapper">
+          <gallery [items]="images" class="gallery"></gallery>
+        </div>
+        <div class="tour-utilities mt-4 tour-content-wrapper">
+          <div
+            class="depature-place flex justify-between items-center border-b-2 pb-3"
+          >
+            <div class="flex">
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  class="text-xs"
+                  style="width: 20px"
+                >
+                  <path
+                    d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                    fill="#494b55"
+                  /></svg
+              ></span>
+              <span class="ms-3"
+                >Khởi hành từ:<b class="ms-3">{{ tourDetail.departure }}</b>
+              </span>
+            </div>
+            <span class="card-transport space-x-2">
+              <span *ngIf="tourDetail.duration.includes('1')"
+                ><fa-icon [icon]="faPlane"></fa-icon
+              ></span>
+              <span *ngIf="tourDetail.duration.includes('2')">
+                <fa-icon [icon]="faCar"></fa-icon
+              ></span>
+              <span *ngIf="tourDetail.duration.includes('3')"
+                ><fa-icon [icon]="faTrain"></fa-icon
+              ></span>
+            </span>
+            <span
+              >Mã Tour:<b>{{ tourDetail.tourCode }}</b></span
+            >
+          </div>
+          <div class="mt-4">
+            <h2 class="page-subtitle">Tour Trọn Gói bao gồm</h2>
+            <div class="grid grid-cols-3 mt-4">
+              <span *ngFor="let utility of tourDetail.utilities"
+                ><fa-icon [icon]="faCheck" style="color: #26bed6"></fa-icon>
+                <span class="ms-2">{{ utility }}</span></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="tour-description mt-4 tour-content-wrapper">
+          <h2 class="page-subtitle">Trải nghiệm thú vị trong tour</h2>
+          {{ tourDetail.description }}
+        </div>
+        <div class="tour-itineraries mt-4 tour-content-wrapper">
+          <div class="flex justify-between items-center">
+            <h2 class="page-subtitle">Chương trình tour</h2>
+            <div>
+              <button mat-button (click)="toggleAccordion(panelOpenState)">
+                {{ panelOpenState == false ? "Xem tất cả" : "Thu gọn" }}
+              </button>
+            </div>
+          </div>
+
+          <mat-accordion class="example-headers-align" multi>
+            <div
+              class="itinerary-item-wrapper"
+              *ngFor="let itinerary of tourDetail.itineraries"
+            >
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="flex items-center">
+                      <img
+                        src="{{ itinerary.images[0].url }}"
+                        alt=""
+                        class="avatar-small"
+                      />
+                      <div
+                        class="flex flex-col items-start"
+                        style="margin-left: 15px"
+                      >
+                        <span class="day-text">{{ itinerary.timeTravel }}</span>
+                        <span class="itinerary-title">{{
+                          itinerary.title
+                        }}</span>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div>
+                  <div>
+                    <p>{{ itinerary.content }}</p>
+                  </div>
+                  <figure
+                    *ngFor="let image of itinerary.images"
+                    style="margin-top: 24px"
+                  >
+                    <img
+                      src="{{ image.url }}"
+                      alt="{{ image.caption }}"
+                      style="width: 100%"
+                    />
+                    <figcaption class="text-center mt-4">
+                      <p>{{ image.caption }}</p>
+                    </figcaption>
+                  </figure>
+                </div>
+              </mat-expansion-panel>
+            </div>
+
+            <!-- <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Day of the trip </mat-panel-title>
+                <mat-panel-description>
+                  Inform the date you wish to travel
+                  <mat-icon>date_range</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  (focus)="picker.open()"
+                  readonly
+                />
+              </mat-form-field>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-expansion-panel> -->
+          </mat-accordion>
+        </div>
+        <div class="tour-schedules mt-4 tour-content-wrapper">
+          <app-tour-detail-schedule
+            [schedules]="tourDetail.schedules"
+          ></app-tour-detail-schedule>
+        </div>
+        <div class="tour-notes mt-4 tour-content-wrapper">
+          <app-tour-detail-notice></app-tour-detail-notice>
+        </div>
+      </div>
+      <div class="tour-sidebar ml-6 flex-1">
+        <h2 class="tour-sidebar-title">Lịch Trình và Giá Tour</h2>
+        <p class="tour-sidebar-subtitle">Chọn Lịch Trình và Xem Giá:</p>
+        <div class="flex items-center justify-between space-x-4 mb-3">
+          <div class="box-white"></div>
+          <div class="box-white"></div>
+          <div class="box-white"></div>
+          <div class="relative">
+            <mat-form-field class="example-full-width relative">
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [min]="minDate"
+                [max]="maxDate"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker [dateClass]="dateClass">
+              </mat-datepicker>
+            </mat-form-field>
+            <!-- <p
+              class="absolute"
+              style="top: 0px; left: 8px; color: var(--sky-color)"
+            >
+              Tất cả
+            </p> -->
+          </div>
+
+          <!-- <mat-form-field class="example-full-width">
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              [min]="minDate"
+              [max]="maxDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker1></mat-datepicker>
+          </mat-form-field> -->
+        </div>
+        <div
+          class="box-white mb-3 quantity-ajust flex justify-between items-center"
+        >
+          <div class="flex flex-col">
+            <span class="person-type">Người lớn</span>
+            <span class="person-age">> 10 tuổi</span>
+          </div>
+          <div class="price-adult-total"></div>
+          <div class="flex items-center">
+            <button class="m-3 mx-4">
+              <fa-icon [icon]="faMinus"></fa-icon>
+            </button>
+            <p class="adult-quantity">1</p>
+            <button class="m-3 mx-4">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div
+          class="box-white mb-3 quantity-ajust flex justify-between items-center"
+        >
+          <div class="flex flex-col">
+            <span class="person-type">Trẻ em</span>
+            <span class="person-age">2 - 10 tuổi</span>
+          </div>
+          <div class="price-child-total"></div>
+          <div class="flex items-center">
+            <button class="m-3 mx-4">
+              <fa-icon [icon]="faMinus"></fa-icon>
+            </button>
+            <p class="adult-quantity">0</p>
+            <button class="m-3 mx-4">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <!-- <div class="box-white mb-3"></div> -->
+        <p class="text-sky-color mb-5">
+          <fa-icon [icon]="faInfo"></fa-icon> Liên hệ để xác nhận đặt chỗ
+        </p>
+        <div class="flex items-center mb-4">
+          <p>Tổng Giá Tour</p>
+          <p class="text-orange-color">
+            {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
+          </p>
+        </div>
+        <div class="sidebar-actions flex justify-between items-center mb-4">
+          <button class="reachout-btn">Liên hệ tư vấn</button>
+          <button class="booking-btn">Yêu cầu đặt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

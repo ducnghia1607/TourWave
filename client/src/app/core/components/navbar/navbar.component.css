@@ -11,11 +11,11 @@
 }
 
 .main-header .navbar .hotline .hotline-link {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: -1px;
   text-decoration: none;
-  color: #fff;
+  color: var(--yellow-scream-color);
 }
 @media only screen and (min-width: 320px) {
   .main-header .navbar ul.nav > li > a {
@@ -35,9 +35,24 @@
 }
 
 .navbar .nav-link > li > a {
+  padding: 20px 10px;
+  display: inline-block;
   cursor: pointer;
+  transition: all 0.5ms ease;
 }
 
 .navbar .nav-link > li > a.active {
-  color: orange !important;
+  /* color: orange !important; */
+  /* color: rgb(245, 64, 103) !important; */
+  color: var(--sky-color) !important;
+}
+
+.navbar ul.nav > li > a.active,
+.navbar .nav-link > li > a:hover {
+  /* border-bottom: 2px solid #ffbd00; */
+  border-bottom: 2px solid var(--scream-color);
+}
+
+.navbar .nav-link > li > a:hover:not(.active) {
+  opacity: 0.65;
 }

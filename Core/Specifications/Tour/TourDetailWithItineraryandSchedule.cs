@@ -14,7 +14,6 @@ namespace Core.Specifications
         {
             AddInclude(t =>  t.Images);
             AddInclude(t =>  t.Itineraries);
-            AddNestedInclude("Itineraries.Contents");
             AddNestedInclude("Itineraries.Images");
             AddInclude(t =>  t.Schedules);
         }
