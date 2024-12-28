@@ -63,4 +63,11 @@ public class GenericRepository<T>(TourContext context) : IGenericRepository<T> w
         query = spec.ApplyCriteria(query);
         return await query.CountAsync();
     }
+
+    public async Task<T> GetValueString(ISpecification<T> spec)
+    {
+        var query = context.Set<T>().AsQueryable();
+        query = spec.ApplyCriteria(query);
+        return await query.FirstOrDefaultAsync();
+    }
 }

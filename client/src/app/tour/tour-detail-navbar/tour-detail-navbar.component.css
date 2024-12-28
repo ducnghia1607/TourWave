@@ -1,0 +1,21 @@
+#tour-detail-navbar {
+  position: fixed;
+  z-index: 100;
+  background: #fff;
+  width: 100%;
+}
+#tour-detail-navbar .navbar {
+  min-height: 50px !important;
+}
+#tour-detail-navbar .navbar ul > li > a {
+  cursor: pointer;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  color: #003c71;
+}
+#tour-detail-navbar .navbar ul > li > a.active {
+  font-weight: bold;
+  color: #26bed6;
+  border-bottom: 2px solid #26bed6;
+}

@@ -1,14 +1,18 @@
-<div class="content-wapper bg-primary-section-color" *ngIf="tourDetail">
-  <div class="container mt-12 tour-item-wrapper">
+<app-tour-detail-navbar></app-tour-detail-navbar>
+<div class="bg-primary-section-color" *ngIf="tourDetail">
+  <div class="container tour-item-wrapper">
     <h1 class="page-title">
       <b>{{ tourDetail.title }}</b>
     </h1>
     <div class="flex items-start">
       <div class="w-2/3">
-        <div class="tour-gallery tour-content-wrapper">
+        <div class="tour-gallery tour-content-wrapper" id="tour-gallery">
           <gallery [items]="images" class="gallery"></gallery>
         </div>
-        <div class="tour-utilities mt-4 tour-content-wrapper">
+        <div
+          class="tour-utilities mt-4 tour-content-wrapper"
+          id="tour-overview"
+        >
           <div
             class="depature-place flex justify-between items-center border-b-2 pb-3"
           >
@@ -18,15 +22,15 @@
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 384 512"
                   class="text-xs"
-                  style="width: 20px"
+                  style="width: 16px"
                 >
                   <path
                     d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
                     fill="#494b55"
                   /></svg
               ></span>
-              <span class="ms-3"
-                >Khởi hành từ:<b class="ms-3">{{ tourDetail.departure }}</b>
+              <span class="ms-1"
+                >Khởi hành từ:<b class="ms-1">{{ tourDetail.departure }}</b>
               </span>
             </div>
             <span class="card-transport space-x-2">
@@ -41,7 +45,10 @@
               ></span>
             </span>
             <span
-              >Mã Tour:<b>{{ tourDetail.tourCode }}</b></span
+              >Mã Tour:
+              <b style="font-size: 18px" class="ms-1"
+                >TO{{ tourDetail.tourCode }}</b
+              ></span
             >
           </div>
           <div class="mt-4">
@@ -58,7 +65,10 @@
           <h2 class="page-subtitle">Trải nghiệm thú vị trong tour</h2>
           {{ tourDetail.description }}
         </div>
-        <div class="tour-itineraries mt-4 tour-content-wrapper">
+        <div
+          class="tour-itineraries mt-4 tour-content-wrapper"
+          id="tour-itineraries"
+        >
           <div class="flex justify-between items-center">
             <h2 class="page-subtitle">Chương trình tour</h2>
             <div>
@@ -139,110 +149,186 @@
             </mat-expansion-panel> -->
           </mat-accordion>
         </div>
-        <div class="tour-schedules mt-4 tour-content-wrapper">
+        <div
+          class="tour-schedules mt-4 tour-content-wrapper"
+          id="tour-schedules"
+        >
           <app-tour-detail-schedule
+            (selectedRowChange)="selectedRowChangeSchedulesHandle($event)"
             [schedules]="tourDetail.schedules"
           ></app-tour-detail-schedule>
         </div>
-        <div class="tour-notes mt-4 tour-content-wrapper">
+        <div class="tour-notes mt-4 tour-content-wrapper" id="tour-notices">
           <app-tour-detail-notice></app-tour-detail-notice>
         </div>
       </div>
-      <div class="tour-sidebar ml-6 flex-1">
-        <h2 class="tour-sidebar-title">Lịch Trình và Giá Tour</h2>
-        <p class="tour-sidebar-subtitle">Chọn Lịch Trình và Xem Giá:</p>
-        <div class="flex items-center justify-between space-x-4 mb-3">
-          <div class="box-white"></div>
-          <div class="box-white"></div>
-          <div class="box-white"></div>
-          <div class="relative">
-            <mat-form-field class="example-full-width relative">
+
+      <!-- Tour sidebar -->
+      <div #toursidebar>
+        <div class="tour-sidebar ml-6 flex-1">
+          <h2 class="tour-sidebar-title">Lịch Trình và Giá Tour</h2>
+          <p class="tour-sidebar-subtitle">Chọn Lịch Trình và Xem Giá:</p>
+          <div class="flex items-center justify-between space-x-4 mb-3">
+            <div
+              class="box-white active"
+              #boxwhite
+              [class.active]="
+                firstBoxWhiteDate?.toDateString() ==
+                this.selectedDate.toDateString()
+              "
+              (click)="onBoxWhiteClick(1)"
+            >
+              {{
+                firstBoxWhiteDate == null
+                  ? ""
+                  : (firstBoxWhiteDate | date : "dd/MM")
+              }}
+            </div>
+            <div
+              class="box-white"
+              #boxwhite
+              [class.active]="
+                secondBoxWhiteDate?.toDateString() ==
+                this.selectedDate.toDateString()
+              "
+              (click)="onBoxWhiteClick(2)"
+            >
+              {{
+                secondBoxWhiteDate == null
+                  ? ""
+                  : (secondBoxWhiteDate | date : "dd/MM")
+              }}
+            </div>
+            <div
+              class="box-white"
+              #boxwhite
+              [class.active]="
+                thirdBoxWhiteDate?.toDateString() ==
+                this.selectedDate.toDateString()
+              "
+              (click)="onBoxWhiteClick(3)"
+            >
+              {{
+                thirdBoxWhiteDate == null
+                  ? ""
+                  : (thirdBoxWhiteDate | date : "dd/MM")
+              }}
+            </div>
+            <div class="relative">
+              <mat-form-field class="example-full-width relative">
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  [(ngModel)]="selectedDate"
+                  (dateChange)="dateChangeSidebar($event)"
+                  #myInputDatePicker
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker [dateClass]="dateClass">
+                </mat-datepicker>
+              </mat-form-field>
+              <!-- <p
+                class="absolute"
+                style="top: 0px; left: 8px; color: var(--sky-color)"
+              >
+                Tất cả
+              </p> -->
+            </div>
+
+            <!-- <mat-form-field class="example-full-width">
+              <mat-label>Choose a date</mat-label>
               <input
                 matInput
-                [matDatepicker]="picker"
+                [matDatepicker]="picker1"
                 [min]="minDate"
                 [max]="maxDate"
               />
+              <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle
                 matIconSuffix
-                [for]="picker"
+                [for]="picker1"
               ></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker [dateClass]="dateClass">
-              </mat-datepicker>
-            </mat-form-field>
-            <!-- <p
-              class="absolute"
-              style="top: 0px; left: 8px; color: var(--sky-color)"
-            >
-              Tất cả
-            </p> -->
+              <mat-datepicker touchUi #picker1></mat-datepicker>
+            </mat-form-field> -->
           </div>
-
-          <!-- <mat-form-field class="example-full-width">
-            <mat-label>Choose a date</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker1"
-              [min]="minDate"
-              [max]="maxDate"
-            />
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker1"
-            ></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker1></mat-datepicker>
-          </mat-form-field> -->
-        </div>
-        <div
-          class="box-white mb-3 quantity-ajust flex justify-between items-center"
-        >
-          <div class="flex flex-col">
-            <span class="person-type">Người lớn</span>
-            <span class="person-age">> 10 tuổi</span>
+          <div
+            class="box-white mb-3 quantity-ajust flex justify-between items-center"
+          >
+            <div class="flex flex-col">
+              <span class="person-type">Người lớn</span>
+              <span class="person-age">> 10 tuổi</span>
+            </div>
+            <div class="price">
+              {{
+                adultNumber > 0
+                  ? "x " +
+                    (tourDetail.priceAdult
+                      | currency : "VND" : "symbol" : "1.0-0")
+                  : ""
+              }}
+            </div>
+            <div class="flex items-center">
+              <button class="m-1 p-1" (click)="decrement('adult')">
+                <fa-icon [icon]="faMinus"></fa-icon>
+              </button>
+              <p class="adult-quantity">{{ adultNumber }}</p>
+              <button class="m-1 p-1">
+                <fa-icon [icon]="faPlus" (click)="increment('adult')"></fa-icon>
+              </button>
+            </div>
           </div>
-          <div class="price-adult-total"></div>
-          <div class="flex items-center">
-            <button class="m-3 mx-4">
-              <fa-icon [icon]="faMinus"></fa-icon>
-            </button>
-            <p class="adult-quantity">1</p>
-            <button class="m-3 mx-4">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
+          <div
+            class="box-white mb-3 quantity-ajust flex justify-between items-center"
+          >
+            <div class="flex flex-col">
+              <span class="person-type">Trẻ em</span>
+              <span class="person-age">2 - 10 tuổi</span>
+            </div>
+            <div class="price">
+              {{
+                childNumber > 0
+                  ? "x " +
+                    (tourDetail.priceChild
+                      | currency : "VND" : "symbol" : "1.0-0")
+                  : ""
+              }}
+            </div>
+            <div class="flex items-center">
+              <button class="m-1 p-1">
+                <fa-icon
+                  [icon]="faMinus"
+                  (click)="decrement('child')"
+                ></fa-icon>
+              </button>
+              <p class="adult-quantity">
+                {{ childNumber }}
+              </p>
+              <button class="m-1 p-1">
+                <fa-icon [icon]="faPlus" (click)="increment('child')"></fa-icon>
+              </button>
+            </div>
           </div>
-        </div>
-        <div
-          class="box-white mb-3 quantity-ajust flex justify-between items-center"
-        >
-          <div class="flex flex-col">
-            <span class="person-type">Trẻ em</span>
-            <span class="person-age">2 - 10 tuổi</span>
-          </div>
-          <div class="price-child-total"></div>
-          <div class="flex items-center">
-            <button class="m-3 mx-4">
-              <fa-icon [icon]="faMinus"></fa-icon>
-            </button>
-            <p class="adult-quantity">0</p>
-            <button class="m-3 mx-4">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
-          </div>
-        </div>
-        <!-- <div class="box-white mb-3"></div> -->
-        <p class="text-sky-color mb-5">
-          <fa-icon [icon]="faInfo"></fa-icon> Liên hệ để xác nhận đặt chỗ
-        </p>
-        <div class="flex items-center mb-4">
-          <p>Tổng Giá Tour</p>
-          <p class="text-orange-color">
-            {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
+          <!-- <div class="box-white mb-3"></div> -->
+          <p class="text-sky-color mb-5">
+            <fa-icon [icon]="faInfo"></fa-icon> Liên hệ để xác nhận đặt chỗ
           </p>
-        </div>
-        <div class="sidebar-actions flex justify-between items-center mb-4">
-          <button class="reachout-btn">Liên hệ tư vấn</button>
-          <button class="booking-btn">Yêu cầu đặt</button>
+          <div class="flex items-center justify-between mb-4">
+            <p>Tổng Giá Tour</p>
+            <p class="text-orange-color total-price">
+              {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
+            </p>
+          </div>
+          <div
+            class="sidebar-actions flex justify-between items-center mb-4 space-x-4"
+          >
+            <button class="reachout-btn w-1/2">Liên hệ tư vấn</button>
+            <button class="booking-btn w-1/2">Yêu cầu đặt</button>
+          </div>
         </div>
       </div>
     </div>

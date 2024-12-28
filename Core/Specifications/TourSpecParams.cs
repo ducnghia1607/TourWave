@@ -6,7 +6,7 @@ public class TourSpecParams
 {
     private const int MaxPageSize = 40;
     public int PageIndex = 1;
-    private int _pageSize = 3;
+    private int _pageSize = 8;
     public int PageSize
     {
         get => _pageSize;
@@ -28,5 +28,11 @@ public class TourSpecParams
         get => _search ?? "";
         set => _search = value.ToLower();
     }
-    
+
+    private string? _date; // departure date
+    public string? Date
+    {
+        get => this._date;
+        set => _date = (DateOnly.Parse(value) < new DateOnly() || value == "")  ? new DateOnly().ToString() : value;
+    }
 }

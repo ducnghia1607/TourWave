@@ -14,7 +14,7 @@ public class BaseApiController : ControllerBase
     public async Task<ActionResult> CreatePagedResult<T>(IGenericRepository<T> repo,ISpecification<T> spec,int pageIndex,int pageSize) where T :BaseEntity{
         var items = await repo.ListAsyncWithSpec(spec);
         var count = await repo.CountAsync(spec);
-       var pagination = new Pagination<T>(pageIndex,pageSize,count,items);
-       return Ok(pagination);
+        var pagination = new Pagination<T>(pageIndex,pageSize,count,items);
+        return Ok(pagination);
     }
 }

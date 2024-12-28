@@ -1,4 +1,5 @@
 .tour-item-wrapper {
+  padding: 126px 0px;
 }
 .tour-item-wrapper .tour-content-wrapper {
   background: #fff;
@@ -110,13 +111,10 @@
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
   position: relative;
   font-size: 16px;
+  cursor: pointer;
 }
 .box-white.quantity-ajust {
   line-height: unset;
-}
-
-.tour-sidebar .mat-mdc-form-field-infix {
-  display: none !important;
 }
 
 .tour-sidebar .mdc-icon-button {
@@ -125,10 +123,17 @@
   left: 6px;
   right: 0px;
   bottom: 0px;
+  cursor: pointer;
 }
-.tour-sidebar .mat-mdc-form-field {
+.tour-sidebar .mat-mdc-form-field-infix .mat-datepicker-input {
+  display: none !important;
+}
+.tour-sidebar .mat-mdc-form-field-infix {
+  width: 20px;
+}
+/* .tour-sidebar .mat-mdc-form-field {
   width: 60px !important;
-}
+} */
 
 .tour-sidebar .mat-mdc-form-field-subscript-wrapper {
   display: none !important;
@@ -144,17 +149,28 @@
   padding: 7px 0px 7px 0px;
 }
 
-.tour-sidebar .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+/* .tour-sidebar .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
   position: unset !important;
 }
 
 .tour-sidebar .mat-mdc-icon-button .mat-mdc-button-ripple {
   position: unset !important;
-}
+} */
 
 button.example-custom-date-class {
-  background: orange;
+  /* background: orange; */
   border-radius: 100%;
+  border: 1px #9fc43a solid;
+}
+
+button.example-custom-date-class > span {
+  color: #9fc43a;
+}
+
+.mat-calendar-body-selected {
+  background: #26bed6 !important;
+  border: 1px #26bed6 solid !important;
+  color: #fff !important;
 }
 
 .quantity-ajust .person-age {
@@ -164,9 +180,10 @@ button.example-custom-date-class {
 
 .reachout-btn,
 .booking-btn {
-  padding: 10px;
+  padding: 12px 10px;
   color: #fff;
   border-radius: 4px;
+  font-size: 18px;
   min-width: 134px;
   height: 47px;
   color: #fff;
@@ -177,10 +194,67 @@ button.example-custom-date-class {
 .booking-btn:hover {
   opacity: 0.6;
 }
+.reachout-btn:hover {
+  background: var(--orange-color);
+  color: #fff;
+}
 .reachout-btn {
-  background: var(--primary-bg-color);
+  background: #fff;
+  color: var(--orange-color);
+  border: 1px solid var(--orange-color);
 }
 .booking-btn {
   background: var(--orange-color);
-  padding: 10px;
+}
+
+.tour-sidebar .box-white.active {
+  border: solid 2px #26bed6;
+}
+
+.tour-sidebar .price {
+  color: var(--orange-color);
+  min-width: 110px;
+  text-align: right;
+}
+
+.tour-sidebar .adult-quantity {
+  min-width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tour-sidebar .total-price {
+  color: #ffbd00;
+  font-weight: bold;
+  font-size: 27px;
+}
+
+.affix {
+  position: fixed;
+  top: 50px;
+  z-index: 10;
+  right: calc((100% - 768px) / 2);
+}
+
+/* .container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+} */
+@media (min-width: 768px) {
+  .affix {
+    right: calc((100% - 768px) / 2);
+  }
+}
+@media (min-width: 992px) {
+  .affix {
+    right: calc((100% - 992px) / 2);
+  }
+}
+@media (min-width: 1280px) {
+  .affix {
+    right: calc((100% - 1280px) / 2);
+  }
 }

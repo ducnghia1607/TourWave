@@ -28,5 +28,13 @@ public class TourContextSeed
             context.TourWithTypes.AddRange(tourWithTypes);
             await context.SaveChangesAsync();
         }
+
+        if(!context.Departures.Any()){
+            var departureData =  await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/departurelocation.json");
+            var departures = JsonSerializer.Deserialize<List<Departure>>(departureData);
+            if(departures == null) return;
+            context.Departures.AddRange(departures);
+            await context.SaveChangesAsync();
+        }
      }
 }

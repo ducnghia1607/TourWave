@@ -1,0 +1,206 @@
+.tourHomeSearchPanel .home-title {
+  margin: 0px;
+  margin-right: 15px;
+  font-weight: bold;
+  font-family: Helvetica;
+  font-size: 40px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  display: inline-block;
+}
+@media only screen and (min-width: 320px) {
+  .tourHomeSearchPanel h2 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .tourHomeSearchPanel h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+.form-container {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+}
+.tourHomeSearchPanel .search-form {
+  margin-bottom: 15px;
+}
+
+.tourHomeSearchPanel {
+  @apply w-8/12;
+}
+/* Search Form */
+.search-form .search-input {
+  font-size: 15px;
+}
+
+.search-box {
+  padding: 0px 15px;
+  height: 52px;
+}
+
+::ng-deep .mat-datepicker-input,
+::ng-deep .mat-mdc-select-min-line,
+::ng-deep .search-form mat-label,
+.search-input::placeholder,
+.search-form .search-input {
+  font-size: 15px !important;
+}
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-mdc-form-field-icon-suffix {
+  position: absolute !important;
+  left: 0px;
+}
+
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-mdc-form-field-infix {
+  margin-left: 35px;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  margin-left: 40px;
+  color: #ffffff;
+}
+
+::ng-deep .material-icons {
+  position: absolute;
+  left: -40px;
+  top: 17px;
+  color: #494b55;
+}
+
+::ng-deep .mat-mdc-option {
+  margin-left: 40px;
+}
+
+.btn-search {
+  height: 52px;
+  background: var(--primary-bg-color);
+  color: #ffffff;
+  padding: 0 34px;
+}
+.btn-search:hover {
+  background: var(--secondary-bg-color);
+}
+
+.tour-section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3f3b3b;
+  margin-bottom: 6px;
+}
+
+.tour-section-subtitle {
+  font-size: 16px;
+  font-weight: normal;
+  color: #717484;
+  display: block;
+  margin-bottom: 22px;
+}
+
+.location-menu-wrapper,
+.search-result-wrapper {
+  background-color: #ffffff;
+  padding: 15px;
+  width: 100%;
+  margin-top: 3px;
+  top: 100%;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-top: 0px;
+  color: #494b55;
+  border-radius: 4px;
+  left: 0;
+}
+.search-result-wrapper {
+  padding: 10px 0px;
+}
+.location-menu-wrapper .title {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #003c71;
+  font-size: 14px;
+}
+
+.location-menu-wrapper .location-picture {
+  width: 60px;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.location-menu-wrapper .location-name {
+  color: #494b55;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.location-menu-wrapper .location-count {
+  color: #003c71;
+  font-size: 14px;
+}
+
+.location-menu-wrapper .location-menu > div {
+  cursor: pointer;
+  transition: all 0.5ms ease;
+}
+
+.location-menu-wrapper .location-menu > div:hover {
+  background-color: #dfe4e9;
+}
+
+.search-result-item {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  color: #494b55;
+  padding: 6px 15px;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.search-result-item:hover {
+  /* background: rgba(73, 75, 85, 0.1); */
+  background-color: rgba(64, 166, 242, 0.1);
+
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .form-container .mat-mdc-text-field-wrapper {
+  max-height: 52px !important;
+  border-radius: 6px !important;
+}
+
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined)
+  .mat-mdc-form-field-infix {
+  padding-top: 22px;
+  /* padding-bottom: 8px; */
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  display: none;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-input-underline {
+  display: none;
+}

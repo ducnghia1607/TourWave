@@ -1,0 +1,44 @@
+<header
+  class="flex justify-center items-center main-header z-50"
+  [class.hidden]="isHidden"
+  id="tour-detail-navbar"
+>
+  <nav
+    class="navbar flex justify-between items-center container"
+    style="padding-top: 0; padding-bottom: 0"
+  >
+    <div>
+      <ul class="flex justify-between items-center nav space-x-4 nav-link">
+        <li>
+          <a
+            class="active"
+            (click)="scrollToSection('tour-overview')"
+            [class.active]="isTabNameActive == 'overview'"
+            >Tổng quan</a
+          >
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('tour-itineraries')"
+            [class.active]="isTabNameActive == 'itinerary'"
+            >Chương trình tour
+          </a>
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('tour-schedules')"
+            [class.active]="isTabNameActive == 'schedule'"
+            >Lịch khởi hành</a
+          >
+        </li>
+        <li>
+          <a
+            (click)="scrollToSection('tour-notices')"
+            [class.active]="isTabNameActive == 'notice'"
+            >Thông tin cần lưu ý</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

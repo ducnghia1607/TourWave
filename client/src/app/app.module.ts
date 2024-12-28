@@ -14,10 +14,11 @@ import { RecommendModule } from './recommend/recommend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localeVi from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
+import { HighlightPipe } from './pipes/highlight.pipe';
 
 registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HighlightPipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

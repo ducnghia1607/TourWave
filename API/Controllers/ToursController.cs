@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using API.DataHelpers;
 using API.DTOs;
 using AutoMapper;
@@ -37,16 +39,77 @@ public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : Ba
     //     }
     //    return tour;
     // }  
-    [HttpGet("{id:int}")] // api/tours/2
-    public async Task<ActionResult<Tour>> GetTour(int id){
-        var spec = new TourDetailWithItineraryandSchedule(id);
+    //[HttpGet("{id:int}")] // api/tours/2
+    //public async Task<ActionResult<Tour>> GetTour(int id)
+    //{
+    //    var spec = new TourDetailWithItineraryandSchedule(id);
+    //    var tour = await repo.GetEntityWithSpec(spec);
+    //    if (tour == null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    return tour;
+    //    //    return mapper.Map<Tour,TourDetailDto>(tour);
+    //}
+
+    //[HttpGet("{title}")]  // api /users/2
+    //public async Task<ActionResult<Tour>> GetTour([FromRoute(Name = "title")]  string name)
+    //{
+    //    var spec = new TourDetailWithItineraryandSchedule(name);
+    //    var tour = await repo.GetEntityWithSpec(spec);
+    //    if(tour == null){
+    //        return NotFound();
+    //    }
+    //    return tour;
+    //    // return await _uow.UserRepository.GetMemberByUsernameAsync(username);
+    //}
+
+    [HttpGet("{searchTerm}")] // api/tours/2
+    public async Task<ActionResult<IReadOnlyList<TourDto>>> GetTourByTitle([FromRoute]string searchTerm, [FromQuery] TourSpecParams param)
+    {
+        var spec = new TourSpecification(searchTerm, param);
+        //var tours = await repo.ListAsyncWithSpec(spec);
+        //if (tours == null)
+        //{
+        //    return NotFound();
+        //}
+        var items = await repo.ListAsyncWithSpec(spec);
+        var count = await repo.CountAsync(spec);
+        var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
+        var pagination = new Pagination<TourDto>(param.PageIndex, param.PageSize, count, data);
+        return Ok(pagination);
+        //    return mapper.Map<Tour,TourDetailDto>(tour);
+    }
+
+    [HttpGet("{title}/{tourCode}")] // api/tours/2
+    public async Task<ActionResult<Tour>> GetTourByTitle(string title,string tourCode)
+    {
+        var spec = new TourSpecification(title,tourCode);
         var tour = await repo.GetEntityWithSpec(spec);
-        if(tour == null){
+        if (tour == null)
+        {
             return NotFound();
         }
         return tour;
-    //    return mapper.Map<Tour,TourDetailDto>(tour);
-    }  
+        //    return mapper.Map<Tour,TourDetailDto>(tour);
+    }
+
+    [HttpGet("search-temp")]
+        public async Task<ActionResult<TourDto>> GetTourByTitle([FromQuery]string keyword)
+    {
+        var spec = new TourSpecification(keyword);
+        var tours = await repo.ListAsyncWithSpec(spec);
+        if (tours == null)
+        {
+            return NotFound();
+        }
+        var items = mapper.Map<IReadOnlyList<Tour>,IReadOnlyList<TourDto>>(tours);
+
+         object obj = new {tous = items};
+        
+        return Ok(items);
+        //    return mapper.Map<Tour,TourDetailDto>(tour);
+    }
 
     [HttpPost]
     public async Task<ActionResult<Tour>> CreateTour(Tour tour){

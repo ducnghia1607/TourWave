@@ -17,9 +17,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { HighlightPipe } from './pipes/highlight.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [HighlightPipe],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -59,6 +60,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatSortModule,
     MatCardModule,
     MatButtonModule,
+    HighlightPipe,
   ],
 })
 export class SharedModule {

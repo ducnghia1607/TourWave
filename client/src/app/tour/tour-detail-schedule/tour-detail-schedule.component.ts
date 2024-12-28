@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { Schedule } from 'src/app/shared/models/Schedule';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -29,6 +36,7 @@ export class TourDetailScheduleComponent implements OnInit {
     }
   }
   @Input() schedules: Schedule[] = [];
+  @Output() selectedRowChange = new EventEmitter<Schedule>();
   selectedDate: Date | null = null;
   displayedColumns: string[] = [
     'Ngày khởi hành',
@@ -45,6 +53,8 @@ export class TourDetailScheduleComponent implements OnInit {
     } else {
       this.clickedRows.clear();
       this.clickedRows.add(row);
+      console.log(row);
+      this.selectedRowChange.emit(row);
     }
   }
 

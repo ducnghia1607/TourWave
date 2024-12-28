@@ -33,17 +33,17 @@
   }
   @media (min-width: 768px) {
     .container {
-      max-width: 750px;
+      max-width: 750px !important;
     }
   }
   @media (min-width: 992px) {
     .container {
-      max-width: 970px;
+      max-width: 970px !important;
     }
   }
   @media (min-width: 1280px) {
     .container {
-      max-width: 1170px;
+      max-width: 1070px !important;
     }
   }
 }
@@ -64,16 +64,16 @@ body {
 }
 
 .content-wapper {
-  padding-top: 70px;
-  padding-bottom: 70px;
+  /* margin-top: 50px;
+  padding-bottom: 50px; */
 }
 
 .page-title {
-  font-size: 36px;
+  font-size: 33px;
   color: #003c71;
   margin-top: 0px;
   margin-bottom: 15px;
-  font-weight: 500;
+  font-weight: bolder;
   line-height: 1.1;
 }
 .page-subtitle {

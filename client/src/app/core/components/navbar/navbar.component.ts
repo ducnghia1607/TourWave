@@ -24,6 +24,7 @@ export class NavbarComponent {
   faArrowRight = faArrowRight as IconProp;
   faUser = faUser as IconProp;
   title = 'showtime';
+  isHidden: boolean = false;
   navbg: any = {
     background: 'linear-gradient(to right, #9d1d1e 0%, #9d1d1e 100%)',
   };

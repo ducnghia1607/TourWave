@@ -5,11 +5,11 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'tour',
+    redirectTo: 'tours',
     pathMatch: 'full',
   },
   {
-    path: 'tour',
+    path: 'tours',
     loadChildren: () => import('./tour/tour.module').then((m) => m.TourModule),
   },
   {

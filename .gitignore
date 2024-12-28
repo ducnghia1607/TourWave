@@ -79,3 +79,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.d
+.vs/GraduationProject/config/applicationhost.config
+.vs/GraduationProject/DesignTimeBuild/.dtbcache.v2
+.vs/GraduationProject/FileContentIndex/a02bc4ea-8c3c-419b-8e80-958a15417031.vsidx
+.vs/ProjectEvaluation/graduationproject.metadata.v7.bin
+.vs/ProjectEvaluation/graduationproject.projects.v7.bin
+.vs/GraduationProject/v17/.futdcache.v2
+.vsidx

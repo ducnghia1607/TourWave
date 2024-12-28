@@ -1,5 +1,8 @@
 <div class="tour-item">
-  <a class="cursor-pointer" routerLink="/tour/{{ tour.id }}">
+  <a
+    class="cursor-pointer"
+    [routerLink]="['/tours', tour.title, tour.tourCode]"
+  >
     <div class="card card-compact bg-base-100 shadow-xl">
       <figure>
         <img src="{{ tour.imageUrl }}" alt="Shoes" />

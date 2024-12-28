@@ -1,13 +1,15 @@
 .main-header {
-  /* background: linear-gradient(to right, #9d1d1e 0%, #9d1d1e 100%);
-    background-color: transparent !important; */
-  max-height: 100px;
+  max-height: 54px;
   position: fixed;
   width: 100%;
 }
 
 .main-header .navbar .nav > li > a {
   color: #fff;
+}
+
+.main-header .navbar {
+  min-width: 40px !important;
 }
 
 .main-header .navbar .hotline .hotline-link {
@@ -19,23 +21,31 @@
 }
 @media only screen and (min-width: 320px) {
   .main-header .navbar ul.nav > li > a {
-    font-size: 18px;
+    font-size: 14px;
+  }
+  .navbar .nav-link > li > a {
+    padding: 11px 10px;
   }
 }
 @media only screen and (min-width: 768px) {
   .main-header .navbar ul.nav > li > a {
     font-size: 16px;
   }
+  .navbar .nav-link > li > a {
+    padding: 12px 10px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
   .main-header .navbar ul.nav > li > a {
-    font-size: 20px;
+    font-size: 18px;
+  }
+  .navbar .nav-link > li > a {
+    padding: 13px 10px;
   }
 }
 
 .navbar .nav-link > li > a {
-  padding: 20px 10px;
   display: inline-block;
   cursor: pointer;
   transition: all 0.5ms ease;

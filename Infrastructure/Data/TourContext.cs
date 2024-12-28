@@ -16,6 +16,7 @@ public class TourContext(DbContextOptions options) : DbContext(options)
     public DbSet<TourWithType> TourWithTypes { get; set; }
     public DbSet<Itinerary> Itinerarys { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<Departure> Departures { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
