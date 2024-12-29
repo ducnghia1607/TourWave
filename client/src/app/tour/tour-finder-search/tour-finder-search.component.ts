@@ -1,31 +1,58 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faLocation, faFlag, faG } from '@fortawesome/free-solid-svg-icons';
-import { TourService } from '../tour.service';
-import { Tour } from 'src/app/shared/models/Tour';
+import { faLocation, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { Departure } from 'src/app/shared/models/Departure';
-import { NavigationExtras, Router } from '@angular/router';
+import { Tour } from 'src/app/shared/models/Tour';
+import { TourService } from '../tour.service';
 import { DatePipe } from '@angular/common';
+
 @Component({
-  selector: 'app-tour-home-search',
-  templateUrl: './tour-home-search.component.html',
-  styleUrls: ['./tour-home-search.component.css'],
+  selector: 'app-tour-finder-search',
+  templateUrl: './tour-finder-search.component.html',
+  styleUrls: ['./tour-finder-search.component.css'],
 })
-export class TourHomeSearchComponent implements OnInit {
+export class TourFinderSearchComponent implements OnChanges {
+  @Input() keywordInput: string = '';
+  @Input() departureInput: string = '';
+  @Input() dateInput: string = '';
   searchTourResult: Tour[] = [];
   selectedTourCode: string = '';
   inputSubject: Subject<string> = new Subject<string>();
   departures: Departure[] = [];
   selectedDeparture: string = '';
   selectedDate: string = '';
+
+  faLocation = faLocation as IconProp;
+  faFlag = faFlag as IconProp;
+  showMenuLocation: boolean = false;
+  showResultSearch: boolean = false;
+  minDate: Date = new Date();
+  searchKeyword: string = '';
   constructor(
     private tourService: TourService,
     private router: Router,
     private datePipe: DatePipe
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['keywordInput'].currentValue)
+      this.searchKeyword = changes['keywordInput'].currentValue;
+    // if (changes['departureInput'].currentValue)
+    //   this.departureInput = changes['departureInput'].currentValue;
+    // if (changes['dateInput'].currentValue)
+    //   this.dateInput = changes['dateInput'].currentValue;
+  }
   ngOnInit(): void {
+    this.searchKeyword = this.keywordInput;
+    this.selectedDeparture = this.departureInput;
+    this.selectedDate = this.dateInput;
     this.inputSubject
       .pipe(
         debounceTime(300), // Adjust the delay as needed (300ms in this example)
@@ -42,22 +69,13 @@ export class TourHomeSearchComponent implements OnInit {
 
     this.tourService.getAllDepartures().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.departures = res;
         this.selectedDeparture = this.departures[0].name;
       },
       error: (err) => console.log(err),
     });
   }
-
-  animalControl = new FormControl<Location | null>(null, Validators.required);
-  selectFormControl = new FormControl('', Validators.required);
-  faLocation = faLocation as IconProp;
-  faFlag = faFlag as IconProp;
-  showMenuLocation: boolean = false;
-  showResultSearch: boolean = false;
-  minDate: Date = new Date();
-  searchKeyword: string = '';
   clickInput($event: any) {
     if ($event.target.value != '') {
       this.showMenuLocation = false;

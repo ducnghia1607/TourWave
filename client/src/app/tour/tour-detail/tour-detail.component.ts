@@ -45,6 +45,7 @@ import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component
 import { TourDetailNavbarComponent } from '../tour-detail-navbar/tour-detail-navbar.component';
 import { Schedule } from 'src/app/shared/models/Schedule';
 import { StringUtility } from 'src/app/shared/models/StringUtility';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-tour-detail',
@@ -85,6 +86,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   childNumber: number = 0;
   selectedDateParam!: Date;
   datepipe: DatePipe = new DatePipe('en-US');
+  showBlackBackGround = false;
   @ViewChild(TourDetailNavbarComponent, { static: false })
   tourNavbar!: TourDetailNavbarComponent;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -93,7 +95,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     private tourService: TourService,
     @Inject(ActivatedRoute) private activedRoute: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private breadcrumbService: BreadcrumbService
   ) {
     var extras = this.router.getCurrentNavigation()?.extras;
     if (extras) {
@@ -112,6 +115,12 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     this.activedRoute.data.subscribe({
       next: (data) => {
         this.tourDetail = data['tourDetail'];
+        // this.breadcrumbService.set(
+        //   '/tours/:title/:tourCode',
+        //   this.tourDetail.destination + '/' + this.tourDetail.title
+        // );
+        this.breadcrumbService.set('@tourTitle', this.tourDetail.title);
+
         const newUrl = `/tours/${StringUtility.removeSign4VietnameseString(
           this.tourDetail.title
         )}/${this.tourDetail.tourCode}`;
@@ -215,17 +224,17 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
         if (scrollTopValue > 400) {
           navbarElement?.classList.add('hidden');
           this.tourNavbar.isHidden = false;
-          this.tourNavbar.isTabNameActive = 'overview';
+          // this.tourNavbar.isTabNameActive = 'overview';
           if (this.toursidebar) {
             this.toursidebar.nativeElement.classList.add('affix');
           }
         }
-        if (scrollTopValue >= 2128) this.tourNavbar.isTabNameActive = 'notice';
-        else if (scrollTopValue >= 1750)
+        if (scrollTopValue >= 2070) this.tourNavbar.isTabNameActive = 'notice';
+        else if (scrollTopValue >= 1690)
           this.tourNavbar.isTabNameActive = 'schedule';
-        else if (scrollTopValue >= 1240)
+        else if (scrollTopValue >= 1000)
           this.tourNavbar.isTabNameActive = 'itinerary';
-        else if (scrollTopValue >= 715)
+        else if (scrollTopValue >= 600)
           this.tourNavbar.isTabNameActive = 'overview';
       }
     } else {
@@ -319,6 +328,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     }
   }
   selectedRowChangeSchedulesHandle(selectedDateSchedule: Schedule) {
+    this.showBlackBackGround = true;
     if (selectedDateSchedule) {
       this.selectedDate = new Date(selectedDateSchedule.departureDate);
       this.setBoxWhiteContent(new Date(selectedDateSchedule.departureDate));

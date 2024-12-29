@@ -13,12 +13,11 @@ import { TourDetailComponent } from './tour/tour-detail/tour-detail.component';
 import { RecommendModule } from './recommend/recommend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localeVi from '@angular/common/locales/vi';
-import { registerLocaleData } from '@angular/common';
-import { HighlightPipe } from './pipes/highlight.pipe';
+import { DatePipe, registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
-  declarations: [AppComponent, HighlightPipe],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -39,6 +38,7 @@ registerLocaleData(localeVi, 'vi-VN');
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: LOCALE_ID, useValue: 'vi-VN' },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,59 @@
+<div
+  class="content-wrapper"
+  style="background-color: #ecf0f5; padding-bottom: 60px"
+>
+  <div class="container">
+    <app-tour-finder-search
+      [keywordInput]="keywordInput"
+      [dateInput]="dateInput"
+      [departureInput]="departureInput"
+    ></app-tour-finder-search>
+    <div>
+      <xng-breadcrumb></xng-breadcrumb>
+    </div>
+    <div class="flex justify-between">
+      <div class="w-1/4">
+        <app-tour-finder-sidebar
+          (clickTourSidebar)="clickTourSidebarHandle($event)"
+        ></app-tour-finder-sidebar>
+      </div>
+      <div class="w-3/4" style="margin-left: 26px">
+        <div class="tour-finder-content-wrapper" *ngIf="tourPagination">
+          <div class="tour-content-title">
+            <h1 class="page-title" style="margin-bottom: 6px">
+              <b>Tour du lịch {{ keywordInput }} từ {{ departureInput }}</b>
+            </h1>
+            <p style="font-size: 16px">
+              Khám phá {{ keywordInput }} với TourWave. Hành trình khám phá văn
+              hóa và thiên nhiên kỳ vĩ. Đặt tour ngay!
+            </p>
+            <div
+              class="tour-content-sort flex justify-between items-center mb-4 mt-2"
+            >
+              <h1 style="font-size: 20px">
+                Tổng cộng <b>{{ tourPagination.count }}</b> tour
+              </h1>
+              <!-- <div class="">
+                <label for="sort" style="width: 60px">Sắp xếp theo:</label>
+                <select
+                  class="select select-bordered select-sort"
+                  name="sort"
+                  id="sort"
+                >
+                  <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div> -->
+            </div>
+          </div>
+
+          <app-tour-finder-content
+            [tourPagination]="tourPagination"
+            (ChangePageNumber)="changePageNumberHandle($event)"
+          ></app-tour-finder-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,7 @@
   text-decoration: none;
   font-size: 14px;
   color: #ccc;
-  transition: all 0.5ms ease;
+  transition: all 5ms ease;
   cursor: pointer;
 }
 

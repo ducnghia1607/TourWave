@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { TourService } from './tour.service';
 import { Tour } from '../shared/models/Tour';
 import { FormControl, Validators } from '@angular/forms';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-tour',
@@ -9,6 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./tour.component.css'],
 })
 export class TourComponent {
+  faHome = faHome as IconProp;
   bestTours: Tour[] = [];
   hotDomesticTours: Tour[] = [];
   hotInternationalTours: Tour[] = [];

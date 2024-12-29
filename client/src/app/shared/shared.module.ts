@@ -18,9 +18,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { HighlightPipe } from './pipes/highlight.pipe';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 
 @NgModule({
-  declarations: [HighlightPipe],
+  declarations: [HighlightPipe, PaginationComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -41,6 +44,9 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     MatSortModule,
     MatCardModule,
     MatButtonModule,
+    NgxPaginationModule,
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
   ],
   exports: [
     FontAwesomeModule,
@@ -61,6 +67,10 @@ import { HighlightPipe } from './pipes/highlight.pipe';
     MatCardModule,
     MatButtonModule,
     HighlightPipe,
+    NgxPaginationModule,
+    PaginationComponent,
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
   ],
 })
 export class SharedModule {

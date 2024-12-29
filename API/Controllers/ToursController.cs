@@ -64,32 +64,27 @@ public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : Ba
     //    // return await _uow.UserRepository.GetMemberByUsernameAsync(username);
     //}
 
-    [HttpGet("{searchTerm}")] // api/tours/2
-    public async Task<ActionResult<IReadOnlyList<TourDto>>> GetTourByTitle([FromRoute]string searchTerm, [FromQuery] TourSpecParams param)
+    [HttpGet("{keyword}")] // api/tours/2
+    //FromRoute] string keyword,
+    public async Task<ActionResult<IReadOnlyList<TourDto>>> GetListToursByTitle( [FromQuery] TourSpecParams param)
     {
-        var spec = new TourSpecification(searchTerm, param);
-        //var tours = await repo.ListAsyncWithSpec(spec);
-        //if (tours == null)
-        //{
-        //    return NotFound();
-        //}
+        var spec = new TourListWithSearchSpecification(param);
         var items = await repo.ListAsyncWithSpec(spec);
         var count = await repo.CountAsync(spec);
         var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
         var pagination = new Pagination<TourDto>(param.PageIndex, param.PageSize, count, data);
         return Ok(pagination);
-        //    return mapper.Map<Tour,TourDetailDto>(tour);
     }
 
     [HttpGet("{title}/{tourCode}")] // api/tours/2
-    public async Task<ActionResult<Tour>> GetTourByTitle(string title,string tourCode)
+    public async Task<ActionResult<Tour>> GetTourDetailByTitle(string title,string tourCode)
     {
-        var spec = new TourSpecification(title,tourCode);
+        var spec = new TourDetailWithitineraryAndScheduleByTitle(title,tourCode);
         var tour = await repo.GetEntityWithSpec(spec);
-        if (tour == null)
-        {
-            return NotFound();
-        }
+        //if (tour == null)
+        //{
+        //    return NotFound();
+        //}
         return tour;
         //    return mapper.Map<Tour,TourDetailDto>(tour);
     }
@@ -97,18 +92,14 @@ public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : Ba
     [HttpGet("search-temp")]
         public async Task<ActionResult<TourDto>> GetTourByTitle([FromQuery]string keyword)
     {
-        var spec = new TourSpecification(keyword);
+        var spec = new TourWithTemporarySearch(keyword);
         var tours = await repo.ListAsyncWithSpec(spec);
         if (tours == null)
         {
             return NotFound();
         }
         var items = mapper.Map<IReadOnlyList<Tour>,IReadOnlyList<TourDto>>(tours);
-
-         object obj = new {tous = items};
-        
         return Ok(items);
-        //    return mapper.Map<Tour,TourDetailDto>(tour);
     }
 
     [HttpPost]

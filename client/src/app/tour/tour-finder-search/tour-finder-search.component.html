@@ -1,0 +1,226 @@
+<div class="form-container tour-finder-search-wrapper flex items-center">
+  <div class="search-form">
+    <label
+      class="input input-bordered flex items-center gap-2 search-box relative"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 384 512"
+        class="text-xs"
+        style="width: 16px"
+      >
+        <path
+          d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+          fill="#494b55"
+        />
+      </svg>
+      <input
+        type="text"
+        class="grow search-input"
+        value=""
+        placeholder="Bạn muốn đi đâu?"
+        (click)="clickInput($event)"
+        (input)="searchTour($event)"
+        [(ngModel)]="searchKeyword"
+      />
+      <div
+        class="absolute w-full z-10 location-menu-wrapper shadow-sm"
+        [class.hidden]="!showMenuLocation"
+      >
+        <h3 class="title">
+          <fa-icon [icon]="faLocation"></fa-icon> Địa điểm hot
+        </h3>
+        <div class="grid grid-cols-3 gap-2 location-menu">
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Nha Trang')"
+          >
+            <img
+              src="../../../assets/images/locations/nhatrang.jpg"
+              alt="Nha trang"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Nha Trang</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Đà Nẵng')"
+          >
+            <img
+              src="../../../assets/images/locations/danang.jpeg"
+              width="60px"
+              alt="Đà Nẵng"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Đà Nẵng</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Đà Lạt')"
+          >
+            <img
+              src="../../../assets/images/locations/dalat.jpg"
+              alt="Đà Lạt"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Đà Lạt</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Ninh Bình')"
+          >
+            <img
+              src="../../../assets/images/locations/ninhbinh.jpg"
+              alt="Ninh Bình"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Ninh Bình</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Úc')"
+          >
+            <img
+              src="../../../assets/images/locations/uc.jpeg"
+              width="60px"
+              alt="Úc"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Úc</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Trung Quốc')"
+          >
+            <img
+              src="../../../assets/images/locations/trungquoc.jpg"
+              alt="Trung Quốc"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Trung Quốc</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Thái Lan')"
+          >
+            <img
+              src="../../../assets/images/locations/thailan.jpg"
+              alt="Nha trang"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Thái Lan</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Singapore')"
+          >
+            <img
+              src="../../../assets/images/locations/singapo.jpeg"
+              width="60px"
+              alt="Singapore"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Singapore</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+          <div
+            class="flex items-center space-x-2"
+            (click)="locationMenuClick('Châu Âu')"
+          >
+            <img
+              src="../../../assets/images/locations/chauau.jpeg"
+              alt="Châu Âu"
+              class="location-picture"
+            />
+            <div>
+              <p class="location-name">Châu Âu</p>
+              <p class="location-count"><b>10</b> tours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="absolute w-full z-10 search-result-wrapper shadow-sm"
+        [class.hidden]="!showResultSearch"
+        *ngIf="searchTourResult.length > 0"
+      >
+        <div class="">
+          <!-- Ở trên chứa 1 thẻ div chứa  các địa điểm  khi click thì dùng hàm khác -->
+          <div
+            *ngFor="let tour of searchTourResult"
+            class="flex items-center search-result-item"
+            (click)="selecteTour(tour.title, tour.tourCode)"
+          >
+            <fa-icon [icon]="faFlag"></fa-icon>
+            <p
+              class="ms-4"
+              [innerHTML]="tour.title | highlight : searchKeyword"
+            ></p>
+          </div>
+        </div>
+      </div>
+    </label>
+  </div>
+  <div class="flex justify-between items-start">
+    <mat-form-field
+      appearance="fill"
+      [ariaPlaceholder]="'Linh hoạt'"
+      style="margin-right: 20px"
+    >
+      <mat-label>Ngày khởi hành</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [min]="minDate"
+        [placeholder]="'Linh hoạt'"
+        [(ngModel)]="selectedDate"
+      />
+      <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="relative">
+      <mat-form-field appearance="fill" style="margin-right: 20px">
+        <mat-label>Khởi hành từ</mat-label>
+        <mat-select [(value)]="selectedDeparture">
+          <mat-option
+            *ngFor="let departure of departures"
+            [value]="departure.name"
+          >
+            {{ departure.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button class="btn btn-search" (click)="searchButtonClicked()">Tìm</button>
+  </div>
+</div>

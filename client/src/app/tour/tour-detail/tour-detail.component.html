@@ -1,6 +1,7 @@
 <app-tour-detail-navbar></app-tour-detail-navbar>
 <div class="bg-primary-section-color" *ngIf="tourDetail">
   <div class="container tour-item-wrapper">
+    <xng-breadcrumb></xng-breadcrumb>
     <h1 class="page-title">
       <b>{{ tourDetail.title }}</b>
     </h1>
@@ -330,6 +331,12 @@
             <button class="booking-btn w-1/2">Yêu cầu đặt</button>
           </div>
         </div>
+
+        <div
+          class="bg-shadow"
+          [class.show]="showBlackBackGround"
+          (click)="showBlackBackGround = false"
+        ></div>
       </div>
     </div>
   </div>

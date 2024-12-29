@@ -16,6 +16,7 @@
   --scream-color: #fff4e6;
   --yellow-scream-color: #ffebdc;
   --orange-color: #ffbd00;
+  --text-primary-color: #003c71;
 }
 
 @layer base {
@@ -61,6 +62,7 @@ body {
 body {
   margin: 0;
   font-family: Helvetica, Arial, sans-serif !important;
+  color: #3f3b3b;
 }
 
 .content-wapper {
@@ -69,12 +71,12 @@ body {
 }
 
 .page-title {
-  font-size: 33px;
-  color: #003c71;
+  font-size: 32px;
+  color: var(--text-primary-color);
   margin-top: 0px;
   margin-bottom: 15px;
   font-weight: bolder;
-  line-height: 1.1;
+  line-height: 1.03;
 }
 .page-subtitle {
   padding: 10px 0;
@@ -98,5 +100,16 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+}
+
+/* BreadScrum */
+.xng-breadcrumb-root {
+  margin: 0px 0px 12px 0px !important;
+}
+
+.xng-breadcrumb-item {
+  font-size: 13px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #555863;
 }

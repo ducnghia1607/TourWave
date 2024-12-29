@@ -10,6 +10,7 @@ export class TourDetailNavbarComponent {
   isHidden: boolean = true;
   isTabNameActive: string = '';
   scrollToSection(sectionId: string) {
+    // Click to scroll to section
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
