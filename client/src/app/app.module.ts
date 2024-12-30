@@ -8,12 +8,15 @@ import { MY_FORMATS } from './shared/models/MY_FORMATS';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TourDetailComponent } from './tour/tour-detail/tour-detail.component';
 import { RecommendModule } from './recommend/recommend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localeVi from '@angular/common/locales/vi';
-import { DatePipe, registerLocaleData } from '@angular/common';
+import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './core/interceptor/loading.interceptor';
+import { AccountModule } from './account/account.module';
 
 registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
@@ -28,6 +31,10 @@ registerLocaleData(localeVi, 'vi-VN');
     RecommendModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule.forRoot({
+      type: 'ball-clip-rotate',
+    }),
+    AccountModule,
   ],
   exports: [],
   providers: [
@@ -39,6 +46,12 @@ registerLocaleData(localeVi, 'vi-VN');
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: LOCALE_ID, useValue: 'vi-VN' },
     DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent],
 })

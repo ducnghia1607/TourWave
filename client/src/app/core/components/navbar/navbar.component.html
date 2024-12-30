@@ -15,7 +15,7 @@
       <ul class="flex justify-between items-center nav space-x-4 nav-link">
         <li><a>Khách sạn</a></li>
         <li><a routerLink="/tours" routerLinkActive="active">Tours</a></li>
-        <li><a routerLink="/recommend">Gợi ý</a></li>
+        <li><a routerLink="/recommend" routerLinkActive="active">Gợi ý</a></li>
         <!-- <li><a>Vé máy bay</a></li>
         <li><a>Vé vui chơi</a></li>
         <li><a>Vé tàu</a></li> -->
@@ -30,21 +30,32 @@
                 d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"
               />
             </svg> -->
-            <fa-icon tabindex="" [icon]="faUser"></fa-icon>
           </span>
-          <div
-            class="dropdown dropdown-bottom"
-            style="color: #fff; font-size: 22px"
-          >
-            <fa-icon tabindex="0" [icon]="faAngleDown"></fa-icon>
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-            >
-              <li><a>Item 1</a></li>
-              <li><a>Item 2</a></li>
-            </ul>
-          </div>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <div class="flex items-center">
+              <img
+                src="../.././../../assets/images/avatar-default-white.svg"
+                alt=""
+              />
+              <fa-icon
+                [icon]="faAngleDown"
+                style="color: #fff; margin-left: 4px; font-size: 16px"
+              ></fa-icon>
+            </div>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div class="menu-container">
+              <button class="btn-signup" routerLink="/auth/register">
+                Đăng ký
+              </button>
+              <div class="menu-txt">
+                <p style="line-height: 1">Quý khách đã có tài khoản?</p>
+                <a href="go-to-login-link" routerLink="/auth/login"
+                  >Đăng nhập ngay</a
+                >
+              </div>
+            </div>
+          </mat-menu>
         </div>
         <div class="hotline flex flex-col justify-end">
           <a class="hotline-link" href="tel:02839338002">

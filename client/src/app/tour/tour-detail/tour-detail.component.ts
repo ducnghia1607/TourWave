@@ -2,15 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Inject,
-  NgModule,
   OnInit,
-  Output,
-  QueryList,
   ViewChild,
-  ViewChildren,
   ViewEncapsulation,
 } from '@angular/core';
 import { TourService } from '../tour.service';
@@ -37,15 +32,14 @@ import { MatAccordion } from '@angular/material/expansion';
 import { TourDetailScheduleComponent } from '../tour-detail-schedule/tour-detail-schedule.component';
 import {
   MatCalendarCellClassFunction,
-  MatDatepickerInput,
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
-import { NgModel } from '@angular/forms';
-import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { TourDetailNavbarComponent } from '../tour-detail-navbar/tour-detail-navbar.component';
 import { Schedule } from 'src/app/shared/models/Schedule';
 import { StringUtility } from 'src/app/shared/models/StringUtility';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { TourConsultingDialogComponent } from '../tour-consulting-dialog/tour-consulting-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tour-detail',
@@ -61,6 +55,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
     TourDetailNoticeComponent,
     TourDetailScheduleComponent,
     TourDetailNavbarComponent,
+    TourConsultingDialogComponent,
   ],
 })
 export class TourDetailComponent implements OnInit, AfterViewInit {
@@ -96,7 +91,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     @Inject(ActivatedRoute) private activedRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    public dialog: MatDialog
   ) {
     var extras = this.router.getCurrentNavigation()?.extras;
     if (extras) {
@@ -105,6 +101,11 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
         this.selectedDateParam = new Date(queryParams['date']);
       }
     }
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(TourConsultingDialogComponent, {
+      width: '600px',
+    });
   }
 
   ngAfterViewInit(): void {}
@@ -115,10 +116,6 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     this.activedRoute.data.subscribe({
       next: (data) => {
         this.tourDetail = data['tourDetail'];
-        // this.breadcrumbService.set(
-        //   '/tours/:title/:tourCode',
-        //   this.tourDetail.destination + '/' + this.tourDetail.title
-        // );
         this.breadcrumbService.set('@tourTitle', this.tourDetail.title);
 
         const newUrl = `/tours/${StringUtility.removeSign4VietnameseString(
@@ -161,8 +158,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
             );
             if (idx != -1) {
               this.selectedDate = this.selectedDateParam;
+              this.setBoxWhiteContent(this.selectedDateParam);
             }
-            this.setBoxWhiteContent(this.selectedDateParam);
           }
         }
       },
@@ -179,7 +176,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
               new ImageItem({ src: element.url, thumb: 'IMAGE_THUMBNAIL_URL' })
             );
           });
-          console.log(res);
+          // console.log(res);
           var schedules = this.tourDetail.schedules;
           if (schedules?.length && schedules.at(0)?.departureDate) {
             const minDate = schedules.at(0)?.departureDate;
@@ -332,6 +329,19 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     if (selectedDateSchedule) {
       this.selectedDate = new Date(selectedDateSchedule.departureDate);
       this.setBoxWhiteContent(new Date(selectedDateSchedule.departureDate));
+    }
+  }
+
+  departureDateChangeHandle(date: Date) {
+    console.log(date);
+    if (date != null) {
+      var dateStr = this.datepipe.transform(date, 'yyyy-MM-dd');
+      if (dateStr)
+        this.tourService
+          .getSchedulesWithFilter(dateStr, this.tourDetail.id)
+          .subscribe((res) => {
+            this.tourDetail.schedules = res;
+          });
     }
   }
 

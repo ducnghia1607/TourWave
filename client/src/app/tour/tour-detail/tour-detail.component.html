@@ -157,6 +157,7 @@
           <app-tour-detail-schedule
             (selectedRowChange)="selectedRowChangeSchedulesHandle($event)"
             [schedules]="tourDetail.schedules"
+            (departureDateChange)="departureDateChangeHandle($event)"
           ></app-tour-detail-schedule>
         </div>
         <div class="tour-notes mt-4 tour-content-wrapper" id="tour-notices">
@@ -327,7 +328,9 @@
           <div
             class="sidebar-actions flex justify-between items-center mb-4 space-x-4"
           >
-            <button class="reachout-btn w-1/2">Liên hệ tư vấn</button>
+            <button class="reachout-btn w-1/2" (click)="openDialog()">
+              Liên hệ tư vấn
+            </button>
             <button class="booking-btn w-1/2">Yêu cầu đặt</button>
           </div>
         </div>
@@ -341,3 +344,5 @@
     </div>
   </div>
 </div>
+
+<!-- <app-tour-consulting-dialog></app-tour-consulting-dialog> -->

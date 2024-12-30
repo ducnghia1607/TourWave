@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpUrlEncodingCodec } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -16,11 +17,12 @@ import { Tour } from 'src/app/shared/models/Tour';
   styleUrls: ['./tour-item.component.css'],
 })
 export class TourItemComponent implements OnInit {
-  constructor() {}
+  constructor(private datePipe: DatePipe) {}
   ngOnInit(): void {}
   faClock = faClock as IconProp;
   faPlane = faPlane as IconProp;
   faTrain = faTrain as IconProp;
   faCar = faCar as IconProp;
   @Input() tour!: Tour;
+  today: Date = new Date();
 }

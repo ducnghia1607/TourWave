@@ -42,7 +42,7 @@ export class TourHomeSearchComponent implements OnInit {
 
     this.tourService.getAllDepartures().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.departures = res;
         this.selectedDeparture = this.departures[0].name;
       },

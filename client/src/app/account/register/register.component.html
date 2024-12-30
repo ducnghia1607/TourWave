@@ -1,0 +1,181 @@
+<div class="flex justify-center items-center register-wrapper">
+  <div class="register-box">
+    <h2 class="title relative">
+      <button class="absolute left-0 bottom-0" [routerLink]="['/tours']">
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+      </button>
+      Đăng ký
+    </h2>
+    <form [formGroup]="registerForm">
+      <div class="form-control">
+        <label for="fullName" class="mb-1"
+          >Họ và tên<span style="color: red">*</span></label
+        >
+        <input
+          type="text"
+          name="fullName"
+          id="fullName"
+          placeholder="Ví dụ: Nguyễn Văn A"
+          formControlName="fullName"
+        />
+
+        <div
+          *ngIf="
+            registerForm.controls['fullName'].invalid &&
+            (registerForm.controls['fullName'].dirty ||
+              registerForm.controls['fullName'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              registerForm.controls['fullName'].errors &&
+              registerForm.controls['fullName'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Họ và tên không được để trống</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="email" class="mb-1">Email (nếu có)</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Ví dụ:email@gmail.com"
+          formControlName="email"
+        />
+      </div>
+      <div class="form-control">
+        <label for="userName" class="mb-1"
+          >Tài khoản<span style="color: red">*</span></label
+        >
+        <input
+          type="text"
+          name="userName"
+          id="userName"
+          placeholder="Nhập tài khoản"
+          formControlName="userName"
+        />
+        <div
+          *ngIf="
+            registerForm.controls['userName'].invalid &&
+            (registerForm.controls['userName'].dirty ||
+              registerForm.controls['userName'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              registerForm.controls['userName'].errors &&
+              registerForm.controls['userName'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Tài khoản không được để trống</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="password" class="mb-1"
+          >Mật khẩu<span style="color: red">*</span></label
+        >
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            registerForm.controls['password'].invalid &&
+            (registerForm.controls['password'].dirty ||
+              registerForm.controls['password'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              registerForm.controls['password'].errors &&
+              registerForm.controls['password'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Mật khẩu không được để trống</span
+            >
+          </div>
+        </div>
+
+        <div
+          *ngIf="
+            registerForm.controls['password'].invalid &&
+            (registerForm.controls['password'].dirty ||
+              registerForm.controls['password'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              registerForm.controls['password'].errors &&
+              (registerForm.controls['password'].errors['maxlength'] ||
+                registerForm.controls['password'].errors['minlength'])
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Độ dài mật khẩu từ 6 đến 20 kí tự</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="confirmPassword" class="mb-1">Nhập lại mật khẩu</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+        />
+        <div
+          *ngIf="
+            registerForm.controls['confirmPassword'].invalid &&
+            (registerForm.controls['confirmPassword'].dirty ||
+              registerForm.controls['confirmPassword'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              registerForm.controls['confirmPassword'].errors &&
+              registerForm.controls['confirmPassword'].errors['notMatching']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Mật khẩu không khớp</span
+            >
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="flex justify-center items-center">
+      <button
+        class="register-btn"
+        [class.btn-disabled]="registerForm.status == 'INVALID'"
+        (click)="registerButtonClicked()"
+      >
+        Đăng ký
+      </button>
+    </div>
+    <div>
+      <p class="text-right" style="font-size: 13px; margin-top: 6px">
+        Bạn đã có tài khoản?
+        <a href="" class="go-to-login-link" routerLink="/auth/login"
+          >Đăng nhập ngay</a
+        >
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import { Schedule } from './Schedule';
+
 export interface Tour {
   id: number;
   title: string;
@@ -9,4 +11,5 @@ export interface Tour {
   imageUrl: string;
   departure: string;
   destination: string;
+  departureDate: string;
 }

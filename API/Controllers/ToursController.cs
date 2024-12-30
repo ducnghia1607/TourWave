@@ -77,9 +77,9 @@ public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : Ba
     }
 
     [HttpGet("{title}/{tourCode}")] // api/tours/2
-    public async Task<ActionResult<Tour>> GetTourDetailByTitle(string title,string tourCode)
+    public async Task<ActionResult<Tour>> GetTourDetailByTitle(string title,string tourCode, [FromQuery]string date)
     {
-        var spec = new TourDetailWithitineraryAndScheduleByTitle(title,tourCode);
+        var spec = new TourDetailWithitineraryAndScheduleByTitle(title,tourCode,date);
         var tour = await repo.GetEntityWithSpec(spec);
         //if (tour == null)
         //{

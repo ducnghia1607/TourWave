@@ -44,7 +44,10 @@ export class TourDetailScheduleComponent implements OnInit {
     'Tình trạng chỗ',
     'Giá',
   ];
-
+  @Output() departureDateChange = new EventEmitter<Date>();
+  onDateChange($event: any) {
+    this.departureDateChange.emit($event.value);
+  }
   clickedRows = new Set<Schedule>();
 
   OnRowClicked(row: any) {

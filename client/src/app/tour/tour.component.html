@@ -52,25 +52,132 @@
         Trải Nghiệm Thế Giới, Khám Phá Bản Thân
       </p>
     </div>
-    <div class="hot-tour-container grid grid-cols-3 gap-8">
+
+    <div class="flex space-x-4" (click)="navigateToTourFinder('Trung Quốc')">
+      <div class="tour-link-image w-1/3">
+        <img
+          src="../../assets/images/locations/trungquoc.jpg"
+          alt=""
+          style="width: 100%; height: 100%"
+        />
+        <h1 class="tour-link-image-text">Trung Quốc</h1>
+      </div>
+
+      <div class="flex flex-col space-y-4 w-2/3">
+        <div
+          class="flex items-center space-x-4 h-1/2"
+          (click)="navigateToTourFinder('Úc')"
+        >
+          <div class="tour-link-image w-1/2">
+            <img
+              src="../../assets/images/locations/uc2.jpg"
+              alt=""
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+            <h1 class="tour-link-image-text">Úc</h1>
+          </div>
+          <div
+            class="tour-link-image w-1/2"
+            (click)="navigateToTourFinder('Singapore')"
+          >
+            <img
+              src="../../assets/images/locations/singapo2.jpeg"
+              alt=""
+              style="width: 100%; height: 237px; object-fit: cover"
+            />
+            <h1 class="tour-link-image-text">Singapore</h1>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4 h-1/2">
+          <div
+            class="tour-link-image w-1/2"
+            (click)="navigateToTourFinder('Hàn Quốc')"
+          >
+            <img
+              src="../../assets/images/locations/hanquoc2.jpg"
+              alt=""
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+            <h1 class="tour-link-image-text">Hàn Quốc</h1>
+          </div>
+          <div
+            class="tour-link-image w-1/2"
+            (click)="navigateToTourFinder('Nhật Bản')"
+          >
+            <img
+              src="../../assets/images/locations/nhatban2.jpg"
+              alt=""
+              style="width: 100%; height: 237px; object-fit: cover"
+            />
+            <h1 class="tour-link-image-text">Nhật Bản</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="hot-tour-container grid grid-cols-3 gap-8">
       <div *ngFor="let t of hotInternationalTours">
         <app-tour-item [tour]="t"></app-tour-item>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 
 <section class="hot-domestic-tour-section bg-primary-section-color pb-16">
   <div class="container">
     <div class="py-5 text-center">
-      <h2 class="tour-section-title">Tour Du Lịch Nội Địa Cao Cấp</h2>
+      <h2 class="page-title tour-section-title">
+        Điểm đến trong nước được ưa thích
+      </h2>
       <p class="tour-section-subtitle">
-        <span class="title-group-sub">Chơi Tết Thả Ga, Không Lo Về Giá</span>
+        <span class="title-group-sub">Trải Nghiệm Hành Trình Di Sản </span>
       </p>
     </div>
-    <div class="hot-tour-container grid grid-cols-3 gap-8">
+    <!-- <div class="hot-tour-container grid grid-cols-3 gap-8">
       <div *ngFor="let t of hotDomesticTours">
         <app-tour-item [tour]="t"></app-tour-item>
+      </div>
+    </div> -->
+    <div class="flex space-x-4">
+      <div
+        class="domestic-tour-link-image"
+        (click)="navigateToTourFinder('Sapa')"
+      >
+        <img src="../../assets/images/locations/sapa.png" alt="" />
+        <h1 class="domestic-tour-link-image-text">Sapa</h1>
+      </div>
+      <div
+        class="domestic-tour-link-image"
+        (click)="navigateToTourFinder('Ninh Bình')"
+      >
+        <img
+          src="../../assets/images/locations/ninhbinh.jpg"
+          alt=""
+          style="object-fit: contain !important"
+        />
+        <h1 class="domestic-tour-link-image-text">Ninh Bình</h1>
+      </div>
+      <div
+        class="domestic-tour-link-image"
+        (click)="navigateToTourFinder('Nha Trang')"
+      >
+        <img
+          src="../../assets/images/locations/nhatrang.jpg"
+          alt=""
+          style="object-fit: contain !important"
+        />
+        <h1 class="domestic-tour-link-image-text">Nha Trang</h1>
+      </div>
+      <div
+        class="domestic-tour-link-image"
+        (click)="navigateToTourFinder('Đà Lạt')"
+      >
+        <img
+          src="../../assets/images/locations/dalat.jpg"
+          alt=""
+          style="object-fit: contain !important"
+        />
+        <h1 class="domestic-tour-link-image-text">Đà Lạt</h1>
       </div>
     </div>
   </div>

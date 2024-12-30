@@ -27,7 +27,6 @@ const routes: Routes = [
         alias: 'locationName',
       },
     },
-    // resolve: { tourDetail: tourDetailResolver },
   },
 ];
 

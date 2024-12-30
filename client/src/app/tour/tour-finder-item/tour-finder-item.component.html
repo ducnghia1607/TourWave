@@ -7,7 +7,7 @@
       <div class="tour-item-title">{{ tour.title }}</div>
       <div class="tour-item-schedule">
         <fa-icon [icon]="faCalender"></fa-icon>
-        <span class="ms-1">28-01-2025</span>
+        <span class="ms-1">{{ tour.departureDate }}</span>
       </div>
     </div>
     <div class="flex justify-between items-center">
@@ -21,7 +21,7 @@
         }}</span>
         <button
           class="btn btn-view me-1"
-          (click)="goToViewTour(tour.title, tour.tourCode)"
+          (click)="goToViewTour(tour.title, tour.tourCode, tour.departureDate)"
         >
           Xem Tour
           <fa-icon [icon]="faGreaterThan" style="font-size: 16px"></fa-icon>

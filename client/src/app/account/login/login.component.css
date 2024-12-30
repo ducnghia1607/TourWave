@@ -1,0 +1,91 @@
+.login-wrapper {
+  background-color: var(--primary-section-color);
+  font-weight: unset !important;
+  margin-bottom: 0 !important;
+  text-align: unset !important;
+  height: 100vh;
+  padding: 20px 0px;
+}
+.login-wrapper .login-box {
+  padding: 16px;
+  background-color: #fff;
+  width: 30%;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 4px;
+}
+.login-box .title {
+  text-align: center;
+  font-size: 24px;
+  color: var(--text-primary-color);
+  font-weight: bold;
+}
+.login-wrapper .form-control input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: inset 0 0 0 0 white;
+  border-color: #d2d6de;
+  font-size: 15px;
+}
+
+.login-wrapper .form-control label {
+  font-size: 14px;
+}
+
+.login-wrapper .form-control input:focus {
+  outline: 1px solid var(--text-primary-color);
+  outline-offset: -2px;
+}
+
+.login-wrapper .form-control input::placeholder {
+  font-size: 13px;
+}
+
+.login-wrapper .form-control {
+  margin-bottom: 8px;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
+  padding: 0 24px 0px !important;
+}
+
+.login-box .login-btn {
+  text-align: center;
+  padding: 10px 24px;
+  color: #fff;
+  background: var(--primary-color);
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.5s ease;
+  text-decoration: none;
+}
+
+.login-box .login-btn:hover {
+  background: var(--secondary-color);
+}
+
+.go-to-register-link {
+  text-decoration: underline;
+  color: var(--blender-sky-color);
+  transition: all 0.5s eae;
+}
+.go-to-register-link:hover {
+  opacity: 0.6;
+}

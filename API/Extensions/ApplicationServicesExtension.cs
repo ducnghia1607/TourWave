@@ -1,9 +1,11 @@
 using System;
 using System.Text.Json.Serialization;
+using API.DataHelpers;
 using API.Errors;
 using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +23,12 @@ public static class ApplicationServicesExtension
         services.AddDbContext<TourContext>(opt =>{
             opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
+        //services.AddTransient<ITourRepository,TourRepository>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        services.AddTransient<ITourRepository,TourRepository>();
+        services.AddAutoMapper(typeof(AutoMapperProfile));
+
         services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+        services.AddScoped<ITokenService, TokenService>();
         services.Configure<ApiBehaviorOptions>(options => {
             options.InvalidModelStateResponseFactory = actionContext => {
             var errors = actionContext.ModelState

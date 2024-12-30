@@ -1,0 +1,64 @@
+<div class="tour-consulting-dialog">
+  <h2 mat-dialog-title>Yêu cầu tư vấn</h2>
+  <p style="padding: 0 24px; font-size: 13px">
+    Quý khách vui lòng nhập thông tin liên hệ bên dưới
+  </p>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="consultingForm">
+      <div class="form-control">
+        <label for="name" class="mb-1"
+          >Họ và tên<span style="color: red">*</span></label
+        >
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Nhập họ và tên"
+          formControlName="name"
+        />
+      </div>
+      <div class="form-control">
+        <label for="phone" class="mb-1"
+          >Điện thoại<span style="color: red">*</span></label
+        >
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          placeholder="Nhập số điện thoại liên hệ"
+          formControlName="phone"
+        />
+      </div>
+      <div class="form-control">
+        <label for="email" class="mb-1">Email(nếu có)</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Nhập email nhận thông tin tour"
+          formControlName="email"
+        />
+      </div>
+      <div class="form-control">
+        <label for="other" class="mb-1">Yêu cầu khác</label>
+        <input
+          type="text"
+          name="other"
+          id="other"
+          placeholder="ví dụ:ăn chay, dị ứng,người lớn tuổi..."
+          formControlName="other"
+        />
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      class="send-request-btn"
+      (click)="sendConsultingRequest()"
+    >
+      Gửi yêu cầu
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -21,9 +21,12 @@ import { HighlightPipe } from './pipes/highlight.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
-  declarations: [HighlightPipe, PaginationComponent],
+  declarations: [HighlightPipe, PaginationComponent, NotificationComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -47,6 +50,8 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     NgxPaginationModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
+    MatDialogModule,
+    MatMenuModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -71,6 +76,8 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     PaginationComponent,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
+    MatDialogModule,
+    MatMenuModule,
   ],
 })
 export class SharedModule {

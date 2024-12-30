@@ -30,6 +30,7 @@
     "ng-gallery": "^12.0.0-beta.4",
     "ngx-gallery": "^5.10.0",
     "ngx-pagination": "^6.0.3",
+    "ngx-spinner": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xng-breadcrumb": "^12.0.0",

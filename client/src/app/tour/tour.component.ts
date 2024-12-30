@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TourService } from './tour.service';
 import { Tour } from '../shared/models/Tour';
 import { FormControl, Validators } from '@angular/forms';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { NavigationExtras, Router } from '@angular/router';
+import { TourHomeSearchComponent } from './tour-home-search/tour-home-search.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tour',
@@ -15,10 +18,16 @@ export class TourComponent {
   bestTours: Tour[] = [];
   hotDomesticTours: Tour[] = [];
   hotInternationalTours: Tour[] = [];
-  constructor(private tourService: TourService) {
+  @ViewChild(TourHomeSearchComponent)
+  tourHomeSearchComponent!: TourHomeSearchComponent;
+  constructor(
+    private tourService: TourService,
+    private router: Router,
+    private datePipe: DatePipe
+  ) {
     this.getBestTours();
-    this.getHotDomesticTours();
-    this.getHotInternationalTours();
+    // this.getHotDomesticTours();
+    // this.getHotInternationalTours();
   }
   getBestTours() {
     this.tourService.getHotTours().subscribe({
@@ -29,20 +38,35 @@ export class TourComponent {
     });
   }
 
-  getHotDomesticTours() {
-    this.tourService.getHotDomesticTours().subscribe({
-      next: (res) => {
-        this.hotDomesticTours = res;
+  // getHotDomesticTours() {
+  //   this.tourService.getHotDomesticTours().subscribe({
+  //     next: (res) => {
+  //       this.hotDomesticTours = res;
+  //     },
+  //     error: (error) => console.log(error),
+  //   });
+  // }
+  // getHotInternationalTours() {
+  //   this.tourService.getHotInternationalTours().subscribe({
+  //     next: (res) => {
+  //       this.hotInternationalTours = res;
+  //     },
+  //     error: (error) => console.log(error),
+  //   });
+  // }
+
+  navigateToTourFinder(link: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        date:
+          this.datePipe.transform(this.tourHomeSearchComponent.searchKeyword) ||
+          this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
+        departure: this.tourHomeSearchComponent.selectedDeparture,
+        search: link,
       },
-      error: (error) => console.log(error),
-    });
-  }
-  getHotInternationalTours() {
-    this.tourService.getHotInternationalTours().subscribe({
-      next: (res) => {
-        this.hotInternationalTours = res;
-      },
-      error: (error) => console.log(error),
-    });
+    };
+    if (link) {
+      this.router.navigate(['/tours', link], navigationExtras);
+    }
   }
 }

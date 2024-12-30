@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Core.Specifications
 {
@@ -26,12 +27,22 @@ namespace Core.Specifications
                     AddOrderByDescending(x => x.PriceAdult);
                     break;
                 default:
-                    AddOrderBy(x => x.Duration);
+                     AddOrderBy(x => x.PriceAdult);
                     break;
+                    // AddOrderBy(x => x.Duration);
+                    // break;
             }
             // AddInclude(t =>  t.Itineraries);
             // AddNestedInclude("Itineraries.Images");
-            AddInclude(t => t.Schedules);
+            //AddInclude(t => t.Schedules);
+            if (string.IsNullOrEmpty(specParams.Date) || specParams.Date == "null")
+            {
+                AddInclude(t => t.Schedules.Where(s => s.DepartureDate >= DateOnly.FromDateTime(DateTime.Now)));
+            }
+            else
+            {
+                AddInclude(t => t.Schedules.Where(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)));
+            }
         }
 
     }

@@ -54,7 +54,11 @@ export class TourFinderComponent implements OnInit {
     //   this.dateInput = queryParams['date'];
     // }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0;
+    }
+  }
 
   getListOfTours() {
     return this.tourService.getListTourBySearch().subscribe({

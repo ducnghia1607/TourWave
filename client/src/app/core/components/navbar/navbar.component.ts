@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faAngleDown,
+  faArrowDown,
   faArrowRight,
   faClock,
   faCoffee,
@@ -23,6 +24,7 @@ export class NavbarComponent {
   faLocationArrow = faLocationArrow as IconProp;
   faArrowRight = faArrowRight as IconProp;
   faUser = faUser as IconProp;
+
   title = 'showtime';
   isHidden: boolean = false;
   navbg: any = {

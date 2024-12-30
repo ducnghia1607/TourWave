@@ -17,6 +17,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./recommend/recommend.module').then((m) => m.RecommendModule),
   },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./account/account.module').then((m) => m.AccountModule),
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

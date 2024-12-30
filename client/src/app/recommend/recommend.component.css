@@ -1,3 +1,39 @@
-::ng-deep .mat-mdc-slider {
+custome ::ng-deep .mat-mdc-slider {
   width: 300px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 50px !important
+  ;
+}
+
+::ng-deep .mat-datepicker-input,
+::ng-deep .mat-mdc-select-min-line,
+::ng-deep .mdc-floating-label mat-label,
+.search-input::placeholder,
+.search-form .search-input {
+  font-size: 15px !important;
+}
+.recommend-wrapper.content-wrapper {
+  height: calc(100vh - 268px);
+}
+
+.recommend-wrapper .page-title {
+  font-size: 26px;
+}
+.recommend-form-wrapper {
+  background-color: #e8ebed;
+  margin-bottom: 20px;
+  padding-top: 70px;
+  border-radius: 4px;
+}
+
+.btn-search {
+  height: 52px;
+  background: var(--primary-bg-color);
+  color: #ffffff;
+  padding: 0 34px;
+}
+.btn-search:hover {
+  background: var(--secondary-bg-color);
 }

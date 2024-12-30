@@ -7,6 +7,7 @@ import { Departure } from '../shared/models/Departure';
 import { TourParams } from '../shared/models/TourParams';
 import { Pagination } from '../shared/models/Pagination';
 import { map, Observable } from 'rxjs';
+import { Schedule } from '../shared/models/Schedule';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,9 +33,9 @@ export class TourService {
     return this.http.get<TourDetail>(this.baseUrl + 'tours/' + id);
   }
 
-  getTour(title: string, tourCode: string) {
+  getTour(title: string, tourCode: string, date: string) {
     return this.http.get<TourDetail>(
-      this.baseUrl + 'tours/' + title + '/' + tourCode
+      this.baseUrl + 'tours/' + title + '/' + tourCode + '?date=' + date
     );
   }
 
@@ -80,5 +81,11 @@ export class TourService {
   }
   setTourParams(params: TourParams) {
     this.tourParams = params;
+  }
+
+  getSchedulesWithFilter(date: string, tourId: number) {
+    return this.http.get<Schedule[]>(
+      this.baseUrl + 'schedules?date=' + date + '&tourId=' + tourId
+    );
   }
 }

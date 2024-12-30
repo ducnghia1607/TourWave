@@ -24,7 +24,7 @@ public class TourSpecification : BaseSpecification<Tour>
                     AddOrderByDescending(x => x.PriceAdult);
                     break;
                 default:
-                    AddOrderBy(x => x.Title);
+                    AddOrderBy(x => x.PriceAdult);
                     break;
             }
     }

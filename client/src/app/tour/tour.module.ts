@@ -13,7 +13,16 @@ import { TourFinderContentComponent } from './tour-finder-content/tour-finder-co
 import { TourFinderItemComponent } from './tour-finder-item/tour-finder-item.component';
 
 @NgModule({
-  declarations: [TourComponent, TourItemComponent, TourHomeSearchComponent, TourFinderComponent, TourFinderSearchComponent, TourFinderSidebarComponent, TourFinderContentComponent, TourFinderItemComponent],
+  declarations: [
+    TourComponent,
+    TourItemComponent,
+    TourHomeSearchComponent,
+    TourFinderComponent,
+    TourFinderSearchComponent,
+    TourFinderSidebarComponent,
+    TourFinderContentComponent,
+    TourFinderItemComponent,
+  ],
   imports: [CommonModule, TourRoutingModule, SharedModule],
 })
 export class TourModule {}

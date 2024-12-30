@@ -1,0 +1,57 @@
+[
+  {
+    "UserName": "Annmarie",
+    "Gender": "female",
+    "DateOfBirth": "1950-10-05",
+    "Created": "2019-06-04",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/women/64.jpg"
+    }
+  },
+  {
+    "UserName": "Padilla",
+    "Gender": "male",
+    "DateOfBirth": "1995-06-13",
+    "Created": "2023-04-22",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/men/60.jpg"
+    }
+  },
+  {
+    "UserName": "Lewis",
+    "Gender": "male",
+    "DateOfBirth": "1977-05-27",
+    "Created": "2023-04-04",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/men/94.jpg"
+    }
+  },
+  {
+    "UserName": "Mclaughlin",
+    "Gender": "male",
+    "DateOfBirth": "1980-12-22",
+    "Created": "2022-06-03",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/men/10.jpg"
+    }
+  },
+  {
+    "UserName": "Blanchard",
+    "Gender": "male",
+    "DateOfBirth": "1956-04-04",
+    "Created": "2022-01-23",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/men/23.jpg"
+    }
+  },
+  {
+    "UserName": "Burt",
+    "Gender": "male",
+    "DateOfBirth": "1998-03-06",
+    "KnownAs": "Burt",
+    "Created": "2023-03-24",
+    "UserPhoto": {
+      "Url": "https://randomuser.me/api/portraits/men/40.jpg"
+    }
+  }
+]

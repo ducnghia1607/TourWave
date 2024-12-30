@@ -13,7 +13,7 @@
 }
 
 .main-header .navbar .hotline .hotline-link {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: bold;
   letter-spacing: -1px;
   text-decoration: none;
@@ -65,4 +65,36 @@
 
 .navbar .nav-link > li > a:hover:not(.active) {
   opacity: 0.65;
+}
+
+.btn-signup {
+  width: 100%;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  transition: all 0.5s ease;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn-signup:hover {
+  background: var(--secondary-color);
+}
+
+.menu-container {
+  padding: 10px 16px;
+}
+
+.menu-txt {
+  margin-top: 10px;
+  font-size: 13px;
+}
+.menu-txt > a {
+  text-decoration: underline;
+  color: var(--blender-sky-color);
+  transition: all 0.5s ease;
+}
+.menu-txt > a:hover {
+  opacity: 0.6;
 }

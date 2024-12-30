@@ -13,5 +13,6 @@ public  string Duration { get; set; }
 public  string Departure { get; set; }
 public string Destination { get; set; }
 public string Transport {get;set;}
-public string ImageUrl { get; set; }  
+public string ImageUrl { get; set; }
+public string DepartureDate { get; set; }
 }

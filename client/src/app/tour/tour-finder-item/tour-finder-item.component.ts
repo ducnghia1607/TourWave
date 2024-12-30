@@ -1,5 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faGreaterThan } from '@fortawesome/free-solid-svg-icons';
@@ -15,9 +16,15 @@ export class TourFinderItemComponent {
   faCalender = faCalendar as IconProp;
   faClock = faClock as IconProp;
   faGreaterThan = faGreaterThan as IconProp;
-  constructor(private router: Router) {}
-  goToViewTour(tourTitle: string, tourCode: string) {
-    console.log(tourTitle, tourCode);
-    this.router.navigate(['/tours', tourTitle, tourCode]);
+  constructor(private router: Router, private datePipe: DatePipe) {}
+  goToViewTour(tourTitle: string, tourCode: string, date: string) {
+    console.log(tourTitle, tourCode, date);
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        date: date || this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
+      },
+    };
+    this.router.navigate(['/tours', tourTitle, tourCode], navigationExtras);
   }
 }

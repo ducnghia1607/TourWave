@@ -1,0 +1,111 @@
+<div class="flex justify-center items-center login-wrapper">
+  <div class="login-box shadow-md">
+    <h2 class="title relative mb-3">
+      <button class="absolute left-0 bottom-0" [routerLink]="['/tours']">
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+      </button>
+      Đăng nhập
+    </h2>
+    <form [formGroup]="loginForm">
+      <div class="form-control">
+        <label for="userName" class="mb-1"
+          >Tài khoản<span style="color: red">*</span></label
+        >
+        <input
+          type="text"
+          name="userName"
+          id="userName"
+          placeholder="Nhập tài khoản"
+          formControlName="userName"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['userName'].invalid &&
+            (loginForm.controls['userName'].dirty ||
+              loginForm.controls['userName'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              loginForm.controls['userName'].errors &&
+              loginForm.controls['userName'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Tài khoản không được để trống</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="password" class="mb-1"
+          >Mật khẩu<span style="color: red">*</span></label
+        >
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['password'].invalid &&
+            (loginForm.controls['password'].dirty ||
+              loginForm.controls['password'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              loginForm.controls['password'].errors &&
+              loginForm.controls['password'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Mật khẩu không được để trống</span
+            >
+          </div>
+        </div>
+
+        <div
+          *ngIf="
+            loginForm.controls['password'].invalid &&
+            (loginForm.controls['password'].dirty ||
+              loginForm.controls['password'].touched)
+          "
+          class=""
+        >
+          <div
+            *ngIf="
+              loginForm.controls['password'].errors &&
+              (loginForm.controls['password'].errors['maxlength'] ||
+                loginForm.controls['password'].errors['minlength'])
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Độ dài mật khẩu từ 6 đến 20 kí tự</span
+            >
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="flex justify-center items-center my-3">
+      <button
+        class="login-btn"
+        [class.btn-disabled]="loginForm.status == 'INVALID'"
+        (click)="loginButtonClicked()"
+      >
+        Đăng nhập
+      </button>
+    </div>
+    <div>
+      <p class="text-right" style="font-size: 13px">
+        Bạn chưa có tài khoản?
+        <a href="" class="go-to-register-link" routerLink="/auth/register"
+          >Đăng ký ngay</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
