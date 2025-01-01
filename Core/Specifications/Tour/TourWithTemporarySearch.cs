@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
-    public class TourWithTemporarySearch : BaseSpecification<Tour>
+    public class TourWithTemporarySearch : BaseSpecification<Core.Entities.Tour>
     {
         public TourWithTemporarySearch(string keyword) : base(t => t.Title.ToLower() == keyword.ToLower() || t.Title.ToLower().Contains(keyword.ToLower()))
         {

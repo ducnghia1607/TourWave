@@ -25,6 +25,9 @@ IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Departure> Departures { get; set; }
     public DbSet<UserPhoto> UserPhotos { get; set; }
+    public DbSet<TourHobby> TourHobbies { get; set; }
+    public DbSet<TourTypeHobby> TourTypeHobbies { get; set; }
+    public DbSet<Consulting> Consultings { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -40,6 +43,42 @@ IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
         .WithOne(au => au.Role)
         .HasForeignKey(u => u.RoleId)
         .IsRequired();
+
+        modelBuilder.Entity<TourTypeHobby>().Property(p => p.Appropriate).HasPrecision(18, 2);
+
+        // modelBuilder.Entity<TourTypeHobby>()
+        // .HasKey(l => new { l.TourHobbyId, l.TourTypeId });
+
+        //  modelBuilder.Entity<TourTypeHobby>()
+        // .HasOne(l => l.TourType)
+        // .WithMany(u => u.TourTypeHobby)
+        // .HasForeignKey(l => l.TourTypeId)
+        // .OnDelete(DeleteBehavior.NoAction);
+
+        // modelBuilder.Entity<TourTypeHobby>()
+        // .HasOne(l => l.TourHobby)
+        // .WithMany(u => u.TourTypeHobby)
+        // .HasForeignKey(l => l.TourHobbyId)
+        // .OnDelete(DeleteBehavior.NoAction);
+        
+        // modelBuilder.Entity<TourWithType>()
+        // .HasKey(l => new { l.TourId, l.TourTypeId });
+
+                 modelBuilder.Entity<TourWithType>()
+        .HasOne(l => l.TourType)
+        .WithMany(u => u.TourWithType)
+        .HasForeignKey(l => l.TourTypeId)
+        .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<TourWithType>()
+        .HasOne(l => l.Tour)
+        .WithMany(u => u.TourWithType)
+        .HasForeignKey(l => l.TourId)
+        .OnDelete(DeleteBehavior.NoAction);
+
+
+        // 1 nguoi co the duoc nhieu nguoi like 
+
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
     }

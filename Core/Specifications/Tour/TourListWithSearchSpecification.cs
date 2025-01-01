@@ -9,7 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Core.Specifications
 {
-    public class TourListWithSearchSpecification : BaseSpecification<Tour>
+    public class TourListWithSearchSpecification : BaseSpecification<Core.Entities.Tour>
     {
         public TourListWithSearchSpecification(TourSpecParams specParams) : 
             base(t => (t.Title.ToLower() == specParams.Search.ToLower() && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null && t.Departure.ToLower() == specParams.Departure.ToLower()) 

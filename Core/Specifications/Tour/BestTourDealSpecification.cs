@@ -4,7 +4,7 @@ using Core.Entities;
 using System.Linq.Expressions;
 namespace Core.Specifications;
 
-public class BestTourDealSpecification : BaseSpecification<Tour>
+public class BestTourDealSpecification : BaseSpecification<Core.Entities.Tour>
 {
     
     // Where : Điểm review cao 

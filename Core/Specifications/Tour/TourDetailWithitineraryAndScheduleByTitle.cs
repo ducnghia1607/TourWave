@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
-    public class TourDetailWithitineraryAndScheduleByTitle : BaseSpecification<Tour>
+    public class TourDetailWithitineraryAndScheduleByTitle : BaseSpecification<Core.Entities.Tour>
     {
 
         public TourDetailWithitineraryAndScheduleByTitle(string title, string tourCode,string ?date) : base(t => t.Title.ToLower() == title.ToLower() || t.TourCode.ToLower() == tourCode.ToLower())

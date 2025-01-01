@@ -1,0 +1,763 @@
+[
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 1,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 2,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 3,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 4,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 5,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 6,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 7,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 8,
+    "Appropriate": 0.8
+  },
+
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 9,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 10,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 11,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 12,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 13,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 14,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 1,
+    "TourTypeId": 15,
+    "Appropriate": 0.8
+  },
+
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 1,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 2,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 3,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 4,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 5,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 6,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 7,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 8,
+    "Appropriate": 0.3
+  },
+
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 9,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 10,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 11,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 12,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 13,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 14,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 2,
+    "TourTypeId": 15,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 1,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 2,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 3,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 4,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 5,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 6,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 7,
+    "Appropriate": 1.0
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 8,
+    "Appropriate": 0.3
+  },
+
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 9,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 10,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 11,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 12,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 13,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 14,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 3,
+    "TourTypeId": 15,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 1,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 2,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 3,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 4,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 5,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 6,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 7,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 8,
+    "Appropriate": 0.6
+  },
+
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 9,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 10,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 11,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 12,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 13,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 14,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 4,
+    "TourTypeId": 15,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 1,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 2,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 3,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 4,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 5,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 6,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 7,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 8,
+    "Appropriate": 0.5
+  },
+
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 9,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 10,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 11,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 12,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 13,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 14,
+    "Appropriate": 1.0
+  },
+  {
+    "TourHobbyId": 5,
+    "TourTypeId": 15,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 1,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 2,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 3,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 4,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 5,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 6,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 7,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 8,
+    "Appropriate": 1.0
+  },
+
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 9,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 10,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 11,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 12,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 13,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 14,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 6,
+    "TourTypeId": 15,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 1,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 2,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 3,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 4,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 5,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 6,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 7,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 8,
+    "Appropriate": 0.7
+  },
+
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 9,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 10,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 11,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 12,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 13,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 14,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 7,
+    "TourTypeId": 15,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 1,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 2,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 3,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 4,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 5,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 6,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 7,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 8,
+    "Appropriate": 0.5
+  },
+
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 9,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 10,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 11,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 12,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 13,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 14,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 8,
+    "TourTypeId": 15,
+    "Appropriate": 0.6
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 1,
+    "Appropriate": 1
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 2,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 3,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 4,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 5,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 6,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 7,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 8,
+    "Appropriate": 0.5
+  },
+
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 9,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 10,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 11,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 12,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 13,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 14,
+    "Appropriate": 0.7
+  },
+  {
+    "TourHobbyId": 9,
+    "TourTypeId": 15,
+    "Appropriate": 0.8
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 1,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 2,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 3,
+    "Appropriate": 0.9
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 4,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 5,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 6,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 7,
+    "Appropriate": 0.1
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 8,
+    "Appropriate": 0.7
+  },
+
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 9,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 10,
+    "Appropriate": 0.4
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 11,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 12,
+    "Appropriate": 0.2
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 13,
+    "Appropriate": 0.3
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 14,
+    "Appropriate": 0.5
+  },
+  {
+    "TourHobbyId": 10,
+    "TourTypeId": 15,
+    "Appropriate": 0.4
+  }
+]

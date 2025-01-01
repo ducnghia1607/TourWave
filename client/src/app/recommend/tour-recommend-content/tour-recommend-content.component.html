@@ -1,0 +1,38 @@
+<div
+  class="tour-content-wrapper flex flex-col space-y-5"
+  *ngIf="tourPagination && tourPagination.data.length > 0"
+>
+  <app-tour-recommend-item
+    *ngFor="
+      let tour of tourPagination.data
+        | paginate
+          : {
+              itemsPerPage: tourPagination.pageSize,
+              currentPage: this.pageNumber,
+              totalItems: tourPagination.count
+            }
+    "
+    [tour]="tour"
+  ></app-tour-recommend-item>
+
+  <!-- <pagination-controls
+    id="some_id"
+    (pageChange)="pageChanged($event)"
+    (pageBoundsCorrection)="pageChanged($event)"
+    [maxSize]="1"
+    [directionLinks]="true"
+    [autoHide]="true"
+    [responsive]="true"
+    previousLabel="Previous"
+    nextLabel="Next"
+    screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page"
+  >
+  </pagination-controls> -->
+  <div class="flex justify-center items-center">
+    <pagination-controls
+      (pageChange)="pageNumberChanged($event)"
+    ></pagination-controls>
+  </div>
+</div>

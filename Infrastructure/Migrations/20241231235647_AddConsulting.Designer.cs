@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TourContext))]
-    [Migration("20241230172513_AddNew")]
-    partial class AddNew
+    [Migration("20241231235647_AddConsulting")]
+    partial class AddConsulting
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -148,6 +148,43 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Entities.Consulting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Consultings");
                 });
 
             modelBuilder.Entity("Core.Entities.Departure", b =>
@@ -329,6 +366,23 @@ namespace Infrastructure.Migrations
                     b.ToTable("Tours");
                 });
 
+            modelBuilder.Entity("Core.Entities.TourHobby", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TourHobbies");
+                });
+
             modelBuilder.Entity("Core.Entities.TourType", b =>
                 {
                     b.Property<int>("Id")
@@ -337,7 +391,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("TypeName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -346,15 +400,39 @@ namespace Infrastructure.Migrations
                     b.ToTable("TourTypes");
                 });
 
+            modelBuilder.Entity("Core.Entities.TourTypeHobby", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Appropriate")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TourHobbyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TourTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourHobbyId");
+
+                    b.HasIndex("TourTypeId");
+
+                    b.ToTable("TourTypeHobbies");
+                });
+
             modelBuilder.Entity("Core.Entities.TourWithType", b =>
                 {
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
                     b.Property<int>("TourTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("TourId", "TourTypeId");
@@ -498,6 +576,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entities.Consulting", b =>
+                {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithMany("UserConsulting")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Core.Entities.Image", b =>
                 {
                     b.HasOne("Core.Entities.Itinerary", "Itinerary")
@@ -535,18 +622,37 @@ namespace Infrastructure.Migrations
                     b.Navigation("Tour");
                 });
 
-            modelBuilder.Entity("Core.Entities.TourWithType", b =>
+            modelBuilder.Entity("Core.Entities.TourTypeHobby", b =>
                 {
-                    b.HasOne("Core.Entities.Tour", "Tour")
-                        .WithMany("TourWithTypes")
-                        .HasForeignKey("TourId")
+                    b.HasOne("Core.Entities.TourHobby", "TourHobby")
+                        .WithMany("TourTypeHobby")
+                        .HasForeignKey("TourHobbyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.TourType", "TourType")
-                        .WithMany("TourWithTypes")
+                        .WithMany("TourTypeHobby")
                         .HasForeignKey("TourTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TourHobby");
+
+                    b.Navigation("TourType");
+                });
+
+            modelBuilder.Entity("Core.Entities.TourWithType", b =>
+                {
+                    b.HasOne("Core.Entities.Tour", "Tour")
+                        .WithMany("TourWithType")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.TourType", "TourType")
+                        .WithMany("TourWithType")
+                        .HasForeignKey("TourTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Tour");
@@ -606,6 +712,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.AppUser", b =>
                 {
+                    b.Navigation("UserConsulting");
+
                     b.Navigation("UserPhoto");
 
                     b.Navigation("UserRoles");
@@ -624,12 +732,19 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Schedules");
 
-                    b.Navigation("TourWithTypes");
+                    b.Navigation("TourWithType");
+                });
+
+            modelBuilder.Entity("Core.Entities.TourHobby", b =>
+                {
+                    b.Navigation("TourTypeHobby");
                 });
 
             modelBuilder.Entity("Core.Entities.TourType", b =>
                 {
-                    b.Navigation("TourWithTypes");
+                    b.Navigation("TourTypeHobby");
+
+                    b.Navigation("TourWithType");
                 });
 #pragma warning restore 612, 618
         }

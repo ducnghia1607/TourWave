@@ -1,50 +1,47 @@
 [
   {
-    "TypeName": "Du lịch sinh thái"
+    "Name": "Du lịch sinh thái"
   },
   {
-    "TypeName": "Du lịch văn hóa"
+    "Name": "Du lịch văn hóa"
   },
   {
-    "TypeName": "Du lịch nghỉ dưỡng"
+    "Name": "Du lịch nghỉ dưỡng"
   },
   {
-    "TypeName": "Du lịch giải trí"
+    "Name": "Du lịch giải trí"
   },
   {
-    "TypeName": "Du lịch thể thao"
+    "Name": "Du lịch thể thao"
   },
   {
-    "TypeName": "Du lịch khám phá"
+    "Name": "Du lịch khám phá"
   },
   {
-    "TypeName": "Du lịch mạo hiểm"
+    "Name": "Du lịch mạo hiểm"
   },
   {
-    "TypeName": "Du lịch gia đình"
+    "Name": "Du lịch gia đình"
   },
   {
-    "TypeName": "Du lịch theo đoàn"
+    "Name": "Du lịch theo đoàn"
   },
   {
-    "TypeName": "Du lịch biển"
+    "Name": "Du lịch biển"
   },
   {
-    "TypeName": "Du lịch núi"
+    "Name": "Du lịch núi"
   },
   {
-    "TypeName": "Du lịch thôn quê"
+    "Name": "Du lịch thôn quê"
   },
   {
-    "TypeName": "Du lịch ẩm thực"
+    "Name": "Du lịch ẩm thực"
   },
   {
-    "TypeName": "Du lịch văn hóa"
+    "Name": "Du lịch quốc tế"
   },
   {
-    "TypeName": "Du lịch quốc tế"
-  },
-  {
-    "TypeName": "Du lịch nội địa"
+    "Name": "Du lịch nội địa"
   }
 ]

@@ -18,7 +18,7 @@ namespace API.Controllers
         [HttpPost("register")]  // api/account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto account)
         {
-            if (!await UserExists(account.UserName)) return BadRequest("Username already exists");
+            if (!await UserExists(account.UserName)) return BadRequest("Tài khoản đã tồn tại trong hệ thống");
 
             //var user = mapper.Map<RegisterDto,AppUser>(account);
             AppUser user = new AppUser()
@@ -38,9 +38,9 @@ namespace API.Controllers
             {
                 UserName = user.UserName,
                 Token = await tokenService.CreateToken(user),
-                PhotoUrl = user.UserPhoto.Url,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth
+                PhotoUrl = "",
+                Gender = "",
+                DateOfBirth = null
             };
         }
 

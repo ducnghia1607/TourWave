@@ -8,6 +8,7 @@ import { TourParams } from '../shared/models/TourParams';
 import { Pagination } from '../shared/models/Pagination';
 import { map, Observable } from 'rxjs';
 import { Schedule } from '../shared/models/Schedule';
+import { Consulting } from '../shared/models/Consulting';
 @Injectable({
   providedIn: 'root',
 })
@@ -87,5 +88,12 @@ export class TourService {
     return this.http.get<Schedule[]>(
       this.baseUrl + 'schedules?date=' + date + '&tourId=' + tourId
     );
+  }
+
+  createNewConsulting(consulting: Consulting) {
+    return this.http.post<Consulting>(this.baseUrl + 'consulting', consulting);
+  }
+  getAllConsultings() {
+    return this.http.get<Consulting[]>(this.baseUrl + 'consulting');
   }
 }

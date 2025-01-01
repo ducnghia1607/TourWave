@@ -39,6 +39,23 @@ public class TourContextSeed
             context.Departures.AddRange(departures);
             await context.SaveChangesAsync();
         }
+
+            if(!context.TourHobbies.Any()){
+            var tourHobbiesData =  await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/tourhobbies.json");
+            var hobbies = JsonSerializer.Deserialize<List<TourHobby>>(tourHobbiesData);
+            if(hobbies == null) return;
+            context.TourHobbies.AddRange(hobbies);
+            await context.SaveChangesAsync();
+        }
+
+        
+      if(!context.TourTypeHobbies.Any()){
+            var tourTypeHobbiesData =  await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/tourtypehobby.json");
+            var tourTypeHobbies = JsonSerializer.Deserialize<List<TourTypeHobby>>(tourTypeHobbiesData);
+            if(tourTypeHobbies == null) return;
+            context.TourTypeHobbies.AddRange(tourTypeHobbies);
+            await context.SaveChangesAsync();
+        }
         if (await userManager.Users.AnyAsync()) return;
         // var usersData = await File.ReadAllTextAsync("Data/UserSeedData.json");
         var usersData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/DataUserSeed.json");

@@ -14,8 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-
-public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : BaseApiController
+using Tour = Core.Entities.Tour;
+public class ToursController(IGenericRepository<Tour> repo,IGenericRepository<TourTypeHobby> hobbyRepo, IMapper mapper) : BaseApiController
 {
 
     [HttpGet]
@@ -160,5 +160,26 @@ public class ToursController(IGenericRepository<Tour> repo, IMapper mapper) : Ba
         var items = await repo.ListAsyncWithSpec(spec);
         var data = mapper.Map<IReadOnlyList<Tour>,IReadOnlyList<TourDto>>(items);
         return Ok(data);
+    }
+
+    [HttpGet("tour-type-hobby")]
+    public async Task<ActionResult<IReadOnlyList<TourTypeHobby>>> GetAllTourTypeHobby(){
+        var items = await hobbyRepo.ListAllAsync();
+        if(items == null) return NotFound();
+        return Ok(items);
+    }
+
+    [HttpGet("recommend-tour")]
+    public async Task<ActionResult<IReadOnlyList<TourToRecommendDto>>> GetAllRecommendTour()
+    {
+        var spec = new TourRecommendSpecification();
+        var items = await repo.ListAsyncWithSpec(spec);
+        if (items == null) return NotFound();
+        var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourToRecommendDto>>(items);
+        var count = await repo.CountAsync(spec);
+        //var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
+        var pagination = new Pagination<TourToRecommendDto>(1, 4, count, data);
+        return Ok(pagination);
+        //return Ok(data);
     }
 }

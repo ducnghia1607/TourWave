@@ -15,6 +15,9 @@ namespace API.DataHelpers
                o => o.MapFrom(src => src.Schedules.FirstOrDefault().DepartureDate.ToString("yyyy-MM-dd")))         
                ;
 
+            CreateMap<Tour, TourToRecommendDto>().ForMember(dest => dest.ImageUrl,
+                   o => o.MapFrom(src => src.Images.FirstOrDefault().Url))
+         ;
             // CreateMap<Tour, TourDto>().ForMember(dest => dest.DepartureDate, o => o.MapFrom(src => src.Schedules.FirstOrDefault().DepartureDate.ToString()));
         }
 

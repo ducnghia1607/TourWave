@@ -21,11 +21,11 @@
   },
   {
     "TourId": 1,
-    "TourTypeId": 16
+    "TourTypeId": 12
   },
   {
     "TourId": 2,
-    "TourTypeId": 16
+    "TourTypeId": 12
   },
   {
     "TourId": 2,
@@ -46,7 +46,7 @@
 
   {
     "TourId": 3,
-    "TourTypeId": 16
+    "TourTypeId": 1
   },
   {
     "TourId": 3,
@@ -78,7 +78,7 @@
   },
   {
     "TourId": 4,
-    "TourTypeId": 16
+    "TourTypeId": 6
   },
   {
     "TourId": 5,
@@ -90,7 +90,7 @@
   },
   {
     "TourId": 5,
-    "TourTypeId": 16
+    "TourTypeId": 10
   },
   {
     "TourId": 5,
@@ -123,6 +123,6 @@
   },
   {
     "TourId": 7,
-    "TourTypeId": 16
+    "TourTypeId": 8
   }
 ]

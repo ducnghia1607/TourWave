@@ -1,0 +1,40 @@
+<div class="flex justify-between tour-item">
+  <div class="tour-item-left">
+    <img src="{{ tour.imageUrl }}" alt="" class="tour-item-left-img" />
+  </div>
+  <div class="tour-item-right flex flex-col justify-around">
+    <div class="flex justify-between">
+      <div class="tour-item-title">{{ tour.title }}</div>
+      <div class="tour-item-schedule">
+        <fa-icon [icon]="faCalender"></fa-icon>
+        <span class="ms-1">{{
+          tour.schedules[0].departureDate | date : "yyyy-MM-dd"
+        }}</span>
+      </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <p>
+        <fa-icon [icon]="faClock"></fa-icon>
+        <span class="ms-1">{{ tour.duration }}</span>
+      </p>
+      <div class="flex flex-col">
+        <span class="tour-item-price">{{
+          tour.priceAdult | currency : "VND" : "symbol" : "1.0-0"
+        }}</span>
+        <button
+          class="btn btn-view me-1"
+          (click)="
+            goToViewTour(
+              tour.title,
+              tour.tourCode,
+              tour.schedules[0].departureDate.toDateString()
+            )
+          "
+        >
+          Xem Tour
+          <fa-icon [icon]="faGreaterThan" style="font-size: 16px"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -95,7 +95,7 @@ export class RegisterComponent implements OnDestroy {
         }
         this.matDiaLog.open(NotificationComponent, {
           data: {
-            title: 'Đã có lỗi xảy ra',
+            title: 'Thông báo',
             message: errStr,
           },
         });

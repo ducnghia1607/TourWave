@@ -15,7 +15,9 @@ custome ::ng-deep .mat-mdc-slider {
   font-size: 15px !important;
 }
 .recommend-wrapper.content-wrapper {
-  height: calc(100vh - 268px);
+  /* height: calc(100vh - 268px); */
+  min-height: calc(100vh - 268px);
+  height: auto;
 }
 
 .recommend-wrapper .page-title {

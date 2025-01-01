@@ -4,9 +4,11 @@ import { RecommendRoutingModule } from './recommend-routing.module';
 import { RecommendComponent } from './recommend.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { TourRecommendItemComponent } from './tour-recommend-item/tour-recommend-item.component';
+import { TourRecommendContentComponent } from './tour-recommend-content/tour-recommend-content.component';
 
 @NgModule({
-  declarations: [RecommendComponent],
+  declarations: [RecommendComponent, TourRecommendItemComponent, TourRecommendContentComponent],
   imports: [CommonModule, RecommendRoutingModule, SharedModule],
 })
 export class RecommendModule {}

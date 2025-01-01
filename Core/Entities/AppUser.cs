@@ -14,6 +14,7 @@ namespace Core.Entities
         public string? Gender { get; set; }
         public string ?FullName { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
+        public ICollection<Consulting> UserConsulting { get; set; }
         public UserPhoto? UserPhoto { get; set; }
     }
 }

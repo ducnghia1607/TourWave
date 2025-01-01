@@ -21,6 +21,6 @@ public string ? CreatedBy { get; set; }
 public string ? ModifiedBy { get; set; }
 public List<Image> Images { get; set; } = new ();
  public List<Itinerary> Itineraries { get; set; } = new ();
- public ICollection<TourWithType>  TourWithTypes {get;set; } = [];
+ public ICollection<TourWithType>  TourWithType {get;set; } = [];
   public List<Schedule> Schedules{get;set;} = new ();
 }
