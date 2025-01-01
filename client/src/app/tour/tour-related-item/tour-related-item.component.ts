@@ -1,6 +1,6 @@
-import { DatePipe } from '@angular/common';
-import { HttpUrlEncodingCodec } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faCar,
@@ -8,17 +8,20 @@ import {
   faPlane,
   faTrain,
 } from '@fortawesome/free-solid-svg-icons';
-import { StringUtility } from 'src/app/shared/models/StringUtility';
 import { Tour } from 'src/app/shared/models/Tour';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { TourService } from '../tour.service';
 
 @Component({
-  selector: 'app-tour-item',
-  templateUrl: './tour-item.component.html',
-  styleUrls: ['./tour-item.component.css'],
+  selector: 'app-tour-related-item',
+  templateUrl: './tour-related-item.component.html',
+  styleUrls: ['./tour-related-item.component.css'],
+  standalone: true,
+  imports: [CurrencyPipe, SharedModule, CommonModule, RouterModule],
 })
-export class TourItemComponent implements OnInit {
+export class TourRelatedItemComponent {
   constructor(private datePipe: DatePipe) {}
-  ngOnInit(): void {}
+  ngOnInit(tourService: TourService): void {}
   faClock = faClock as IconProp;
   faPlane = faPlane as IconProp;
   faTrain = faTrain as IconProp;
@@ -30,7 +33,7 @@ export class TourItemComponent implements OnInit {
       localStorage.getItem('recentVisitedTours') || '[]'
     );
     var idx = recentVisitedTours.findIndex((x: any) => x.id == this.tour.id);
-    if (idx != -1) return;
+    if (idx == -1) return;
     if (recentVisitedTours.length >= 6) {
       recentVisitedTours.shift();
     }
@@ -39,5 +42,10 @@ export class TourItemComponent implements OnInit {
       'recentVisitedTours',
       JSON.stringify(recentVisitedTours)
     );
+    localStorage.setItem;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Optional: Adds smooth scrolling animation
+    });
   }
 }

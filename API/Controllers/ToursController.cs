@@ -182,4 +182,15 @@ public class ToursController(IGenericRepository<Tour> repo,IGenericRepository<To
         return Ok(pagination);
         //return Ok(data);
     }
+
+    [HttpGet("related-tour")]
+    public async Task<ActionResult<IReadOnlyList<TourDto>>> GetRelatedTour([FromQuery]string destination, [FromQuery]  string tourCode)
+    {
+        var spec = new TourRelatedSpecification(destination,tourCode);
+        var items = await repo.ListAsyncWithSpec(spec);
+        items = items.Take(3).ToList();
+        var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
+        return Ok(data);
+        //return Ok(data);
+    }
 }

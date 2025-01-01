@@ -5,4 +5,5 @@ export class TourParams {
   departure: string = '';
   sort: string = '';
   date: string = '';
+  filterByPrice: string = '';
 }

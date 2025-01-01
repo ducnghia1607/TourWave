@@ -12,9 +12,9 @@ namespace Core.Specifications
     public class TourListWithSearchSpecification : BaseSpecification<Core.Entities.Tour>
     {
         public TourListWithSearchSpecification(TourSpecParams specParams) : 
-            base(t => (t.Title.ToLower() == specParams.Search.ToLower() && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null && t.Departure.ToLower() == specParams.Departure.ToLower()) 
-            || (t.Destination.ToLower() == specParams.Search.ToLower() && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null && t.Departure.ToLower() == specParams.Departure.ToLower()) 
-            || (t.Title.Contains(specParams.Search) && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null) && t.Departure.ToLower() == specParams.Departure.ToLower())
+            base(t => (t.Title.ToLower() == specParams.Search.ToLower() && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null && t.Departure.ToLower() == specParams.Departure.ToLower()&& (string.IsNullOrEmpty(specParams.FilterByPrice) || t.PriceAdult <= 5000000 && specParams.FilterByPrice == "1" || t.PriceAdult >= 15000000 && specParams.FilterByPrice == "2" )) 
+            || (t.Destination.ToLower() == specParams.Search.ToLower() && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null && t.Departure.ToLower() == specParams.Departure.ToLower() && (string.IsNullOrEmpty(specParams.FilterByPrice) || t.PriceAdult <= 5000000 && specParams.FilterByPrice == "1" || t.PriceAdult >= 15000000 && specParams.FilterByPrice == "2" )) 
+            || (t.Title.Contains(specParams.Search) && t.Schedules.SingleOrDefault(s => s.DepartureDate >= DateOnly.Parse(specParams.Date)) != null) && t.Departure.ToLower() == specParams.Departure.ToLower() && (string.IsNullOrEmpty(specParams.FilterByPrice) || t.PriceAdult <= 5000000 && specParams.FilterByPrice == "1" || t.PriceAdult >= 15000000 && specParams.FilterByPrice == "2" ))
         {
             ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
             AddInclude(t => t.Images);

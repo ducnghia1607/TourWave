@@ -5,7 +5,7 @@
     <h1 class="page-title">
       <b>{{ tourDetail.title }}</b>
     </h1>
-    <div class="flex items-start">
+    <div class="flex items-start relative">
       <div class="w-2/3">
         <div class="tour-gallery tour-content-wrapper" id="tour-gallery">
           <gallery [items]="images" class="gallery"></gallery>
@@ -340,6 +340,36 @@
           [class.show]="showBlackBackGround"
           (click)="showBlackBackGround = false"
         ></div>
+      </div>
+    </div>
+
+    <div
+      class="related-tour-wrapper tour-content-wrapper py-9 mt-5"
+      *ngIf="relatedTours && relatedTours.length > 0"
+    >
+      <p style="margin-bottom: 10px; font-size: 17px">
+        Tour du lịch {{ tourDetail.destination }} liên quan
+      </p>
+      <div class="grid grid-cols-3 gap-x-5">
+        <app-tour-related-item
+          *ngFor="let tour of relatedTours"
+          [tour]="tour"
+        ></app-tour-related-item>
+      </div>
+    </div>
+
+    <div
+      class="recent-visted-tour-wrapper tour-content-wrapper py-9 mt-5"
+      *ngIf="recentVistedTours && recentVistedTours.length > 0"
+    >
+      <p style="margin-bottom: 10px; font-size: 17px">
+        Tour du lịch bạn đã xem gần đây
+      </p>
+      <div class="grid grid-cols-3 gap-x-5">
+        <app-tour-related-item
+          *ngFor="let tour of recentVistedTours"
+          [tour]="tour"
+        ></app-tour-related-item>
       </div>
     </div>
   </div>

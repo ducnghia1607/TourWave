@@ -87,8 +87,20 @@ export class TourFinderComponent implements OnInit {
   changePageNumberHandle($event: any) {
     this.tourParams.pageIndex = $event;
     this.tourParams.pageSize = 1;
+    //  comment dong nay de hien thi tat ca tour
     this.tourService.setTourParams(this.tourParams);
     console.log(this.tourService.getTourParams());
+    this.getListOfTours();
+  }
+
+  sortTourClickHandle($event: any) {
+    this.tourParams.sort = $event;
+    this.tourService.setTourParams(this.tourParams);
+    this.getListOfTours();
+  }
+  filterTourClickHandle($event: any) {
+    this.tourParams.filterByPrice = $event;
+    this.tourService.setTourParams(this.tourParams);
     this.getListOfTours();
   }
 }

@@ -6,7 +6,7 @@ import { TourDetail } from '../shared/models/TourDetail';
 import { Departure } from '../shared/models/Departure';
 import { TourParams } from '../shared/models/TourParams';
 import { Pagination } from '../shared/models/Pagination';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Schedule } from '../shared/models/Schedule';
 import { Consulting } from '../shared/models/Consulting';
 @Injectable({
@@ -16,7 +16,8 @@ export class TourService {
   baseUrl = environment.apiUrl;
   tourParams: TourParams = new TourParams();
   tourPagination?: Pagination<Tour[]>;
-
+  recentVistedTours = new BehaviorSubject<Tour[] | null>(null);
+  recentVistedToursSource$ = this.recentVistedTours.asObservable();
   constructor(private http: HttpClient) {
     this.getHotTours();
   }
@@ -60,6 +61,9 @@ export class TourService {
       params = params.append('date', this.tourParams.date);
     if (this.tourParams.sort)
       params = params.append('sort', this.tourParams.sort);
+    if (this.tourParams.filterByPrice) {
+      params = params.append('filterByPrice', this.tourParams.filterByPrice);
+    }
     params = params.append('pageIndex', this.tourParams.pageIndex);
     params = params.append('pageSize', this.tourParams.pageSize);
     return this.http
@@ -87,6 +91,17 @@ export class TourService {
   getSchedulesWithFilter(date: string, tourId: number) {
     return this.http.get<Schedule[]>(
       this.baseUrl + 'schedules?date=' + date + '&tourId=' + tourId
+    );
+  }
+
+  getRelatedTours(destination: string, tourCode: string) {
+    return this.http.get<Tour[]>(
+      this.baseUrl +
+        'tours/related-tour' +
+        '?destination=' +
+        destination +
+        '&tourCode=' +
+        tourCode
     );
   }
 

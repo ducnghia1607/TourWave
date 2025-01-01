@@ -25,6 +25,20 @@
     </div>
   </div>
 </div>
+
+<section
+  class="bg-primary-bg-color pb-8"
+  *ngIf="recentVisitedTours && recentVisitedTours.length > 0"
+>
+  <div class="grid grid-cols-3 gap-8 container">
+    <app-tour-recent-item
+      (removeRecentTour)="removeRecentTourHandle($event)"
+      *ngFor="let tour of recentVisitedTours"
+      [tour]="tour"
+    ></app-tour-recent-item>
+  </div>
+</section>
+
 <section class="hot-tour-section bg-warning-section-color pb-8">
   <div class="container">
     <div class="py-5 text-center">

@@ -40,6 +40,12 @@ import { StringUtility } from 'src/app/shared/models/StringUtility';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { TourConsultingDialogComponent } from '../tour-consulting-dialog/tour-consulting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Consulting } from 'src/app/shared/models/Consulting';
+import { take, tap } from 'rxjs';
+import { AccountService } from 'src/app/account/account.service';
+import { User } from 'src/app/shared/models/User';
+import { Tour } from 'src/app/shared/models/Tour';
+import { TourRelatedItemComponent } from '../tour-related-item/tour-related-item.component';
 
 @Component({
   selector: 'app-tour-detail',
@@ -56,6 +62,7 @@ import { MatDialog } from '@angular/material/dialog';
     TourDetailScheduleComponent,
     TourDetailNavbarComponent,
     TourConsultingDialogComponent,
+    TourRelatedItemComponent,
   ],
 })
 export class TourDetailComponent implements OnInit, AfterViewInit {
@@ -68,6 +75,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   faInfo = faInfo as IconProp;
   baseUrl = environment.apiUrl;
   tourDetail!: TourDetail;
+  relatedTours: Tour[] = [];
+  recentVistedTours: Tour[] = [];
   images: GalleryItem[] = [];
   panelOpenState = false;
   firstBoxWhiteDate!: Date | null;
@@ -82,9 +91,11 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   selectedDateParam!: Date;
   datepipe: DatePipe = new DatePipe('en-US');
   showBlackBackGround = false;
+  consulting!: Consulting;
   @ViewChild(TourDetailNavbarComponent, { static: false })
   tourNavbar!: TourDetailNavbarComponent;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
+  user!: User;
   @ViewChild('toursidebar', { static: false }) toursidebar!: ElementRef;
   constructor(
     private tourService: TourService,
@@ -92,8 +103,12 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     private location: Location,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private accountService: AccountService
   ) {
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0;
+    }
     var extras = this.router.getCurrentNavigation()?.extras;
     if (extras) {
       var queryParams = extras.queryParams;
@@ -101,11 +116,32 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
         this.selectedDateParam = new Date(queryParams['date']);
       }
     }
+
+    this.accountService.currentUser$.pipe(take(1)).subscribe((res) => {
+      if (res) {
+        this.user = res;
+        console.log(this.user);
+      }
+    });
+    this.recentVistedTours = JSON.parse(
+      localStorage.getItem('recentVisitedTours') || '[]'
+    ).slice(0, 3);
   }
   openDialog() {
     const dialogRef = this.dialog.open(TourConsultingDialogComponent, {
       width: '600px',
     });
+    dialogRef.componentInstance.consultingRequest.subscribe(
+      (consultingData) => {
+        this.consulting = consultingData;
+        this.consulting.tourId = this.tourDetail.id;
+        this.consulting.appUserId = this.user ? this.user.id : 0;
+        this.tourService.createNewConsulting(this.consulting).subscribe({
+          next: (res) => console.log(res),
+          error: (err) => console.log(err),
+        });
+      }
+    );
   }
 
   ngAfterViewInit(): void {}
@@ -162,6 +198,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
             }
           }
         }
+
+        this.GetRelatedTours();
       },
     });
   }
@@ -208,6 +246,14 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  GetRelatedTours() {
+    this.tourService
+      .getRelatedTours(this.tourDetail.destination, this.tourDetail.tourCode)
+      .subscribe((res) => {
+        if (res) this.relatedTours = res;
+      });
+  }
+
   @HostListener('document:scroll') scrollover() {
     const navbarElement = document.getElementById('main-header');
     if (
@@ -216,7 +262,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       document.documentElement.scrollTop > 0
     ) {
       var scrollTopValue = document?.scrollingElement?.scrollTop;
-
+      console.log(scrollTopValue);
       if (scrollTopValue) {
         if (scrollTopValue > 400) {
           navbarElement?.classList.add('hidden');
@@ -226,7 +272,12 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
             this.toursidebar.nativeElement.classList.add('affix');
           }
         }
-        if (scrollTopValue >= 2070) this.tourNavbar.isTabNameActive = 'notice';
+        if (scrollTopValue >= 2400) {
+          if (this.toursidebar) {
+            this.toursidebar.nativeElement.classList.remove('affix');
+          }
+        } else if (scrollTopValue >= 2070)
+          this.tourNavbar.isTabNameActive = 'notice';
         else if (scrollTopValue >= 1690)
           this.tourNavbar.isTabNameActive = 'schedule';
         else if (scrollTopValue >= 1000)

@@ -1,4 +1,4 @@
 export interface TourWithType {
-  tourId: string;
-  tourTypeId: string;
+  tourId: number;
+  tourTypeId: number;
 }

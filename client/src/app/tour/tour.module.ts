@@ -11,6 +11,7 @@ import { TourFinderSearchComponent } from './tour-finder-search/tour-finder-sear
 import { TourFinderSidebarComponent } from './tour-finder-sidebar/tour-finder-sidebar.component';
 import { TourFinderContentComponent } from './tour-finder-content/tour-finder-content.component';
 import { TourFinderItemComponent } from './tour-finder-item/tour-finder-item.component';
+import { TourRecentItemComponent } from './tour-recent-item/tour-recent-item.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { TourFinderItemComponent } from './tour-finder-item/tour-finder-item.com
     TourFinderSidebarComponent,
     TourFinderContentComponent,
     TourFinderItemComponent,
+    TourRecentItemComponent,
   ],
   imports: [CommonModule, TourRoutingModule, SharedModule],
+  exports: [TourItemComponent],
 })
 export class TourModule {}

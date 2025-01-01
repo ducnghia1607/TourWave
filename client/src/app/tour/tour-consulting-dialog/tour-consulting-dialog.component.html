@@ -16,6 +16,24 @@
           placeholder="Nhập họ và tên"
           formControlName="name"
         />
+        <div
+          *ngIf="
+            consultingForm.controls['name'].invalid &&
+            (consultingForm.controls['name'].dirty ||
+              consultingForm.controls['name'].touched)
+          "
+        >
+          <div
+            *ngIf="
+              consultingForm.controls['name'].errors &&
+              consultingForm.controls['name'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Họ và tên không được để trống</span
+            >
+          </div>
+        </div>
       </div>
       <div class="form-control">
         <label for="phone" class="mb-1"
@@ -28,6 +46,24 @@
           placeholder="Nhập số điện thoại liên hệ"
           formControlName="phone"
         />
+        <div
+          *ngIf="
+            consultingForm.controls['phone'].invalid &&
+            (consultingForm.controls['phone'].dirty ||
+              consultingForm.controls['phone'].touched)
+          "
+        >
+          <div
+            *ngIf="
+              consultingForm.controls['phone'].errors &&
+              consultingForm.controls['phone'].errors['required']
+            "
+          >
+            <span class="" style="font-size: 12px; color: red"
+              >Họ và tên không được để trống</span
+            >
+          </div>
+        </div>
       </div>
       <div class="form-control">
         <label for="email" class="mb-1">Email(nếu có)</label>
@@ -56,6 +92,7 @@
       [mat-dialog-close]="true"
       cdkFocusInitial
       class="send-request-btn"
+      [class.btn-disabled]="consultingForm.status == 'INVALID'"
       (click)="sendConsultingRequest()"
     >
       Gửi yêu cầu

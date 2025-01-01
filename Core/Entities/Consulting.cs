@@ -14,6 +14,8 @@ namespace Core.Entities
         public string Note { get; set; }
         public AppUser ?AppUser { get; set; } // CreatedBy
         public int ?AppUserId { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public Tour ?Tour { get; set; }
+        public int ?TourId { get; set; }
     }
 }

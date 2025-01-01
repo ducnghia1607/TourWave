@@ -43,4 +43,12 @@ public class TourSpecParams
         get => this._date;
         set => _date = (DateOnly.Parse(value) < new DateOnly() || value == "")  ? new DateOnly().ToString() : value;
     }
+
+    private string? _filterByPrice = "";
+    public string? FilterByPrice
+    {
+        get { return _filterByPrice; }
+        set { _filterByPrice = value; }
+    }
+    
 }

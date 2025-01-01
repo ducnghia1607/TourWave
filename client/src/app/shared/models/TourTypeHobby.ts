@@ -1,5 +1,5 @@
 export interface TourTypeHobby {
-  tourTypeId: string;
-  tourHobbyId: string;
+  tourTypeId: number;
+  tourHobbyId: number;
   appropriate: number;
 }

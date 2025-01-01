@@ -245,17 +245,17 @@ button.example-custom-date-class > span {
 } */
 @media (min-width: 768px) {
   .affix {
-    right: calc((100% - 768px) / 2);
+    right: calc((100% - 784px) / 2);
   }
 }
 @media (min-width: 992px) {
   .affix {
-    right: calc((100% - 992px) / 2);
+    right: calc((100% - 1110px) / 2);
   }
 }
 @media (min-width: 1280px) {
   .affix {
-    right: calc((100% - 1100px) / 2);
+    right: calc((100% - 1130px) / 2);
   }
 }
 .bg-shadow {

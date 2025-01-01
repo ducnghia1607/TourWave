@@ -16,6 +16,8 @@ export class AccountService {
   setCurrentUser(user: User) {
     user.roles = [];
     var role = this.getDecodedToken(user.token).role;
+    console.log(this.getDecodedToken(user.token));
+    user.id = this.getDecodedToken(user.token).sid;
     Array.isArray(role) ? (user.roles = role) : user.roles.push(role);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);

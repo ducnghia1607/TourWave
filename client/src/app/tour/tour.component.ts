@@ -18,6 +18,7 @@ export class TourComponent {
   bestTours: Tour[] = [];
   hotDomesticTours: Tour[] = [];
   hotInternationalTours: Tour[] = [];
+  recentVisitedTours: Tour[] = [];
   @ViewChild(TourHomeSearchComponent)
   tourHomeSearchComponent!: TourHomeSearchComponent;
   constructor(
@@ -28,6 +29,9 @@ export class TourComponent {
     this.getBestTours();
     // this.getHotDomesticTours();
     // this.getHotInternationalTours();
+    this.recentVisitedTours = JSON.parse(
+      localStorage.getItem('recentVisitedTours') || '[]'
+    );
   }
   getBestTours() {
     this.tourService.getHotTours().subscribe({
@@ -36,6 +40,16 @@ export class TourComponent {
       },
       error: (error) => console.log(error),
     });
+  }
+
+  removeRecentTourHandle($event: any) {
+    this.recentVisitedTours = this.recentVisitedTours.filter(
+      (x: any) => x.id != $event
+    );
+    localStorage.setItem(
+      'recentVisitedTours',
+      JSON.stringify(this.recentVisitedTours)
+    );
   }
 
   // getHotDomesticTours() {

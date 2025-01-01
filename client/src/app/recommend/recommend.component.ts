@@ -165,7 +165,7 @@ export class RecommendComponent implements OnInit {
     start: new FormControl<string | null>(null),
     end: new FormControl<string | null>(null),
     budget: new FormControl<number | null>(null),
-    hobby: new FormControl<string | null>(null),
+    hobby: new FormControl<number | null>(null),
   });
 
   formatCurrency(value: number): string {
@@ -209,7 +209,7 @@ export class RecommendComponent implements OnInit {
   }
 
   static calculateHobbySuitability(
-    hobbyId: string,
+    hobbyId: number,
     tourWithType: TourWithType[],
     tourTypeHobby: TourTypeHobby[]
   ) {

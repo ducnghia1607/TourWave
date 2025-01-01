@@ -4,5 +4,6 @@ export interface Consulting {
   email: string;
   note: string;
   createdAt: Date;
-  appUserId: string;
+  appUserId: number;
+  tourId: number;
 }

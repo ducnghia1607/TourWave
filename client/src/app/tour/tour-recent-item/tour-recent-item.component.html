@@ -1,0 +1,24 @@
+<div class="flex tour-visted-item space-x-3 relative">
+  <img src="{{ tour.imageUrl }}" alt="" width="120px" height="120px" />
+  <div
+    class="flex flex-col justify-between py-2 pr-2"
+    (click)="navigateToTourDetail(tour.title, tour.tourCode)"
+  >
+    <h1 class="title line-clamp-3">{{ tour.title }}</h1>
+    <span
+      class="text-right"
+      style="
+        color: var(--blender-sky-color);
+        font-size: 14px;
+        font-weight: bold;
+      "
+      >{{ tour.priceAdult | currency : "VND" : "symbol" : "1.0-0" }}</span
+    >
+  </div>
+  <div class="absolute" style="top: 2px; right: 2px">
+    <fa-icon
+      [icon]="faClose"
+      (click)="removeItemFromRecentVisitedTours(tour.id)"
+    ></fa-icon>
+  </div>
+</div>

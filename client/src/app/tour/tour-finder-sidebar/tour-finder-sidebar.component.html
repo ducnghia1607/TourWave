@@ -40,6 +40,7 @@
           class="radio radio-info"
           checked="checked"
           id="priceAsc"
+          (click)="sortTourClicked('priceAsc')"
         />
         <label for="priceAsc" class="ms-2">Giá: Thấp đến cao</label>
       </div>
@@ -48,7 +49,8 @@
           type="radio"
           name="sort"
           class="radio radio-info"
-          id="priceDes"
+          id="priceDesc"
+          (click)="sortTourClicked('priceDesc')"
         />
         <label for="priceDesc" class="ms-2">Giá: Cao đến thấp</label>
       </div>
@@ -89,11 +91,34 @@
         Mức giá trong khoảng
       </p>
       <div class="flex items-center mb-3">
-        <input type="radio" name="price" class="radio radio-info" id="price1" />
+        <input
+          type="radio"
+          name="price"
+          class="radio radio-info"
+          id="price0"
+          checked="checked"
+          (click)="filterTourClicked('')"
+        />
+        <label for="price0" class="ms-2">Tất cả </label>
+      </div>
+      <div class="flex items-center mb-3">
+        <input
+          type="radio"
+          name="price"
+          class="radio radio-info"
+          id="price1"
+          (click)="filterTourClicked('1')"
+        />
         <label for="price1" class="ms-2">Từ 1 triệu đến 5 triệu </label>
       </div>
       <div class="flex items-center">
-        <input type="radio" name="price" class="radio radio-info" id="price2" />
+        <input
+          type="radio"
+          name="price"
+          class="radio radio-info"
+          id="price2"
+          (click)="filterTourClicked('2')"
+        />
         <label for="price2" class="ms-2">Trên 15 triệu</label>
       </div>
     </div>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TourContext))]
-    [Migration("20241231235647_AddConsulting")]
+    [Migration("20250101074415_AddConsulting")]
     partial class AddConsulting
     {
         /// <inheritdoc />
@@ -180,9 +180,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("TourId");
 
                     b.ToTable("Consultings");
                 });
@@ -582,7 +587,15 @@ namespace Infrastructure.Migrations
                         .WithMany("UserConsulting")
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("Core.Entities.Tour", "Tour")
+                        .WithMany("Consultings")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("Core.Entities.Image", b =>
@@ -726,6 +739,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Tour", b =>
                 {
+                    b.Navigation("Consultings");
+
                     b.Navigation("Images");
 
                     b.Navigation("Itineraries");

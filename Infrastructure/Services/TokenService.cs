@@ -35,6 +35,7 @@ namespace Infrastructure.Services
             //};
 
             var claims = new List<Claim>(){
+                new Claim(JwtRegisteredClaimNames.Sid,user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
             };
             // Add role to Claim 

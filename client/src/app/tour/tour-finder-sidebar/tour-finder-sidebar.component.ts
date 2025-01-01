@@ -10,6 +10,8 @@ import { faArrowsUpDown } from '@fortawesome/free-solid-svg-icons';
 export class TourFinderSidebarComponent {
   faArrowsUpDown = faArrowsUpDown as IconProp;
   @Output() clickTourSidebar = new EventEmitter<string>();
+  @Output() sortTour = new EventEmitter<string>();
+  @Output() filterTour = new EventEmitter<string>();
   OnclickTourSidebar(link: string) {
     this.clickTourSidebar.emit(link);
     if (document.scrollingElement) {
@@ -18,5 +20,12 @@ export class TourFinderSidebarComponent {
         behavior: 'smooth',
       });
     }
+  }
+  sortTourClicked(sort: string) {
+    this.sortTour.emit(sort);
+  }
+
+  filterTourClicked(filterType: string) {
+    this.filterTour.emit(filterType);
   }
 }
