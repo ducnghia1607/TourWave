@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class SchedulesController(IGenericRepository<Schedule> repo) : BaseApiController
+    public class SchedulesController(IUnitOfWork unit) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<Schedule>> GetSchedulesOfTourByFilter([FromQuery]string date, [FromQuery] string tourId)
         {
             var spec = new SchedulesWithFilter(date, tourId);
-            var schedules = await repo.ListAsyncWithSpec(spec);
+            var schedules = await unit.Repository<Schedule>().ListAsyncWithSpec(spec);
             if (schedules == null) return NotFound();
             return Ok(schedules);
 

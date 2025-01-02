@@ -29,6 +29,7 @@ public static class ApplicationServicesExtension
 
         services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.Configure<ApiBehaviorOptions>(options => {
             options.InvalidModelStateResponseFactory = actionContext => {
             var errors = actionContext.ModelState

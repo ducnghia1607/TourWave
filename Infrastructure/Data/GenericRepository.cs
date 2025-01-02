@@ -42,10 +42,10 @@ public class GenericRepository<T>(TourContext context) : IGenericRepository<T> w
         context.Set<T>().Remove(entity);
     }
 
-    public async Task<bool> SaveAllASync()
-    {
-        return await context.SaveChangesAsync() > 0;
-    }
+    // public async Task<bool> SaveAllASync()
+    // {
+    //     return await context.SaveChangesAsync() > 0;
+    // }
 
     public void Update(T entity)
     {

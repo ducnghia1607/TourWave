@@ -5,21 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class ConsultingController(IGenericRepository<Consulting> repo) : BaseApiController
+    public class ConsultingController(IUnitOfWork unit) : BaseApiController
     {
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Consulting>>> GetAllConsulting()
         {
             var spec = new ConsultingSpecification();
-            return Ok(await repo.ListAsyncWithSpec(spec));
+            return Ok(await unit.Repository<Consulting>().ListAsyncWithSpec(spec));
         }
         [HttpPost]
         public async Task<ActionResult<Consulting>> CreateConsulting(Consulting consulting){
             if (consulting.AppUserId == 0) consulting.AppUserId = null;
             if(consulting.CreatedAt == DateTime.MinValue) consulting.CreatedAt = DateTime.Now;
-                repo.Add(consulting);
-                if(await repo.SaveAllASync()){
+                unit.Repository<Consulting>().Add(consulting);
+                if(await unit.Complete()){
                     return CreatedAtAction("CreateConsulting", new {id = consulting.Id},consulting);
                 }
             return BadRequest("Problem creating new consulting");
@@ -27,10 +27,10 @@ namespace API.Controllers
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteConsulting(int id){
-            var consulting = await repo.GetByIdAsync(id);
+            var consulting = await unit.Repository<Consulting>().GetByIdAsync(id);
             if(consulting == null) return NotFound();
-            repo.Remove(consulting);
-            if(await repo.SaveAllASync()){
+            unit.Repository<Consulting>().Remove(consulting);
+            if(await unit.Complete()){
                 return NoContent();
              }
              return BadRequest("Problem deleting the tour");
