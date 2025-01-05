@@ -24,4 +24,5 @@ public List<Image> Images { get; set; } = new ();
  public ICollection<TourWithType>  TourWithType {get;set; } = [];
  public List<Schedule> Schedules{get;set;} = new ();
  public List<Consulting> Consultings { get; set; } = new();
+ public List<Booking> ?Bookings { get; set; } = new();
 }

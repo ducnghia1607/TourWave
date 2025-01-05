@@ -1,0 +1,155 @@
+<div>
+  <h1 class="page-title-2">Quản lý tour</h1>
+  <div class="example-container flex items-center mt-6 space-x-6 relative">
+    <mat-form-field>
+      <mat-label
+        ><span class="font-primary" style="font-size: 15px"
+          >Tìm kiếm</span
+        ></mat-label
+      >
+      <input
+        matInput
+        placeholder="Nhập tên, mã tour, điểm khởi hành, điểm đến"
+        [(ngModel)]="filterValue"
+        #input
+      />
+    </mat-form-field>
+
+    <button
+      class="btn btn-primary-tour"
+      style="padding: 0px 50px; margin: 0px 40px 23px"
+      (click)="searchButtonClicked()"
+    >
+      Tìm
+    </button>
+    <div
+      class="action flex items-center justify-between absolute right-0 space-x-3"
+      style="margin-bottom: 23px"
+    >
+      <button routerLink="/management/create-new-tour">
+        <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
+        Thêm mới
+      </button>
+
+      <button>
+        <fa-icon [icon]="faPenToSquare" class="me-1"></fa-icon>
+        Sửa
+      </button>
+
+      <button>
+        <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
+        Xóa
+      </button>
+    </div>
+  </div>
+  <div style="overflow: auto; height: 500px">
+    <div class="example-container mat-elevation-z8">
+      <div class="example-table-container">
+        <table
+          mat-table
+          [dataSource]="data"
+          class="example-table"
+          matSort
+          matSortActive="created"
+          matSortDisableClear
+          matSortDirection="desc"
+          classs=""
+        >
+          <ng-container matColumnDef="STT">
+            <th mat-header-cell *matHeaderCellDef disableClear>STT</th>
+            <td mat-cell *matCellDef="let row; let i = index">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <!-- FullName Column -->
+          <ng-container matColumnDef="tourCode">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Mã tour</th>
+            <td mat-cell *matCellDef="let row">{{ row.tourCode }}</td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="tourTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên tour</th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              style="
+                max-width: 160px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ row.title }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="duration">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Thời gian tour
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.duration }}</td>
+          </ng-container>
+
+          <!-- amount Column -->
+          <ng-container matColumnDef="priceAdult">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Giá người lớn
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.priceAdult | currency : "VND" : "symbol" : "1.0-0" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="priceChild">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Giá trẻ em
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.priceChild | currency : "VND" : "symbol" : "1.0-0" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="departure">
+            <th mat-header-cell *matHeaderCellDef disableClear>
+              Điểm khởi hành
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.departure }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="destination">
+            <th mat-header-cell *matHeaderCellDef disableClear>Điểm đến</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.destination }}
+              <!-- <fa-icon
+                  [icon]="faEye"
+                  class="me-2 p-2"
+                  style="color: green"
+                  (click)="viewConsulting(row.id)"
+                ></fa-icon> -->
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+            class="font-primary"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="OnRowClicked(row)"
+            [class.row-is-clicked]="clickedRows.has(row)"
+            class="font-primary"
+          ></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="resultsLength"
+        [pageSize]="10"
+        aria-label="Select page of GitHub search results"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,8 @@ import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptor/loading.interceptor';
 import { AccountModule } from './account/account.module';
+import { CheckoutModule } from './checkout/checkout.module';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 
 registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
@@ -35,6 +37,7 @@ registerLocaleData(localeVi, 'vi-VN');
       type: 'ball-clip-rotate',
     }),
     AccountModule,
+    CheckoutModule,
   ],
   exports: [],
   providers: [
@@ -49,6 +52,11 @@ registerLocaleData(localeVi, 'vi-VN');
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true,
     },
     CurrencyPipe,

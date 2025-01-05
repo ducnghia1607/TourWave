@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,32 +7,42 @@ import {
 } from '@angular/forms';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { AccountService } from '../account.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { TourDetailNavbarComponent } from 'src/app/tour/tour-detail-navbar/tour-detail-navbar.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnDestroy, AfterViewInit {
   faArrowLeft = faArrowLeft as IconProp;
   loginForm!: FormGroup;
   validationErrors: string[] = [];
+  returnUrl: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private router: Router,
-    private matDiaLog: MatDialog
+    private matDiaLog: MatDialog,
+    private activedRoute: ActivatedRoute
   ) {
     this.initializeForm();
     var footer = document.querySelector('.home-page-footer');
     if (footer) {
       footer.classList.add('hidden');
     }
+    this.activedRoute.queryParamMap.subscribe((params) => {
+      this.returnUrl = params.get('returnUrl') || '';
+    });
+    const navbarElement = document.getElementById('main-header');
+    navbarElement?.classList.remove('hidden');
   }
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     var footer = document.querySelector('.home-page-footer');
     if (footer) {
@@ -60,7 +70,12 @@ export class LoginComponent implements OnDestroy {
     this.accountService.login(this.loginForm.value).subscribe({
       next: (res) => {
         if (res) {
-          this.router.navigateByUrl('/tours');
+          if (this.returnUrl != '') {
+            this.router.navigate([this.returnUrl]);
+            // this.router.navigateBy(this.returnUrl);
+          } else {
+            this.router.navigateByUrl('/tours');
+          }
           var footer = document.querySelector('.home-page-footer');
           if (footer) {
             footer.classList.add('hidden');
@@ -73,13 +88,6 @@ export class LoginComponent implements OnDestroy {
         if (errStr == 'Unauthorized' || err.status == 401) {
           errStr = 'Tên đăng nhập hoặc mật khẩu không đúng';
         }
-        // if (Array.isArray(err.error)) {
-        //   err.error.forEach((element: string) => {
-        //     errStr += element + '\n';
-        //   });
-        // } else {
-        //   errStr = err.error;
-        // }
         this.matDiaLog.open(NotificationComponent, {
           data: {
             title: 'Thông báo',
@@ -88,5 +96,12 @@ export class LoginComponent implements OnDestroy {
         });
       },
     });
+  }
+  goBack() {
+    if (this.returnUrl != '') {
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.router.navigateByUrl('/tours');
+    }
   }
 }

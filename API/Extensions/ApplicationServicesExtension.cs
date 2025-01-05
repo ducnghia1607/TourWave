@@ -29,7 +29,10 @@ public static class ApplicationServicesExtension
 
         services.AddTransient(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         services.AddScoped<ITokenService, TokenService>();
+        services.AddHttpContextAccessor();
         services.AddScoped<IUnitOfWork,UnitOfWork>();
+        services.AddScoped<IPaymentService,PaymentService>();
+        services.AddScoped<IVnPayService,VnPayService>();
         services.Configure<ApiBehaviorOptions>(options => {
             options.InvalidModelStateResponseFactory = actionContext => {
             var errors = actionContext.ModelState

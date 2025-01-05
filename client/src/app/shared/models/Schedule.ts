@@ -1,6 +1,7 @@
 export interface Schedule {
-  departureDate: Date;
-  returnDate: Date;
+  id: number;
+  departureDate: string;
+  returnDate: string;
   remainingSpot: number;
   price: number;
 }

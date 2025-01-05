@@ -1,0 +1,63 @@
+<div
+  class="summary-wrapper"
+  style="padding: 15px"
+  *ngIf="booking && tourDetail"
+>
+  <h1 class="tour-title">
+    {{ tourDetail.title }} - TO{{ tourDetail.tourCode }}
+  </h1>
+  <p>
+    <fa-icon [icon]="faCalendar" class="me-2"></fa-icon>
+    {{ booking.departureDate | date : "EEEEE, dd/MM/YYYY" }}
+    <fa-icon [icon]="faArrowRight" class="mx-2"></fa-icon>
+    {{ booking.returnDate | date : "EEEEE, dd/MM/YYYY" }}
+  </p>
+
+  <p>
+    <fa-icon [icon]="faPlane" class="me-2"></fa-icon> {{ tourDetail.departure }}
+    <fa-icon [icon]="faArrowRight" class="mx-2"></fa-icon>
+    <fa-icon [icon]="faPlaneArrival" class="me-2"></fa-icon
+    >{{ tourDetail.destination }}
+  </p>
+  <p>
+    <fa-icon [icon]="faUser" class="me-2"></fa-icon>
+    {{ booking.numAdults }} người lớn {{ booking.numChildren }} trẻ em
+  </p>
+
+  <div style="margin-bottom: 6px">
+    Giá đã bao gồm:
+    <div class="grid grid-cols-3 mt-4">
+      <span
+        *ngFor="let utility of tourDetail.utilities"
+        class="flex items-start"
+        ><fa-icon [icon]="faCheck" style="color: #26bed6"></fa-icon>
+        <span class="ms-2 utility">{{ utility }}</span></span
+      >
+    </div>
+  </div>
+
+  <div
+    class="flex items-center justify-between"
+    style="
+      border-top: 1px solid #ccc;
+      margin-top: 10px;
+      padding: 10px 0px;
+      font-size: 16px;
+      font-weight: 500;
+    "
+  >
+    <p
+      style="
+        color: var(--text-primary-color);
+        font-size: 16px;
+        font-weight: 600;
+      "
+    >
+      Tổng cộng thanh toán
+    </p>
+    <span
+      style="color: var(--secondary-color); font-size: 20px; font-weight: 600"
+      >{{ getTotal | currency : "VND" : "symbol" : "1.0-0" }}</span
+    >
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { MyTripComponent } from './tour/my-trip/my-trip.component';
 
 const routes: Routes = [
   {
@@ -18,9 +19,23 @@ const routes: Routes = [
       import('./recommend/recommend.module').then((m) => m.RecommendModule),
   },
   {
+    path: 'checkout',
+    loadChildren: () =>
+      import('./checkout/checkout.module').then((m) => m.CheckoutModule),
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./account/account.module').then((m) => m.AccountModule),
+  },
+  {
+    path: 'management',
+    loadChildren: () =>
+      import('./management/management.module').then((m) => m.ManagementModule),
+  },
+  {
+    path: 'trips',
+    component: MyTripComponent,
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

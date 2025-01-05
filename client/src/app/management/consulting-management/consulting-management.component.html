@@ -1,0 +1,169 @@
+<div>
+  <h1 class="page-title-2">Quản lý tư vấn</h1>
+  <div class="flex space-x-8 items-center mt-6 example-container">
+    <div class="filter-input">
+      <mat-form-field>
+        <mat-label class="font-primary" style="font-size: 15px"
+          >Tìm kiếm</mat-label
+        >
+        <input
+          matInput
+          placeholder="Nhập tên, mã tour"
+          [(ngModel)]="filterValue"
+          #input
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field
+      appearance="fill"
+      [ariaPlaceholder]="'Linh hoạt'"
+      style="margin-right: 20px"
+    >
+      <mat-label class="font-primary" style="font-size: 15px"
+        >Ngày đặt đơn</mat-label
+      >
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [placeholder]="'Linh hoạt'"
+        [(ngModel)]="selectedDate"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button
+      class="btn btn-primary-tour"
+      style="padding: 0px 50px; margin-bottom: 23px"
+      (click)="searchButtonClicked()"
+    >
+      Tìm
+    </button>
+  </div>
+  <div style="overflow: auto; height: 500px">
+    <div class="example-container mat-elevation-z8">
+      <div class="example-table-container">
+        <table
+          mat-table
+          [dataSource]="data"
+          class="example-table"
+          matSort
+          matSortActive="created"
+          matSortDisableClear
+          matSortDirection="desc"
+          classs=""
+        >
+          <ng-container matColumnDef="STT">
+            <th mat-header-cell *matHeaderCellDef>STT</th>
+            <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+          <ng-container matColumnDef="CreatedAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Thời gian
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.createdAt | date : "EEEEE,M/d/yy, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <!-- FullName Column -->
+          <ng-container matColumnDef="FullName">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Họ và tên</th>
+            <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="Phone">
+            <th mat-header-cell *matHeaderCellDef>SĐT</th>
+            <td mat-cell *matCellDef="let row">{{ row.phone }}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Email
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Trạng thái
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              [ngClass]="{ 'text-success': row.status == '1' }"
+            >
+              {{ row.status == "0" ? "Chưa liên hệ" : "Đã liên hệ" }}
+            </td>
+          </ng-container>
+          <!-- 
+          <ng-container matColumnDef="TourTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Tên tour
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.tourTitle }}
+            </td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="TourCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Mã Tour
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.tourCode }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef disableClear>Hành động</th>
+            <td mat-cell *matCellDef="let row">
+              <fa-icon
+                *ngIf="row.status == '0'"
+                [icon]="faCheckCircle"
+                class="me-1 p-2"
+                style="color: var(--text-primary-color)"
+                (click)="updateStatus(row.id)"
+                [matTooltip]="'Đánh dấu đã liên hệ'"
+              ></fa-icon>
+              <fa-icon
+                [icon]="faEye"
+                class="me-1 p-2"
+                style="color: green"
+                (click)="viewConsulting(row.id)"
+              ></fa-icon>
+              <fa-icon
+                [icon]="faTrash"
+                class="me-1 p-2"
+                style="color: red"
+                (click)="deleteConsulting(row.id)"
+              ></fa-icon>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+            class="font-primary"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            [class.reached-out-bg]="row.status != '0'"
+            class="font-primary"
+          ></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="resultsLength"
+        [pageSize]="10"
+        aria-label="Select page of GitHub search results"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

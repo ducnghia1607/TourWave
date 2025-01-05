@@ -1,0 +1,129 @@
+<div class="create-tour-wrapper">
+  <h1 class="page-title-2">Tạo mới tour</h1>
+  <form action="">
+    <div
+      class="flex justify-between items-center"
+      style="border-top: 1px solid #ccc; padding: 20px 0px"
+    >
+      <div class="form-control">
+        <label for="">Title:</label>
+        <input
+          type="text"
+          placeholder="Nhập tên tour"
+          class="input input-bordered w-full max-w-xs"
+          style="width: 500px"
+        />
+      </div>
+      <div class="form-control">
+        <label>Khởi hành từ</label>
+        <select class="select select-bordered w-full max-w-xs">
+          <option disabled selected>Khởi hành từ</option>
+          <option
+            *ngFor="let departure of departures"
+            value="{{ departure.name }}"
+          >
+            {{ departure.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-control">
+        <label for="" style="font-size: 15px; min-width: 70px">Mã Tour:</label>
+        <input
+          type="text"
+          placeholder="Mã tour"
+          class="input input-bordered max-w-xs"
+        />
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid #ccc; padding: 10px 0px 0px">
+      <div>
+        <form>
+          <mat-form-field class="example-chip-list">
+            <mat-label>Tour Trọn Gói bao gồm</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Fruit selection">
+              <mat-chip-row
+                *ngFor="let fruit of fruits"
+                (removed)="remove(fruit)"
+              >
+                {{ fruit }}
+                <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input
+              placeholder="Nhập tiện ích..."
+              #fruitInput
+              [formControl]="fruitCtrl"
+              [matChipInputFor]="chipGrid"
+              [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="selected($event)"
+            >
+              <mat-option
+                *ngFor="let fruit of filteredFruits | async"
+                [value]="fruit"
+              >
+                {{ fruit }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex flex-col">
+        <label
+          for="note"
+          style="
+            font-size: 15px;
+            color: var(--text-primary-color);
+            font-weight: 500;
+            margin-bottom: 6px;
+          "
+          >Mô tả</label
+        >
+        <textarea
+          name="note"
+          id="note"
+          rows="3"
+          formControlName="note"
+          class="tour-description"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-6" style="margin-top: 16px">
+      <div class="form-control">
+        <label for="" style="width: 150px; font-size: 15px"
+          >Giá người lớn</label
+        >
+        <input
+          type="number"
+          placeholder="Type here"
+          class="input input-bordered w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control">
+        <label for="" style="width: 150px; font-size: 15px">Giá trẻ em </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          class="input input-bordered w-full max-w-xs"
+        />
+      </div>
+    </div>
+    <div
+      style="border-top: 1px solid #ccc; padding: 20px 0px; margin-top: 16px"
+    >
+      <h1 class="page-title-2">Chương trình tour</h1>
+      <div></div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,110 @@
+.checkout-wrapper {
+  padding: 85px 0 60px;
+  background-color: var(--primary-section-color);
+}
+
+.left-block {
+  width: 65%;
+}
+
+.right-block {
+  width: 35%;
+}
+.stepper-label {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.5;
+  color: #003c71;
+}
+
+.checkout-info-wrapper {
+  color: #818180;
+}
+.checkout-info-wrapper .form-control input[type="text"] {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: inset 0 0 0 0 white;
+  border-color: #d2d6de;
+}
+.checkout-info-wrapper .form-control {
+  flex-direction: row !important;
+  align-items: center;
+}
+
+.checkout-info-wrapper .form-control label {
+  font-size: 14px;
+  min-width: 132px;
+}
+
+.checkout-info-wrapper .form-control input:focus {
+  outline: 1px solid var(--text-primary-color);
+  outline-offset: -2px;
+}
+
+.checkout-info-wrapper .form-control input::placeholder {
+  font-size: 13px;
+}
+
+.checkout-info-wrapper .form-control {
+  margin-bottom: 8px;
+}
+
+.checkout-info-wrapper textarea {
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: inset 0 0 0 0 white;
+  border-color: #d2d6de;
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+.radio-info {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+.btn-checkout {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.5s ease;
+}
+
+.btn-checkout:hover {
+  background-color: var(--secondary-color);
+}

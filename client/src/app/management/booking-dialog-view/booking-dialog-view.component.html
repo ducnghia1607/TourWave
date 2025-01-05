@@ -1,0 +1,56 @@
+<div class="tour-booking-dialog" *ngIf="booking">
+  <h2 mat-dialog-title>Thông tin tư vấn</h2>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      <p>
+        <span class="font-weight-bold">Tên khách hàng:</span>
+        {{ booking.fullName }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Số điện thoại:</span>
+        {{ booking.phone }}
+      </p>
+      <p><span class="font-weight-bold">Email:</span> {{ booking.email }}</p>
+      <p>
+        <span class="font-weight-bold">Yêu cầu khác:</span>
+        {{ booking.note }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Trạng thái:</span>
+        <span
+          [ngClass]="{
+            'text-success': booking.paymentStatus == '1',
+            'text-red-500': booking.paymentStatus == '2'
+          }"
+        >
+          {{
+            booking.paymentStatus == "0"
+              ? "Chờ thanh toán"
+              : booking.paymentStatus == "1"
+              ? "Thành công"
+              : "Thất bại"
+          }}
+        </span>
+      </p>
+      <p><span class="font-weight-bold">Tour:</span> {{ booking.tourTitle }}</p>
+      <p>
+        <span class="font-weight-bold">Mã Code:</span> {{ booking.tourCode }}
+      </p>
+
+      <p>
+        <span class="font-weight-bold">Ngày khởi hành - trở về:</span>
+        {{ booking.departureDate }} - {{ booking.returnDate }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Giá tiền:</span>
+        {{
+          booking.numAdults * booking.pricePerAdult +
+            booking.numChildren * booking.pricePerChild | currency
+        }}
+      </p>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button [mat-dialog-close]="true" class="btn-primary-tour">Đóng</button>
+  </mat-dialog-actions>
+</div>

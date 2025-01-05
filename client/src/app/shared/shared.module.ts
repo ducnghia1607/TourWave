@@ -24,9 +24,20 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { NotificationComponent } from './components/notification/notification.component';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { SafePipe } from './pipes/safe.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
-  declarations: [HighlightPipe, PaginationComponent, NotificationComponent],
+  declarations: [
+    HighlightPipe,
+    PaginationComponent,
+    NotificationComponent,
+    SafePipe,
+  ],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -52,6 +63,12 @@ import { NotificationComponent } from './components/notification/notification.co
     BreadcrumbItemDirective,
     MatDialogModule,
     MatMenuModule,
+    MatStepperModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -78,6 +95,13 @@ import { NotificationComponent } from './components/notification/notification.co
     BreadcrumbItemDirective,
     MatDialogModule,
     MatMenuModule,
+    MatStepperModule,
+    SafePipe,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule {

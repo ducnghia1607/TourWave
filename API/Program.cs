@@ -13,11 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
+
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
-// app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().WithOrigins("https://localhost:4200"));
-app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().AllowAnyOrigin());
+app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+//app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().AllowAnyOrigin());
 // app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 

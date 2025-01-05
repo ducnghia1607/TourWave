@@ -79,6 +79,14 @@ body {
   font-weight: bolder;
   line-height: 1.03;
 }
+.page-title-2 {
+  font-size: 24px;
+  color: var(--text-primary-color);
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-weight: bolder;
+  line-height: 1.03;
+}
 .page-subtitle {
   padding: 10px 0;
   margin-bottom: 10px;
@@ -113,4 +121,24 @@ body {
   font-size: 13px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #555863;
+}
+
+.btn-primary-tour {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.5s ease;
+}
+
+.btn-primary-tour:hover {
+  background-color: var(--secondary-color);
+}
+
+.font-primary {
+  font-family: Helvetica, Arial, sans-serif !important;
 }

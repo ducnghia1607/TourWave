@@ -1,0 +1,56 @@
+<section class="sidebar-section" [class.open]="isExpanded">
+  <div class="sidebar-content">
+    <ul class="sidebar-actions">
+      <li
+        class="action-item"
+        [class.active]="activeId == '1'"
+        (click)="navigateSidebar('1')"
+      >
+        <fa-icon [icon]="faHouse" class="text-white me-1"></fa-icon>
+        <span>Trang web</span>
+      </li>
+      <li
+        class="action-item active"
+        [class.active]="activeId == '2'"
+        (click)="navigateSidebar('2')"
+      >
+        <fa-icon [icon]="faSuitcaseRolling" class="text-white me-1"></fa-icon>
+        <span>Quản lý tour</span>
+      </li>
+      <li
+        class="action-item"
+        [class.active]="activeId == '3'"
+        (click)="navigateSidebar('3')"
+      >
+        <fa-icon [icon]="faPhone" class="text-white me-1"></fa-icon>
+        <span>Thống kê giao dịch</span>
+      </li>
+      <li
+        class="action-item"
+        [class.active]="activeId == '4'"
+        (click)="navigateSidebar('4')"
+      >
+        <fa-icon [icon]="faUser" class="text-white me-1"></fa-icon>
+        <span>Quản lý tư vấn</span>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="sidebar-footer p-3 d-flex align-items-center justify-content-start"
+    (click)="toggleSidebar()"
+  >
+    <fa-icon
+      [icon]="faGreaterThan"
+      class="mr-2"
+      *ngIf="!isExpanded"
+      style="color: white"
+    ></fa-icon>
+    <fa-icon
+      [icon]="faLessThan"
+      class="mr-2"
+      *ngIf="isExpanded"
+      style="color: white"
+    ></fa-icon>
+    <span>Thu gọn</span>
+  </div>
+</section>

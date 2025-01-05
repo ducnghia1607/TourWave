@@ -1,21 +1,23 @@
 [
   {
-    "UserName": "Annmarie",
+    "UserName": "test1",
     "Gender": "female",
     "DateOfBirth": "1950-10-05",
     "Created": "2019-06-04",
     "UserPhoto": {
       "Url": "https://randomuser.me/api/portraits/women/64.jpg"
-    }
+    },
+    "FullName": "Nguyễn Đức Mạnh"
   },
   {
-    "UserName": "Padilla",
+    "UserName": "test2",
     "Gender": "male",
     "DateOfBirth": "1995-06-13",
     "Created": "2023-04-22",
     "UserPhoto": {
       "Url": "https://randomuser.me/api/portraits/men/60.jpg"
-    }
+    },
+    "FullName": "Nguyễn Đức Nghĩa"
   },
   {
     "UserName": "Lewis",

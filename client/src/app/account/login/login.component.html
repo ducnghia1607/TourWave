@@ -1,7 +1,7 @@
 <div class="flex justify-center items-center login-wrapper">
   <div class="login-box shadow-md">
     <h2 class="title relative mb-3">
-      <button class="absolute left-0 bottom-0" [routerLink]="['/tours']">
+      <button class="absolute left-0 bottom-0" (click)="goBack()">
         <fa-icon [icon]="faArrowLeft"></fa-icon>
       </button>
       Đăng nhập

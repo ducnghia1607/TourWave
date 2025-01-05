@@ -10,7 +10,7 @@ public class TourSpecParams
     public int PageIndex
     {
         get { return _pageIndex ; }
-        set { _pageIndex  = value; }
+        set { _pageIndex  = value <= 0 ? 1 : value; }
     }
 
     private int _pageSize = 8;
@@ -50,5 +50,12 @@ public class TourSpecParams
         get { return _filterByPrice; }
         set { _filterByPrice = value; }
     }
-    
+
+    private string? _sortBy = "";
+    public string? SortBy
+    {
+        get { return _sortBy; }
+        set { _sortBy = value; }
+    }
+
 }

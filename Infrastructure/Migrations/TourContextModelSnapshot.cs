@@ -147,6 +147,94 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.Booking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AppUserId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClientSecret")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DepartureDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumAdults")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumChildren")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentMethodType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PricePerAdult")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PricePerChild")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateOnly>("ReturnDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("AppUserId1");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("Bookings");
+                });
+
             modelBuilder.Entity("Core.Entities.Consulting", b =>
                 {
                     b.Property<int>("Id")
@@ -177,7 +265,11 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TourId")
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TourId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -578,6 +670,37 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entities.Booking", b =>
+                {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.AppUser", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("AppUserId1");
+
+                    b.HasOne("Core.Entities.Schedule", "Schedule")
+                        .WithMany("Bookings")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Tour", "Tour")
+                        .WithMany("Bookings")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Schedule");
+
+                    b.Navigation("Tour");
+                });
+
             modelBuilder.Entity("Core.Entities.Consulting", b =>
                 {
                     b.HasOne("Core.Entities.AppUser", "AppUser")
@@ -586,9 +709,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Consultings")
-                        .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TourId");
 
                     b.Navigation("AppUser");
 
@@ -722,6 +843,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.AppUser", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("UserConsulting");
 
                     b.Navigation("UserPhoto");
@@ -734,8 +857,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("Core.Entities.Schedule", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
             modelBuilder.Entity("Core.Entities.Tour", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Consultings");
 
                     b.Navigation("Images");

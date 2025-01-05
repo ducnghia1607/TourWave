@@ -1,0 +1,194 @@
+<div>
+  <h1 class="page-title-2">Thống kê đặt tour</h1>
+  <div class="flex example-container justify-between items-start mt-6">
+    <mat-form-field class="filter-input" style="margin-right: 16px">
+      <mat-label class="font-primary" style="font-size: 15px"
+        >Tìm kiếm</mat-label
+      >
+      <input
+        matInput
+        placeholder="Nhập tên, mã tour"
+        [(ngModel)]="filterValue"
+        #input
+      />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="fill"
+      [ariaPlaceholder]="'Linh hoạt'"
+      style="margin-right: 20px"
+    >
+      <mat-label class="font-primary" style="font-size: 15px"
+        >Ngày đặt lịch</mat-label
+      >
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [placeholder]="'Linh hoạt'"
+        [(ngModel)]="selectedDate"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field
+      appearance="fill"
+      [ariaPlaceholder]="'Linh hoạt'"
+      style="margin-right: 20px"
+    >
+      <mat-label class="font-primary" style="font-size: 15px"
+        >Ngày khởi hành</mat-label
+      >
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [placeholder]="'Linh hoạt'"
+        [(ngModel)]="selectedDd"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <button
+      class="btn btn-primary-tour"
+      style="padding: 0px 50px"
+      (click)="searchButtonClicked()"
+    >
+      Tìm
+    </button>
+  </div>
+  <div style="overflow: auto; height: 500px">
+    <div class="example-container mat-elevation-z8">
+      <div class="example-table-container">
+        <table
+          mat-table
+          [dataSource]="data"
+          class="example-table"
+          matSort
+          matSortActive="created"
+          matSortDisableClear
+          matSortDirection="desc"
+          classs=""
+        >
+          <ng-container matColumnDef="STT">
+            <th mat-header-cell *matHeaderCellDef>STT</th>
+            <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Thời gian đặt
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.createDate | date : "EEEEE,M/d/yy, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <!-- FullName Column -->
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+              Khách hàng
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+          </ng-container>
+
+          <!-- Phone Column -->
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef>SĐT</th>
+            <td mat-cell *matCellDef="let row">{{ row.phone }}</td>
+          </ng-container>
+
+          <!-- amount Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Số tiền
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{
+                row.pricePerAdult * row.numAdults +
+                  row.pricePerChild * row.numChildren
+                  | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="paymentStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Trạng thái
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              [ngClass]="{
+                'text-success': row.paymentStatus == '1',
+                'text-red-500': row.paymentStatus == '2'
+              }"
+            >
+              {{
+                row.paymentStatus == "0"
+                  ? "Chờ thanh toán"
+                  : row.paymentStatus == "1"
+                  ? "Đã thanh toán"
+                  : "Thất bại"
+              }}
+            </td>
+          </ng-container>
+          <!-- 
+            <ng-container matColumnDef="TourTitle">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+                Tên tour
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.tourTitle }}
+              </td>
+            </ng-container> -->
+
+          <ng-container matColumnDef="tourCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Mã Tour
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.tourCode }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="schedule">
+            <th mat-header-cell *matHeaderCellDef disableClear>
+              Ngày khởi hành - trở về
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.departureDate }} -
+              {{ row.returnDate }}
+              <!-- <fa-icon
+                [icon]="faEye"
+                class="me-2 p-2"
+                style="color: green"
+                (click)="viewConsulting(row.id)"
+              ></fa-icon> -->
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+            class="font-primary"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            [class.reached-out-bg]="row.paymentStatus == '1'"
+            class="font-primary"
+            (click)="viewDetailBooking(row.id)"
+          ></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="resultsLength"
+        [pageSize]="10"
+        aria-label="Select page of GitHub search results"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

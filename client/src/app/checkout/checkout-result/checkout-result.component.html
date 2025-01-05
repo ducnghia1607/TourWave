@@ -1,0 +1,28 @@
+<div class="result-wrapper" *ngIf="response">
+  <div class="container result" style="padding: 15px">
+    <h1 class="page-title">Kết quả thanh toán</h1>
+    <div>
+      <p *ngIf="response.description">{{ response.description }}</p>
+      <p *ngIf="response.terminalId">
+        Mã Website (Terminal Id): {{ response.terminalId }}
+      </p>
+      <p *ngIf="response.orderId">
+        Mã giao dịch thanh toán: {{ response.orderId }}
+      </p>
+      <p *ngIf="response.transactioId">
+        Mã giao dịch tại VNPAY: {{ response.transactioId }}
+      </p>
+      <p *ngIf="response.amount">
+        Số tiền thanh toán (VND):
+        {{ response.amount | currency : "VND" : "symbol" : "1.0-0" }}
+      </p>
+      <p *ngIf="response.bankCode">
+        Ngân hàng thanh toán: {{ response.bankCode }}
+      </p>
+    </div>
+    <div class="result-action flex space-x-5">
+      <button class="btn btn-primary-tour">Quay về trang chủ</button>
+      <button class="btn btn-primary-tour">Xem chuyến đi của bạn</button>
+    </div>
+  </div>
+</div>

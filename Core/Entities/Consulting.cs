@@ -17,5 +17,6 @@ namespace Core.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public Tour ?Tour { get; set; }
         public int ?TourId { get; set; }
+        public string Status { get; set; } // 0 : chưa liên hệ 1 : đã liên hệ
     }
 }

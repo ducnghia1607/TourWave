@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { TourService } from '../tour.service';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TourDetail } from 'src/app/shared/models/TourDetail';
 // import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { CommonModule, DatePipe, Location } from '@angular/common';
@@ -46,6 +46,8 @@ import { AccountService } from 'src/app/account/account.service';
 import { User } from 'src/app/shared/models/User';
 import { Tour } from 'src/app/shared/models/Tour';
 import { TourRelatedItemComponent } from '../tour-related-item/tour-related-item.component';
+import { BookingService } from 'src/app/core/services/booking.service';
+import { Booking } from 'src/app/shared/models/Booking';
 
 @Component({
   selector: 'app-tour-detail',
@@ -61,7 +63,6 @@ import { TourRelatedItemComponent } from '../tour-related-item/tour-related-item
     TourDetailNoticeComponent,
     TourDetailScheduleComponent,
     TourDetailNavbarComponent,
-    TourConsultingDialogComponent,
     TourRelatedItemComponent,
   ],
 })
@@ -92,6 +93,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   datepipe: DatePipe = new DatePipe('en-US');
   showBlackBackGround = false;
   consulting!: Consulting;
+  booking!: Booking;
   @ViewChild(TourDetailNavbarComponent, { static: false })
   tourNavbar!: TourDetailNavbarComponent;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -104,7 +106,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     public dialog: MatDialog,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private bookingService: BookingService
   ) {
     if (document.scrollingElement) {
       document.scrollingElement.scrollTop = 0;
@@ -123,6 +126,12 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
         console.log(this.user);
       }
     });
+
+    this.bookingService.currentBooking$.subscribe((res) => {
+      if (res) {
+        this.booking = res;
+      }
+    });
     this.recentVistedTours = JSON.parse(
       localStorage.getItem('recentVisitedTours') || '[]'
     ).slice(0, 3);
@@ -136,12 +145,54 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
         this.consulting = consultingData;
         this.consulting.tourId = this.tourDetail.id;
         this.consulting.appUserId = this.user ? this.user.id : 0;
+        this.consulting.status = '0';
         this.tourService.createNewConsulting(this.consulting).subscribe({
           next: (res) => console.log(res),
           error: (err) => console.log(err),
         });
       }
     );
+  }
+
+  bookingTour() {
+    if (!this.user) {
+      this.router.navigate(['auth/login'], {
+        queryParams: {
+          returnUrl: this.router.url,
+        },
+      });
+      return;
+    }
+    var schedule = this.tourDetail.schedules.find((x) => {
+      console.log(
+        new Date(x.departureDate).getTime(),
+        this.selectedDate.getTime()
+      );
+      return new Date(x.departureDate).getTime() == this.selectedDate.getTime();
+    });
+    var booking = {
+      tourId: this.tourDetail.id,
+      appUserId: this.user.id,
+      departureDate: schedule?.departureDate,
+      returnDate: schedule?.returnDate,
+      numAdults: this.adultNumber,
+      numChildren: this.childNumber,
+      pricePerAdult: this.tourDetail.priceAdult,
+      pricePerChild: this.tourDetail.priceChild,
+      scheduleId: schedule?.id,
+      paymentStatus: '0',
+      status: '0',
+      paymentMethodType: '',
+      createDate: new Date(),
+    } as Booking;
+    // this.bookingService.addNewBooking(booking).subscribe();
+    const navigationExtras: NavigationExtras = {
+      state: { booking: booking },
+      queryParams: {
+        id: this.tourDetail.id,
+      },
+    };
+    this.router.navigate(['/checkout'], navigationExtras);
   }
 
   ngAfterViewInit(): void {}
@@ -203,48 +254,48 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  GetTourById() {
-    const id = this.activedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      this.tourService.getTourById(id).subscribe({
-        next: (res) => {
-          this.tourDetail = res;
-          this.tourDetail.images.forEach((element) => {
-            this.images.push(
-              new ImageItem({ src: element.url, thumb: 'IMAGE_THUMBNAIL_URL' })
-            );
-          });
-          // console.log(res);
-          var schedules = this.tourDetail.schedules;
-          if (schedules?.length && schedules.at(0)?.departureDate) {
-            const minDate = schedules.at(0)?.departureDate;
-            const maxDate = schedules.at(-1)?.departureDate;
-            if (minDate) {
-              this.minDate = new Date(minDate);
-              this.selectedDate = this.minDate;
-            }
-            if (maxDate) {
-              this.maxDate = new Date(maxDate);
-            }
-            schedules.forEach((item) => {
-              if (item) {
-                this.schedulesList.push(new Date(item.departureDate));
-              }
-            });
-            if (this.schedulesList.length != 0)
-              this.firstBoxWhiteDate = this.schedulesList[0];
+  // GetTourById() {
+  //   const id = this.activedRoute.snapshot.paramMap.get('id');
+  //   if (id) {
+  //     this.tourService.getTourById(id).subscribe({
+  //       next: (res) => {
+  //         this.tourDetail = res;
+  //         this.tourDetail.images.forEach((element) => {
+  //           this.images.push(
+  //             new ImageItem({ src: element.url, thumb: 'IMAGE_THUMBNAIL_URL' })
+  //           );
+  //         });
+  //         // console.log(res);
+  //         var schedules = this.tourDetail.schedules;
+  //         if (schedules?.length && schedules.at(0)?.departureDate) {
+  //           const minDate = schedules.at(0)?.departureDate;
+  //           const maxDate = schedules.at(-1)?.departureDate;
+  //           if (minDate) {
+  //             this.minDate = new Date(minDate);
+  //             this.selectedDate = this.minDate;
+  //           }
+  //           if (maxDate) {
+  //             this.maxDate = new Date(maxDate);
+  //           }
+  //           schedules.forEach((item) => {
+  //             if (item) {
+  //               this.schedulesList.push(new Date(item.departureDate));
+  //             }
+  //           });
+  //           if (this.schedulesList.length != 0)
+  //             this.firstBoxWhiteDate = this.schedulesList[0];
 
-            if (this.schedulesList.length > 1)
-              this.secondBoxWhiteDate = this.schedulesList[1];
+  //           if (this.schedulesList.length > 1)
+  //             this.secondBoxWhiteDate = this.schedulesList[1];
 
-            if (this.schedulesList.length > 2)
-              this.thirdBoxWhiteDate = this.schedulesList[2];
-          }
-        },
-        error: (err) => console.log(err),
-      });
-    }
-  }
+  //           if (this.schedulesList.length > 2)
+  //             this.thirdBoxWhiteDate = this.schedulesList[2];
+  //         }
+  //       },
+  //       error: (err) => console.log(err),
+  //     });
+  //   }
+  // }
 
   GetRelatedTours() {
     this.tourService
@@ -262,7 +313,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       document.documentElement.scrollTop > 0
     ) {
       var scrollTopValue = document?.scrollingElement?.scrollTop;
-      console.log(scrollTopValue);
+      // console.log(scrollTopValue);
       if (scrollTopValue) {
         if (scrollTopValue > 400) {
           navbarElement?.classList.add('hidden');

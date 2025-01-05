@@ -10,23 +10,59 @@ public class TourSpecification : BaseSpecification<Tour>
     // string ?destination
     //(specParams.Departure.Count == 0 || specParams.Departure.Contains(t.Departure))
     public TourSpecification(TourSpecParams specParams) : base(t => 
-        (string.IsNullOrEmpty(specParams.Search)|| t.Title.Contains(specParams.Search)) &&
-        (t.Departure.ToLower() == specParams.Departure || string.IsNullOrEmpty(specParams.Departure))
+        string.IsNullOrEmpty(specParams.Search)|| t.Title.Contains(specParams.Search) || t.TourCode.Contains(specParams.Search)
+        || t.Destination.Contains(specParams.Search) || t.Departure.Contains(specParams.Search)
     )
     {
             AddInclude(t => t.Images);
             ApplyPaging(specParams.PageSize *(specParams.PageIndex - 1),specParams.PageSize);
-            switch(specParams.Sort){
-                case "priceAsc":
-                    AddOrderBy(x => x.PriceAdult);
-                    break;
-                case "priceDesc":
+        switch (specParams.SortBy)
+        {
+            case "tourCode":
+                if (specParams.Sort == "desc")
+                {
+                AddOrderByDescending(x => x.TourCode);
+                }
+                else
+                {
+                    AddOrderBy(x => x.TourCode);
+                }
+                break;
+            case "tourTitle":
+                if (specParams.Sort == "desc")
+                {
+                    AddOrderByDescending(x => x.Title);
+                }
+                else
+                {
+                    AddOrderBy(x => x.Title);
+                }
+                break;
+            case "priceAdult":
+                if (specParams.Sort == "desc")
+                {
                     AddOrderByDescending(x => x.PriceAdult);
-                    break;
-                default:
+                }
+                else
+                {
                     AddOrderBy(x => x.PriceAdult);
-                    break;
-            }
+                }
+                break;
+            case "priceChild":
+                if (specParams.Sort == "desc")
+                {
+                    AddOrderByDescending(x => x.PriceChild);
+                }
+                else
+                {
+                    AddOrderBy(x => x.PriceChild);
+                }
+                break;
+            default:
+                    AddOrderByDescending(x => x.CreatedAt);
+                break;
+
+        }
     }
 
 

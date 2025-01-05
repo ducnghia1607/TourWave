@@ -1,0 +1,16 @@
+.result-wrapper {
+  padding: 121px 0 60px;
+  background-color: var(--primary-section-color);
+  min-height: 100vh;
+  border-radius: 4px;
+}
+.result {
+  border-radius: 4px;
+  background-color: white;
+}
+
+.result p {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #818180;
+}

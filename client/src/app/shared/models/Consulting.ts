@@ -6,4 +6,5 @@ export interface Consulting {
   createdAt: Date;
   appUserId: number;
   tourId: number;
+  status: string;
 }

@@ -1,0 +1,104 @@
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+/* .mat-mdc-cell {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    } */
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+.reached-out-bg {
+  background-color: #ccc !important;
+}
+
+.example-container .mat-mdc-text-field-wrapper {
+  min-width: 260px !important;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  font-size: 15px !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations)
+  .mdc-text-field__input::placeholder {
+  font-size: 15px !important;
+}
+
+.example-container .mat-mdc-form-field-infix {
+  width: 270px !important;
+}
+
+.action > button {
+  transition: all 0.5s;
+  height: 40px;
+  min-width: 90px;
+  padding: 0 10px;
+  border-radius: 4px;
+  color: black;
+  border: solid 1px #bdbdbd;
+  background-color: white;
+  margin: auto;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.example-container .row-is-clicked {
+  background-color: #003c71 !important;
+  color: #fff !important;
+}

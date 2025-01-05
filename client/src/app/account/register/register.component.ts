@@ -35,6 +35,9 @@ export class RegisterComponent implements OnDestroy {
     if (footer) {
       footer.classList.add('hidden');
     }
+
+    const navbarElement = document.getElementById('main-header');
+    navbarElement?.classList.remove('hidden');
   }
 
   initializeForm() {

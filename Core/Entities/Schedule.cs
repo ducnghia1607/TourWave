@@ -13,5 +13,7 @@ namespace Core.Entities
         public int RemainingSpot {get;set;}
         public int TourId {get;set;}
         public Tour Tour {get;set;}
+
+        public ICollection<Booking> ?Bookings {get;set;}
     }
 }

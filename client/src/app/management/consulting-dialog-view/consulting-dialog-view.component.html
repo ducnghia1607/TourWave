@@ -1,0 +1,33 @@
+<div class="tour-consulting-dialog" *ngIf="consulting">
+  <h2 mat-dialog-title>Thông tin tư vấn</h2>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      <p>
+        <span class="font-weight-bold">Họ và tên:</span>
+        {{ consulting.fullName }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Số điện thoại:</span>
+        {{ consulting.phone }}
+      </p>
+      <p><span class="font-weight-bold">Email:</span> {{ consulting.email }}</p>
+      <p>
+        <span class="font-weight-bold">Yêu cầu khác:</span>
+        {{ consulting.note }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Trạng thái:</span>
+        {{ consulting.status == "0" ? "Chưa liên hệ" : "Đã liên hệ" }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Tour:</span> {{ consulting.tourTitle }}
+      </p>
+      <p>
+        <span class="font-weight-bold">Mã Code:</span> {{ consulting.tourCode }}
+      </p>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button [mat-dialog-close]="true" class="btn-primary-tour">Đóng</button>
+  </mat-dialog-actions>
+</div>

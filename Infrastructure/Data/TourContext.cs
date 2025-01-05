@@ -28,6 +28,7 @@ IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     public DbSet<TourHobby> TourHobbies { get; set; }
     public DbSet<TourTypeHobby> TourTypeHobbies { get; set; }
     public DbSet<Consulting> Consultings { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -45,7 +46,51 @@ IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
         .IsRequired();
 
         modelBuilder.Entity<TourTypeHobby>().Property(p => p.Appropriate).HasPrecision(18, 2);
+modelBuilder.Entity<Booking>()
+    .HasOne(b => b.AppUser)
+    .WithMany()
+    .HasForeignKey(b => b.AppUserId)
+    .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Tour)
+                .WithMany(t => t.Bookings)
+                .HasForeignKey(b => b.TourId)
+                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Schedule)
+                .WithMany(s => s.Bookings)
+                .HasForeignKey(b => b.ScheduleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.AppUser)
+                .WithMany()
+                .HasForeignKey(b => b.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure Tour
+            modelBuilder.Entity<Tour>()
+                .HasMany(t => t.Bookings)
+                .WithOne(b => b.Tour)
+                .HasForeignKey(b => b.TourId);
+
+            modelBuilder.Entity<Tour>()
+                .HasMany(t => t.Schedules)
+                .WithOne(s => s.Tour)
+                .HasForeignKey(s => s.TourId);
+
+            // Configure Schedule
+            modelBuilder.Entity<Schedule>()
+                .HasOne(s => s.Tour)
+                .WithMany(t => t.Schedules)
+                .HasForeignKey(s => s.TourId);
+
+            modelBuilder.Entity<Schedule>()
+                .HasMany(s => s.Bookings)
+                .WithOne(b => b.Schedule)
+                .HasForeignKey(b => b.ScheduleId)
+                .OnDelete(DeleteBehavior.Cascade);
         // modelBuilder.Entity<TourTypeHobby>()
         // .HasKey(l => new { l.TourHobbyId, l.TourTypeId });
 

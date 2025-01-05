@@ -1,0 +1,16 @@
+.management-wrapper {
+  min-height: 100vh;
+  background: var(--primary-section-color);
+}
+
+.management-content {
+}
+
+.content-wrapper {
+  width: 92%;
+  height: 90%;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}

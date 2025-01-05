@@ -1,0 +1,176 @@
+<div class="flex checkout-wrapper">
+  <div class="container flex space-x-6">
+    <div class="bg-white rounded shadow-md left-block" style="padding: 15px">
+      <!-- <button mat-raised-button (click)="isOptional = !isOptional">
+        {{ !isOptional ? "Enable optional steps" : "Disable optional steps" }}
+      </button> -->
+
+      <h1 class="stepper-label">Thông tin người đặt</h1>
+      <p style="font-size: 14px" class="italic mb-2">
+        Vui lòng điền đầy đủ thông tin
+      </p>
+      <form [formGroup]="clientFormGroup" class="checkout-info-wrapper">
+        <div>
+          <div>
+            <div class="form-control items-center">
+              <label for="">Danh xưng</label>
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="1"
+                  class="radio radio-info"
+                  checked="checked"
+                  formControlName="gender"
+                />
+                <label for="male">Anh</label><br />
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="0"
+                  class="radio radio-info"
+                  formControlName="gender"
+                />
+                <label for="female">Chị</label><br />
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label for="fullName">Họ và tên đầy đủ</label>
+              <div class="flex flex-col items-start flex-1">
+                <input
+                  type="text"
+                  placeholder="VD: Nguyễn Văn A"
+                  id="fullName"
+                  formControlName="fullName"
+                  name="fullName"
+                />
+                <div
+                  *ngIf="
+                    clientFormGroup.controls['fullName'].invalid &&
+                    (clientFormGroup.controls['fullName'].dirty ||
+                      clientFormGroup.controls['fullName'].touched)
+                  "
+                  class=""
+                >
+                  <div
+                    *ngIf="
+                      clientFormGroup.controls['fullName'].errors &&
+                      clientFormGroup.controls['fullName'].errors['required']
+                    "
+                  >
+                    <span class="" style="font-size: 12px; color: red"
+                      >Họ và tên không được để trống</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label for="phone">Số điện thoại liên hệ</label>
+
+              <div class="flex flex-col items-start flex-1">
+                <input
+                  type="text"
+                  placeholder="Nhập số điện thoại"
+                  id="phone"
+                  formControlName="phone"
+                  name="phone"
+                />
+                <div
+                  *ngIf="
+                    clientFormGroup.controls['phone'].invalid &&
+                    (clientFormGroup.controls['phone'].dirty ||
+                      clientFormGroup.controls['phone'].touched)
+                  "
+                  class=""
+                >
+                  <div
+                    *ngIf="
+                      clientFormGroup.controls['phone'].errors &&
+                      clientFormGroup.controls['phone'].errors['required']
+                    "
+                  >
+                    <span class="" style="font-size: 12px; color: red"
+                      >Số điện thọai không được để trống</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label for="email">Email</label>
+
+              <div class="flex flex-col items-start flex-1">
+                <input
+                  type="text"
+                  placeholder="Nhập email"
+                  id="email"
+                  name="email"
+                  formControlName="email"
+                />
+                <div
+                  *ngIf="
+                    clientFormGroup.controls['email'].invalid &&
+                    (clientFormGroup.controls['email'].dirty ||
+                      clientFormGroup.controls['email'].touched)
+                  "
+                  class=""
+                >
+                  <div
+                    *ngIf="
+                      clientFormGroup.controls['email'].errors &&
+                      clientFormGroup.controls['email'].errors['required']
+                    "
+                  >
+                    <span class="" style="font-size: 12px; color: red"
+                      >Email không đúng định dạng</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="note"
+                style="
+                  font-size: 15px;
+                  color: var(--text-primary-color);
+                  font-weight: 500;
+                  margin-bottom: 6px;
+                "
+                >Yêu cầu đặc biệt</label
+              >
+              <textarea
+                name="note"
+                id="note"
+                rows="3"
+                formControlName="note"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            class="btn btn-checkout"
+            [class.btn-disabled]="this.clientFormGroup.invalid"
+            (click)="checkOutBtnClicked()"
+          >
+            Thanh toán
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="bg-white rounded shadow-md right-block">
+      <app-checkout-summary
+        [booking]="booking"
+        [tourDetail]="tour"
+      ></app-checkout-summary>
+    </div>
+  </div>
+</div>

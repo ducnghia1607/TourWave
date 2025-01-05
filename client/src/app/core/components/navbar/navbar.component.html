@@ -12,10 +12,24 @@
       <img src="../../../assets/images/logo.png" alt="" width="48px" />
       <div style="margin-left: 40px">
         <ul class="flex justify-between items-center nav space-x-4 nav-link">
-          <!-- <li><a>Khách sạn</a></li> -->
           <li><a routerLink="/tours" routerLinkActive="active">Tours</a></li>
           <li>
             <a routerLink="/recommend" routerLinkActive="active">Gợi ý</a>
+          </li>
+          <li *ngIf="user">
+            <a routerLink="/mytour" routerLinkActive="active"
+              >Chuyến đi của tôi</a
+            >
+          </li>
+          <li
+            *ngIf="
+              user &&
+              user.roles &&
+              (user?.roles?.includes('Admin') ||
+                user?.roles?.includes('Moderator'))
+            "
+          >
+            <a routerLink="/management" routerLinkActive="active">Quản lý</a>
           </li>
           <!-- <li><a>Vé máy bay</a></li>
           <li><a>Vé vui chơi</a></li>
@@ -45,16 +59,34 @@
               ></fa-icon>
             </div>
           </button>
+
           <mat-menu #menu="matMenu">
-            <div class="menu-container">
+            <div class="menu-container" *ngIf="user == null">
               <button class="btn-signup" routerLink="/auth/register">
                 Đăng ký
               </button>
               <div class="menu-txt">
                 <p style="line-height: 1">Quý khách đã có tài khoản?</p>
-                <a href="go-to-login-link" routerLink="/auth/login"
-                  >Đăng nhập ngay</a
+                <a (click)="loginBtnClick()">Đăng nhập ngay</a>
+              </div>
+            </div>
+            <div class="othermenu" *ngIf="user != null">
+              <ul>
+                <li>
+                  <a href="">Hồ sơ của tôi</a>
+                </li>
+                <li>
+                  <a href="">Nhận xét của tôi</a>
+                </li>
+              </ul>
+              <div class="w-full flex justify-center items-center mt-2">
+                <button
+                  class="btn-logout"
+                  routerLink="/tours"
+                  (click)="logout()"
                 >
+                  Đăng xuất
+                </button>
               </div>
             </div>
           </mat-menu>
