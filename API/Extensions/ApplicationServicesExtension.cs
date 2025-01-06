@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using API.DataHelpers;
 using API.Errors;
 using AutoMapper;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -33,6 +34,9 @@ public static class ApplicationServicesExtension
         services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.AddScoped<IPaymentService,PaymentService>();
         services.AddScoped<IVnPayService,VnPayService>();
+        services.AddScoped<ITourService,TourService>();
+        services.AddScoped<IPhotoService,PhotoService>();
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         services.Configure<ApiBehaviorOptions>(options => {
             options.InvalidModelStateResponseFactory = actionContext => {
             var errors = actionContext.ModelState
@@ -47,11 +51,13 @@ public static class ApplicationServicesExtension
                 return new BadRequestObjectResult(response);
             };
         });
-        // services.AddCors(opt => {
-        //     opt.AddPolicy("CorsPolicy",policy => {
-        //         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200","http://localhost:4200");
-        //     });
-        // });
+        services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy", policy =>
+            {
+                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://localhost:4200");
+            });
+        });
         return services;
     }
 }

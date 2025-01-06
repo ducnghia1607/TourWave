@@ -9,6 +9,11 @@ import { Pagination } from '../shared/models/Pagination';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Schedule } from '../shared/models/Schedule';
 import { Consulting } from '../shared/models/Consulting';
+import { SortDirection } from '@angular/material/sort';
+import { BookingResponse } from '../shared/models/BookingResponse';
+import { TourType } from '../shared/models/TourType';
+import { ReviewResponse } from '../shared/models/ReviewResponse';
+import { Review } from '../shared/models/Review';
 @Injectable({
   providedIn: 'root',
 })
@@ -81,6 +86,26 @@ export class TourService {
       );
   }
 
+  getListOfBookingForUser(
+    sort: string,
+    order: SortDirection,
+    page: number,
+    userId: number
+  ) {
+    var queryStringValue = `?sort=${sort}&order=${order}&page=${page + 1}`;
+    // if (selectedDate) queryStringValue += `&date=${selectedDate}`;
+    // else queryStringValue += `&date=`;
+    // if (filterValue) queryStringValue += `&search=${filterValue}`;
+    // else queryStringValue += `&search=`;
+    // if (selectedDd) queryStringValue += `&departureDate=${selectedDd}`;
+    // else queryStringValue += `&departureDate=`;
+    if (userId) queryStringValue += `&uid=${userId}`;
+    else queryStringValue += `&uid=`;
+    return this.http.get<Pagination<BookingResponse[]>>(
+      this.baseUrl + 'bookings/booking-for-user' + queryStringValue
+    );
+  }
+
   getTourParams() {
     return this.tourParams;
   }
@@ -110,5 +135,31 @@ export class TourService {
   }
   getAllConsultings() {
     return this.http.get<Consulting[]>(this.baseUrl + 'consulting');
+  }
+  getAllTourTypes() {
+    return this.http.get<TourType[]>(this.baseUrl + 'tours/tour-types');
+  }
+
+  createNewTour(tour: any) {
+    return this.http.post<any>(this.baseUrl + 'tours', tour);
+  }
+  deleteTour(tourId: any) {
+    return this.http.delete(this.baseUrl + 'tours/' + tourId);
+  }
+
+  getAllReviews(tourId: number) {
+    return this.http.get<ReviewResponse[]>(
+      this.baseUrl + 'reviews?tourId=' + tourId
+    );
+  }
+
+  createNewReview(review: Review) {
+    return this.http.post<Review>(this.baseUrl + 'reviews', review);
+  }
+
+  checkCanReview(tourId: number, uid: number) {
+    return this.http.get<boolean>(
+      this.baseUrl + 'tours/check-can-review?tourId=' + tourId + '&uid=' + uid
+    );
   }
 }

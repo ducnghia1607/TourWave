@@ -31,6 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FileUploadModule } from 'ng2-file-upload';
 @NgModule({
   declarations: [
     HighlightPipe,
@@ -69,6 +70,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTooltipModule,
     MatChipsModule,
     MatAutocompleteModule,
+    FileUploadModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -102,6 +104,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTooltipModule,
     MatChipsModule,
     MatAutocompleteModule,
+    FileUploadModule,
   ],
 })
 export class SharedModule {

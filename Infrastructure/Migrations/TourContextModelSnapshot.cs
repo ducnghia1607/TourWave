@@ -321,6 +321,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ReviewId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TourId")
                         .HasColumnType("int");
 
@@ -331,6 +334,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ItineraryId");
+
+                    b.HasIndex("ReviewId");
 
                     b.HasIndex("TourId");
 
@@ -367,6 +372,38 @@ namespace Infrastructure.Migrations
                     b.ToTable("Itinerarys");
                 });
 
+            modelBuilder.Entity("Core.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("Core.Entities.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -377,9 +414,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateOnly>("DepartureDate")
                         .HasColumnType("date");
-
-                    b.Property<int>("RemainingSpot")
-                        .HasColumnType("int");
 
                     b.Property<DateOnly>("ReturnDate")
                         .HasColumnType("date");
@@ -402,13 +436,13 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Availability")
+                    b.Property<bool?>("Availability")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Capacity")
+                    b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -429,7 +463,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
@@ -443,6 +477,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopPlaces")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TourCode")
@@ -722,11 +759,17 @@ namespace Infrastructure.Migrations
                         .WithMany("Images")
                         .HasForeignKey("ItineraryId");
 
+                    b.HasOne("Core.Entities.Review", "Review")
+                        .WithMany("Images")
+                        .HasForeignKey("ReviewId");
+
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Images")
                         .HasForeignKey("TourId");
 
                     b.Navigation("Itinerary");
+
+                    b.Navigation("Review");
 
                     b.Navigation("Tour");
                 });
@@ -738,6 +781,25 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tour");
+                });
+
+            modelBuilder.Entity("Core.Entities.Review", b =>
+                {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Tour", "Tour")
+                        .WithMany("Reviews")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Tour");
                 });
@@ -845,6 +907,8 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("Bookings");
 
+                    b.Navigation("Reviews");
+
                     b.Navigation("UserConsulting");
 
                     b.Navigation("UserPhoto");
@@ -853,6 +917,11 @@ namespace Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Core.Entities.Itinerary", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Core.Entities.Review", b =>
                 {
                     b.Navigation("Images");
                 });
@@ -871,6 +940,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Itineraries");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Schedules");
 

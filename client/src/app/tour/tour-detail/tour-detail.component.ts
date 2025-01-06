@@ -48,6 +48,8 @@ import { Tour } from 'src/app/shared/models/Tour';
 import { TourRelatedItemComponent } from '../tour-related-item/tour-related-item.component';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Booking } from 'src/app/shared/models/Booking';
+import { TourDetailReviewComponent } from '../tour-detail-review/tour-detail-review.component';
+import { ReviewResponse } from 'src/app/shared/models/ReviewResponse';
 
 @Component({
   selector: 'app-tour-detail',
@@ -64,6 +66,7 @@ import { Booking } from 'src/app/shared/models/Booking';
     TourDetailScheduleComponent,
     TourDetailNavbarComponent,
     TourRelatedItemComponent,
+    TourDetailReviewComponent,
   ],
 })
 export class TourDetailComponent implements OnInit, AfterViewInit {
@@ -153,7 +156,22 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       }
     );
   }
+  reviews: ReviewResponse[] = [];
 
+  getAllReview(tourId: number) {
+    this.tourService.getAllReviews(tourId).subscribe((res) => {
+      this.reviews = res;
+    });
+  }
+  canReview = false;
+  checkCanReview(tourId: number, uid: number) {
+    this.tourService
+      .checkCanReview(tourId, uid)
+      .pipe(take(1))
+      .subscribe((res) => {
+        this.canReview = res;
+      });
+  }
   bookingTour() {
     if (!this.user) {
       this.router.navigate(['auth/login'], {
@@ -203,6 +221,9 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     this.activedRoute.data.subscribe({
       next: (data) => {
         this.tourDetail = data['tourDetail'];
+        this.getAllReview(this.tourDetail.id);
+        this.checkCanReview(this.tourDetail.id, this.user.id);
+        console.log(this.reviews);
         this.breadcrumbService.set('@tourTitle', this.tourDetail.title);
 
         const newUrl = `/tours/${StringUtility.removeSign4VietnameseString(
@@ -254,48 +275,6 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  // GetTourById() {
-  //   const id = this.activedRoute.snapshot.paramMap.get('id');
-  //   if (id) {
-  //     this.tourService.getTourById(id).subscribe({
-  //       next: (res) => {
-  //         this.tourDetail = res;
-  //         this.tourDetail.images.forEach((element) => {
-  //           this.images.push(
-  //             new ImageItem({ src: element.url, thumb: 'IMAGE_THUMBNAIL_URL' })
-  //           );
-  //         });
-  //         // console.log(res);
-  //         var schedules = this.tourDetail.schedules;
-  //         if (schedules?.length && schedules.at(0)?.departureDate) {
-  //           const minDate = schedules.at(0)?.departureDate;
-  //           const maxDate = schedules.at(-1)?.departureDate;
-  //           if (minDate) {
-  //             this.minDate = new Date(minDate);
-  //             this.selectedDate = this.minDate;
-  //           }
-  //           if (maxDate) {
-  //             this.maxDate = new Date(maxDate);
-  //           }
-  //           schedules.forEach((item) => {
-  //             if (item) {
-  //               this.schedulesList.push(new Date(item.departureDate));
-  //             }
-  //           });
-  //           if (this.schedulesList.length != 0)
-  //             this.firstBoxWhiteDate = this.schedulesList[0];
-
-  //           if (this.schedulesList.length > 1)
-  //             this.secondBoxWhiteDate = this.schedulesList[1];
-
-  //           if (this.schedulesList.length > 2)
-  //             this.thirdBoxWhiteDate = this.schedulesList[2];
-  //         }
-  //       },
-  //       error: (err) => console.log(err),
-  //     });
-  //   }
-  // }
 
   GetRelatedTours() {
     this.tourService

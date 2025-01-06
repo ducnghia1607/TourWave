@@ -1,4 +1,5 @@
 import { Itinerary } from './Itinarary';
+import { ReviewResponse } from './ReviewResponse';
 import { Schedule } from './Schedule';
 import { Tour } from './Tour';
 
@@ -17,6 +18,7 @@ export interface TourDetail extends Tour {
   images: Image[];
   itineraries: Itinerary[];
   schedules: Schedule[];
+  reviews: ReviewResponse[];
 }
 
 export interface Image {

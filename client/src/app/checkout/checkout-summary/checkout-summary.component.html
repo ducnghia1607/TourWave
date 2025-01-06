@@ -3,9 +3,7 @@
   style="padding: 15px"
   *ngIf="booking && tourDetail"
 >
-  <h1 class="tour-title">
-    {{ tourDetail.title }} - TO{{ tourDetail.tourCode }}
-  </h1>
+  <h1 class="tour-title">{{ tourDetail.title }} - {{ tourDetail.tourCode }}</h1>
   <p>
     <fa-icon [icon]="faCalendar" class="me-2"></fa-icon>
     {{ booking.departureDate | date : "EEEEE, dd/MM/YYYY" }}

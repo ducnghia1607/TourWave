@@ -16,6 +16,7 @@ namespace Core.Entities
         public ICollection<AppUserRole> UserRoles { get; set; }
         public ICollection<Consulting> UserConsulting { get; set; }
         public UserPhoto? UserPhoto { get; set; }
-        public ICollection<Booking> Bookings {get;set;}
+        public ICollection<Booking> ?Bookings {get;set;}
+        public List<Review>? Reviews { get; set; } = new();
     }
 }

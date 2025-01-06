@@ -29,6 +29,7 @@
     "@stripe/stripe-js": "^5.4.0",
     "moment": "^2.30.1",
     "ng-gallery": "^12.0.0-beta.4",
+    "ng2-file-upload": "^6.0.0",
     "ngx-gallery": "^5.10.0",
     "ngx-pagination": "^6.0.3",
     "ngx-spinner": "^16.0.2",

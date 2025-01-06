@@ -1,5 +1,5 @@
 export class TourParams {
-  pageSize: number = 1;
+  pageSize: number = 6;
   pageIndex: number = 1;
   search: string = '';
   departure: string = '';

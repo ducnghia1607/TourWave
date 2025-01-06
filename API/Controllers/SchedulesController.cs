@@ -20,5 +20,15 @@ namespace API.Controllers
             return Ok(schedules);
 
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Schedule>> GetRemainingSpotOnSchedule([FromQuery] string date, [FromQuery] string tourId)
+        {
+            var spec = new SchedulesWithFilter(date, tourId);
+            var schedules = await unit.Repository<Schedule>().ListAsyncWithSpec(spec);
+            if (schedules == null) return NotFound();
+            return Ok(schedules);
+
+        }
     }
 }

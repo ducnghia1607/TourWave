@@ -4,6 +4,7 @@ import { TourTypeHobby } from '../shared/models/TourTypeHobby';
 import { environment } from 'src/environments/environment';
 import { TourToRecommend } from '../shared/models/TourToRecommend';
 import { Pagination } from '../shared/models/Pagination';
+import { BookingRecommendation } from '../shared/models/BookingRecommendation';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,18 @@ export class RecommendService {
   }
 
   getAllTourToRecommend() {
+    // Get All tour for recommendation
     return this.http.get<Pagination<TourToRecommend[]>>(
       this.baseUrl + 'tours/recommend-tour'
+    );
+  }
+
+  getAllBookingForUser(userId: number) {
+    return this.http.get<BookingRecommendation[]>(
+      this.baseUrl +
+        'bookings/all-booking-for-recommendation' +
+        '?uid=' +
+        userId
     );
   }
 }

@@ -13,6 +13,9 @@ export class TourRecommendContentComponent {
     if (this.tourPagination) {
       this.pageNumber = this.tourPagination.pageIndex;
     }
+    this.recentVisitedTours = JSON.parse(
+      localStorage.getItem('recentVisitedTours') || '[]'
+    );
   }
   @Input() tourPagination!: Pagination<TourToRecommend[]>;
   @Output() ChangePageNumber = new EventEmitter<number>();
@@ -20,5 +23,16 @@ export class TourRecommendContentComponent {
   pageNumberChanged($event: any) {
     this.pageNumber = $event;
     this.ChangePageNumber.emit(this.pageNumber);
+  }
+  recentVisitedTours: Tour[] = [];
+
+  removeRecentTourHandle($event: any) {
+    this.recentVisitedTours = this.recentVisitedTours.filter(
+      (x: any) => x.id != $event
+    );
+    localStorage.setItem(
+      'recentVisitedTours',
+      JSON.stringify(this.recentVisitedTours)
+    );
   }
 }

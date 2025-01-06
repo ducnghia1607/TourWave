@@ -16,6 +16,9 @@ import {
 import { merge, startWith, switchMap, catchError, of, map } from 'rxjs';
 import { Pagination } from 'src/app/shared/models/Pagination';
 import { Tour } from 'src/app/shared/models/Tour';
+import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { TourService } from 'src/app/tour/tour.service';
 
 @Component({
   selector: 'app-tour-management',
@@ -75,8 +78,10 @@ export class TourManagementComponent {
 
   constructor(
     private managementService: ManagementService,
+    private tourService: TourService,
     private datePipe: DatePipe,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -114,18 +119,49 @@ export class TourManagementComponent {
         this.data = data;
       });
   }
-
+  currentTourCode!: string;
+  currentTourTitle!: string;
+  currentTourId!: string;
   clickedRows = new Set<Tour>();
 
   OnRowClicked(row: any) {
     if (this.clickedRows.has(row)) {
       this.clickedRows.delete(row);
+      this.currentTourCode = '';
+      this.currentTourTitle = '';
+      this.currentTourCode = '';
     } else {
       this.clickedRows.clear();
       this.clickedRows.add(row);
       console.log(row);
-      // this.selectedRowChange.emit(row);
+      this.currentTourCode = row.tourCode;
+      this.currentTourTitle = row.title;
+      this.currentTourId = row.id;
     }
+  }
+  goToTourDetail() {
+    if (this.currentTourCode === '' || this.currentTourTitle === '') return;
+    this.router.navigate([
+      '/tours',
+      this.currentTourTitle,
+      this.currentTourCode,
+    ]);
+  }
+  deleteTour() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.componentInstance.confirm.subscribe((confirm) => {
+      if (confirm == '2') {
+        return;
+      } else {
+        if (this.currentTourId === '') return;
+        this.tourService.deleteTour(this.currentTourId).subscribe((res) => {
+          console.log(res);
+        });
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   faEye = faEye as IconProp;

@@ -1,1 +1,289 @@
-<p>my-trip works!</p>
+<div class="my-trip-wrapper">
+  <div class="container bg-white">
+    <div class="navigation-box">
+      <ul>
+        <li [class.active]="isTabActive == '1'" (click)="isTabActive = '1'">
+          <a>Chuyến đi sắp tới</a>
+        </li>
+        <li [class.active]="isTabActive == '2'" (click)="isTabActive = '2'">
+          <a>Lịch sử chuyến đi</a>
+        </li>
+      </ul>
+    </div>
+    <div class="my-trip-content">
+      <div class="my-trip-future" [hidden]="isTabActive != '1'">
+        <div *ngIf="tourFuture.length == 0">
+          <div class="empty-history flex justify-center items-center flex-col">
+            <img src="../../../assets/images/emptytrip.png" alt="" />
+            <p style="font-size: 14px; padding: 16px 0px">
+              Hiện tại bạn chưa có chuyến đi sắp tới nào
+            </p>
+          </div>
+        </div>
+        <div
+          style="overflow: auto; height: 500px"
+          [hidden]="tourFuture.length == 0"
+        >
+          <div class="example-container mat-elevation-z8">
+            <div class="example-table-container">
+              <table
+                mat-table
+                [dataSource]="tourFuture"
+                class="example-table"
+                matSort
+                matSortActive="created"
+                matSortDisableClear
+                matSortDirection="desc"
+                classs=""
+              >
+                <ng-container matColumnDef="STT">
+                  <th mat-header-cell *matHeaderCellDef disableClear>STT</th>
+                  <td mat-cell *matCellDef="let row; let i = index">
+                    {{ i + 1 }}
+                  </td>
+                </ng-container>
+
+                <!-- FullName Column -->
+                <ng-container matColumnDef="tourCode">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    Mã tour
+                  </th>
+                  <td mat-cell *matCellDef="let row">{{ row.tourCode }}</td>
+                </ng-container>
+
+                <!-- Phone Column -->
+                <ng-container matColumnDef="tourTitle">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Tên tour
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    style="
+                      max-width: 160px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ row.tourTitle }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdAt">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ngày đặt
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{ row.createDate | date : "EEEEE,M/d/yy, h:mm a" }}
+                  </td>
+                </ng-container>
+
+                <!-- amount Column -->
+                <ng-container matColumnDef="quantity">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    disableClear
+                  >
+                    Số lượng
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{ row.numAdults }} người lớn {{ row.numChildren }} trẻ em
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    disableClear
+                  >
+                    Giá tiền
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{
+                      row.pricePerChild * row.numChildren +
+                        row.pricePerAdult * row.numAdults
+                        | currency : "VND" : "symbol" : "1.0-0"
+                    }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef disableClear>
+                    Ngày khời hành - trở về
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{ row.departureDate }} -
+                    {{ row.returnDate }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumns"
+                  class="font-primary"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  class="font-primary"
+                  (click)="OnRowClicked(row)"
+                ></tr>
+                <!-- (click)="OnRowClicked(row)"
+                [class.row-is-clicked]="clickedRows.has(row)" -->
+              </table>
+            </div>
+
+            <mat-paginator
+              [length]="resultsLength"
+              [pageSize]="10"
+              aria-label="Select page of GitHub search results"
+            ></mat-paginator>
+          </div>
+        </div>
+      </div>
+
+      <div class="my-trip-history" [hidden]="isTabActive != '2'">
+        <div *ngIf="tourHistory.length == 0">
+          <div class="empty-history flex justify-center items-center flex-col">
+            <img src="../../../assets/images/emptytrip.png" alt="" />
+            <p style="font-size: 14px; padding: 16px 0px">
+              Hiện tại bạn chưa có lịch sử chuyến đi nào
+            </p>
+          </div>
+        </div>
+        <div
+          style="overflow: auto; height: 500px"
+          [hidden]="tourHistory.length == 0"
+        >
+          <div class="example-container mat-elevation-z8">
+            <div class="example-table-container">
+              <table
+                mat-table
+                [dataSource]="tourHistory"
+                class="example-table"
+                matSort
+                matSortActive="created"
+                matSortDisableClear
+                matSortDirection="desc"
+                classs=""
+              >
+                <ng-container matColumnDef="STT">
+                  <th mat-header-cell *matHeaderCellDef disableClear>STT</th>
+                  <td mat-cell *matCellDef="let row; let i = index">
+                    {{ i + 1 }}
+                  </td>
+                </ng-container>
+
+                <!-- FullName Column -->
+                <ng-container matColumnDef="tourCode">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    Mã tour
+                  </th>
+                  <td mat-cell *matCellDef="let row">{{ row.tourCode }}</td>
+                </ng-container>
+
+                <!-- Phone Column -->
+                <ng-container matColumnDef="tourTitle">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Tên tour
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    style="
+                      max-width: 160px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ row.tourTitle }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdAt">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ngày đặt
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{ row.createDate | date : "EEEEE,M/d/yy, h:mm a" }}
+                  </td>
+                </ng-container>
+
+                <!-- amount Column -->
+                <ng-container matColumnDef="quantity">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    disableClear
+                  >
+                    Số lượng
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{ row.numAdults }} người lớn {{ row.numChildren }} trẻ em
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    disableClear
+                  >
+                    Giá tiền
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{
+                      row.pricePerChild * row.numChildren +
+                        row.pricePerAdult * row.numAdults
+                        | currency : "VND" : "symbol" : "1.0-0"
+                    }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef disableClear>
+                    Ngày khời hành - trở về
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    {{ row.departureDate }} -
+                    {{ row.returnDate }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumns"
+                  class="font-primary"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  class="font-primary"
+                  (click)="OnRowClicked(row)"
+                ></tr>
+                <!-- (click)="OnRowClicked(row)"
+                [class.row-is-clicked]="clickedRows.has(row)" -->
+              </table>
+            </div>
+
+            <mat-paginator
+              [length]="resultsLength"
+              [pageSize]="10"
+              aria-label="Select page of GitHub search results"
+            ></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div>
+  <h1 mat-dialog-title>Xác nhận xóa</h1>
+  <div mat-dialog-content>Bạn có chắn chắn muốn xóa không ?</div>
+  <div mat-dialog-actions class="float-right">
+    <button mat-raised-button mat-dialog-close (click)="declineClick()">
+      Không
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      mat-dialog-close
+      cdkFocusInitial
+      (click)="consentClick()"
+    >
+      Đồng ý
+    </button>
+  </div>
+</div>

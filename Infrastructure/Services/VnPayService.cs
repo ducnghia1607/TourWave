@@ -153,7 +153,6 @@ namespace Infrastructure.Services
                 bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
                 int bookingId = Convert.ToInt32(orderId);
                 var booking = await _unit.Repository<Booking>().GetByIdAsync(bookingId);
-
                 //var booking = await this.unit.Repository<Booking>().GetByIdAsync(bookingId);
 
                 if (checkSignature)

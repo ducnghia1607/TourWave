@@ -9,7 +9,7 @@
         <img src="{{ tour.imageUrl }}" alt="Shoes" />
       </figure>
       <div class="card-body">
-        <h2 class="card-title line-clamp-2">
+        <h2 class="card-title line-clamp-2" style="min-height: 32px">
           {{ tour.title }}
         </h2>
         <div class="flex justify-between items-center">
@@ -26,15 +26,20 @@
             </span>
           </span>
         </div>
-        <ul class="card-departure">
-          <li>Thế giới băng tuyết</li>
-          <li>Làng Tuyết Hương</li>
-          <li>Nhà Thờ Saint Sophia</li>
+        <ul
+          class="card-departure"
+          style="height: 60px; max-height: 60%; overflow: hidden"
+        >
+          <div class="grid grid-cols-2">
+            <li class="line-clamp-1" *ngFor="let place of tour.topPlaces">
+              {{ place }}
+            </li>
+          </div>
         </ul>
         <div class="card-actions justify-end relative py-3">
-          <span class="sale-price mb-1">{{
+          <!-- <span class="sale-price mb-1">{{
             tour.priceAdult | currency : "VND" : "symbol" : "1.0-0"
-          }}</span>
+          }}</span> -->
           <span class="price">{{
             tour.priceChild | currency : "VND" : "symbol" : "1.0-0"
           }}</span>

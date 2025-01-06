@@ -36,6 +36,7 @@ export class TourDetailScheduleComponent implements OnInit {
     }
   }
   @Input() schedules: Schedule[] = [];
+  @Input() price!: number;
   @Output() selectedRowChange = new EventEmitter<Schedule>();
   selectedDate: Date | null = null;
   displayedColumns: string[] = [

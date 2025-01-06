@@ -12,4 +12,5 @@ export interface Tour {
   departure: string;
   destination: string;
   departureDate: string;
+  topPlaces: [];
 }

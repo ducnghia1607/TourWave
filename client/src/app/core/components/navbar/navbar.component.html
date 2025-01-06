@@ -17,7 +17,7 @@
             <a routerLink="/recommend" routerLinkActive="active">Gợi ý</a>
           </li>
           <li *ngIf="user">
-            <a routerLink="/mytour" routerLinkActive="active"
+            <a routerLink="/trips" routerLinkActive="active"
               >Chuyến đi của tôi</a
             >
           </li>
@@ -71,14 +71,14 @@
               </div>
             </div>
             <div class="othermenu" *ngIf="user != null">
-              <ul>
+              <!-- <ul>
                 <li>
-                  <a href="">Hồ sơ của tôi</a>
+                  <a [routerLink]="'auth/profile'">Hồ sơ của tôi</a>
                 </li>
                 <li>
                   <a href="">Nhận xét của tôi</a>
                 </li>
-              </ul>
+              </ul> -->
               <div class="w-full flex justify-center items-center mt-2">
                 <button
                   class="btn-logout"

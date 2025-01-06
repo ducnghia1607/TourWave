@@ -87,6 +87,15 @@ body {
   font-weight: bolder;
   line-height: 1.03;
 }
+
+.page-title-3 {
+  font-size: 20px;
+  color: var(--text-primary-color);
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-weight: bolder;
+  line-height: 1.03;
+}
 .page-subtitle {
   padding: 10px 0;
   margin-bottom: 10px;
@@ -135,10 +144,41 @@ body {
   transition: all 0.5s ease;
 }
 
+.btn-default-app {
+  transition: all 0.5s;
+  height: 40px;
+  min-width: 90px;
+  padding: 0 10px;
+  border-radius: 4px;
+  color: black;
+  border: solid 1px #bdbdbd;
+  background-color: white;
+  margin: auto;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
 .btn-primary-tour:hover {
   background-color: var(--secondary-color);
 }
 
 .font-primary {
   font-family: Helvetica, Arial, sans-serif !important;
+}
+
+.fz-14 {
+  font-size: 14px;
+}
+
+.fz-16 {
+  font-size: 16px;
+}
+
+.fz-18 {
+  font-size: 18px;
+}
+
+.fz-20 {
+  font-size: 20px;
 }

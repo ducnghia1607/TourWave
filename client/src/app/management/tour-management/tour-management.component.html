@@ -1,6 +1,6 @@
 <div>
   <h1 class="page-title-2">Quản lý tour</h1>
-  <div class="example-container flex items-center mt-6 space-x-6 relative">
+  <div class="tour-management-form flex items-center mt-6 space-x-6 relative">
     <mat-form-field>
       <mat-label
         ><span class="font-primary" style="font-size: 15px"
@@ -26,20 +26,20 @@
       class="action flex items-center justify-between absolute right-0 space-x-3"
       style="margin-bottom: 23px"
     >
-      <button routerLink="/management/create-new-tour">
+      <button>
         <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
         Thêm mới
       </button>
 
-      <button>
-        <fa-icon [icon]="faPenToSquare" class="me-1"></fa-icon>
-        Sửa
+      <button (click)="goToTourDetail()">
+        <fa-icon [icon]="faEye" class="me-1"></fa-icon>
+        Xem
       </button>
 
-      <button>
+      <!-- <button (click)="deleteTour()">
         <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
         Xóa
-      </button>
+      </button> -->
     </div>
   </div>
   <div style="overflow: auto; height: 500px">

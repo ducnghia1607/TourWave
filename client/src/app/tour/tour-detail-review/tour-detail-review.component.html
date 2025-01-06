@@ -1,0 +1,197 @@
+<div class="review-box">
+  <div>
+    <h1 class="page-title-3" *ngIf="reviews.length > 0">
+      Đánh giá khách hàng về {{ tourTitle }}
+    </h1>
+    <div class="flex items-center space-x-4 my-4">
+      <p class="score-span" [class.low-point]="averageRating < 5">
+        {{ averageRating }}/10
+      </p>
+      <span>{{
+        averageRating >= 9
+          ? "Tuyệt vời"
+          : averageRating >= 7
+          ? "Tốt"
+          : averageRating >= 5
+          ? "Bình thường"
+          : "Kém"
+      }}</span>
+      <span
+        style="
+          font-size: 12px;
+          padding: 0px 6px;
+          border-left: 1px solid var(--blender-sky-color);
+        "
+        >{{ totalReviews }} đánh giá</span
+      >
+    </div>
+  </div>
+  <div class="second-block" style="padding: 10px 0px" *ngIf="canReview">
+    <h1 class="page-title-3">Nhận xét của bạn</h1>
+    <form action="" [formGroup]="reviewForm">
+      <div class="flex items-center">
+        <label for="" style="min-width: 80px; font-size: 15px">Đánh giá</label>
+        <div class="flex space-x-2 items-center">
+          <select
+            class="select select-bordered w-full max-w-xs"
+            formControlName="rating"
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <label for="">điểm</label>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div class="flex flex-col">
+            <label
+              for="note"
+              style="
+                font-size: 15px;
+                color: var(--text-primary-color);
+                font-weight: 500;
+                margin-bottom: 6px;
+              "
+              >Mô tả</label
+            >
+            <textarea
+              name="note"
+              id="note"
+              rows="4"
+              formControlName="description"
+              class="tour-description"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="flex justify-between items-start space-x-8">
+      <div class="w-1/4">
+        <h3 class="fz-14" style="margin-bottom: 8px">Select files</h3>
+
+        <div
+          ng2FileDrop
+          [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+          (fileOver)="fileOverBase($event)"
+          [uploader]="uploader"
+          class="my-drop-zone"
+        >
+          Base drop zone
+        </div>
+        <span class="fz-14">Chọn nhiều file</span>
+
+        <input
+          type="file"
+          ng2FileSelect
+          [uploader]="uploader"
+          multiple
+          style="margin: 8px 0px; font-size: 14px"
+        /><br />
+      </div>
+
+      <div class="w-3/4" style="margin-bottom: 40px">
+        <h3 class="fz-14">Upload queue</h3>
+        <p class="fz-14">Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table" style="min-height: 90px !important">
+          <thead>
+            <tr>
+              <th width="50%" style="color: #3f3b3b">Name</th>
+              <th style="color: #3f3b3b">Size</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <td>
+                <strong>{{ item?.file?.name }}</strong>
+              </td>
+              <td *ngIf="uploader.options.isHTML5" nowrap>
+                {{ item?.file?.size / 1024 / 1024 | number : ".2" }} MB
+              </td>
+              <td nowrap>
+                <button
+                  type="button"
+                  class="btn-remove-item"
+                  (click)="(item.remove)"
+                >
+                  <fa-icon [icon]="faTrash"></fa-icon> Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <button
+            type="button"
+            class="btn btn-remove-queue"
+            (click)="(uploader.clearQueue)"
+            [disabled]="!uploader.queue.length"
+          >
+            <span class="glyphicon glyphicon-trash"></span> Remove all
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="submitReview()">
+      <fa-icon [icon]="faPlus" class="me-1"></fa-icon> Nhận xét
+    </button>
+  </div>
+
+  <div class="rating-overview" *ngIf="reviews.length > 0">
+    <p class="fz-16" style="font-weight: bold; margin-bottom: 20px">
+      Đánh giá gần đây
+    </p>
+    <div class="review-content">
+      <div
+        class="review-item flex items-start space-x-4"
+        *ngFor="let review of reviews"
+        style="border-top: 1px solid#ccc; padding: 20px 0"
+      >
+        <div class="fz-14 font-semibold">
+          <fa-icon [icon]="faUser" class="me-1"></fa-icon>
+          <span class="fz-14">{{ review.fullName }}</span>
+        </div>
+        <div class="flex-1 fz-14">
+          <div>
+            <span
+              class="score-span-mini me-2"
+              [class.low-point]="review.rating < 5"
+              >{{ review.rating }}</span
+            >
+            <span class="text-rating" [class.low-point]="review.rating < 5">{{
+              review.rating >= 9
+                ? "Tuyệt vời"
+                : review.rating >= 7
+                ? "Tốt"
+                : review.rating >= 5
+                ? "Bình thường"
+                : "Kém"
+            }}</span>
+          </div>
+          <div class="fz-14 italic">{{ review.description }}</div>
+          <div class="flex space-x-2 items-center">
+            <img
+              src="{{ url }}"
+              alt="Ảnh review"
+              *ngFor="let url of review.imagesUrl"
+              style="width: 50px; height: 50px; object-fit: contain"
+            />
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>

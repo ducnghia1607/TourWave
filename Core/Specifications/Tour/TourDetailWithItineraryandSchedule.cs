@@ -17,6 +17,7 @@ namespace Core.Specifications
             AddInclude(t =>  t.Itineraries);
             AddNestedInclude("Itineraries.Images");
             AddInclude(t =>  t.Schedules);
+            AddInclude(t =>  t.TourWithType);
         }
     }
 }

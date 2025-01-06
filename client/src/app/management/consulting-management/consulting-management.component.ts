@@ -12,6 +12,7 @@ import { faCheckCircle, faEye } from '@fortawesome/free-regular-svg-icons';
 import { DatePipe } from '@angular/common';
 import { ConsultingDialogViewComponent } from '../consulting-dialog-view/consulting-dialog-view.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-consulting-management',
@@ -37,8 +38,16 @@ export class ConsultingManagementComponent {
 
   consulting!: ConsultingResponse;
   deleteConsulting(id: number) {
-    this.managementService.deleteConsulting(id).subscribe(() => {
-      this.data = this.data.filter((x) => x.id !== id);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.componentInstance.confirm.subscribe((confirm) => {
+      if (confirm == '2') {
+        return;
+      } else {
+        if (!id) return;
+        this.managementService.deleteConsulting(id).subscribe(() => {
+          this.data = this.data.filter((x) => x.id !== id);
+        });
+      }
     });
   }
   viewConsulting(id: number) {

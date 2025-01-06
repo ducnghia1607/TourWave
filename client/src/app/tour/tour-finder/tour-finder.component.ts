@@ -86,7 +86,7 @@ export class TourFinderComponent implements OnInit {
 
   changePageNumberHandle($event: any) {
     this.tourParams.pageIndex = $event;
-    this.tourParams.pageSize = 1;
+    this.tourParams.pageSize = 6;
     //  comment dong nay de hien thi tat ca tour
     this.tourService.setTourParams(this.tourParams);
     console.log(this.tourService.getTourParams());

@@ -18,7 +18,7 @@
   color: var(--secondary-color);
 }
 
-.card-departure > li {
+.card-departure li {
   color: #26bed6;
   list-style-type: disc;
   list-style-position: inside;

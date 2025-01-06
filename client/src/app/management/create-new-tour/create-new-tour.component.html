@@ -1,61 +1,161 @@
 <div class="create-tour-wrapper">
   <h1 class="page-title-2">Tạo mới tour</h1>
-  <form action="">
-    <div
-      class="flex justify-between items-center"
-      style="border-top: 1px solid #ccc; padding: 20px 0px"
-    >
-      <div class="form-control">
-        <label for="">Title:</label>
-        <input
-          type="text"
-          placeholder="Nhập tên tour"
-          class="input input-bordered w-full max-w-xs"
-          style="width: 500px"
-        />
-      </div>
-      <div class="form-control">
-        <label>Khởi hành từ</label>
-        <select class="select select-bordered w-full max-w-xs">
-          <option disabled selected>Khởi hành từ</option>
-          <option
-            *ngFor="let departure of departures"
-            value="{{ departure.name }}"
+  <form action="" [formGroup]="tourForm">
+    <!-- Tên tour - Khởi hành từ - Loại tour -->
+    <div class="first-block">
+      <h1 class="page-title-3">Tên tour - khởi hành từ - loại tour</h1>
+      <div
+        class="flex justify-between items-center"
+        style="border-top: 1px solid #ccc; padding: 20px 0px"
+      >
+        <div class="form-control">
+          <label for="">Tên tour:</label>
+          <input
+            type="text"
+            placeholder="Nhập tên tour"
+            class="input input-bordered w-full"
+            style="width: 500px; margin-bottom: 15px"
+            formControlName="title"
+          />
+        </div>
+        <div class="form-control">
+          <label>Khởi hành từ</label>
+          <select
+            class="select select-bordered w-full max-w-xs"
+            style="margin-bottom: 15px"
+            formControlName="departure"
           >
-            {{ departure.name }}
-          </option>
-        </select>
-      </div>
-      <div class="form-control">
-        <label for="" style="font-size: 15px; min-width: 70px">Mã Tour:</label>
-        <input
-          type="text"
-          placeholder="Mã tour"
-          class="input input-bordered max-w-xs"
-        />
+            <option disabled selected>Khởi hành từ</option>
+            <option
+              *ngFor="let departure of departures"
+              value="{{ departure.name }}"
+            >
+              {{ departure.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label>Loại tour</label>
+          <mat-form-field appearance="fill">
+            <!-- <mat-label>
+              <span class="fz-14 font-primary">Loại tour</span>
+            </mat-label> -->
+            <mat-select multiple formControlName="tourWithType">
+              <mat-option *ngFor="let type of tourTypes" [value]="type.id">
+                <span class="fz-14 font-primary"> {{ type.name }}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
 
-    <div style="border-top: 1px solid #ccc; padding: 10px 0px 0px">
-      <div>
-        <form>
-          <mat-form-field class="example-chip-list">
-            <mat-label>Tour Trọn Gói bao gồm</mat-label>
+    <!-- Upload image section -->
+    <div
+      class="second-block"
+      style="border-top: 1px solid #ccc; padding: 20px 0px"
+    >
+      <h1 class="page-title-3">Thêm bộ sưu tập ảnh cho tour</h1>
+      <div class="flex justify-between items-start space-x-8">
+        <div class="w-1/4">
+          <h3 class="fz-14" style="margin-bottom: 8px">Select files</h3>
+
+          <div
+            ng2FileDrop
+            [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="my-drop-zone"
+          >
+            Base drop zone
+          </div>
+          <span class="fz-14">Chọn nhiều file</span>
+
+          <input
+            type="file"
+            ng2FileSelect
+            [uploader]="uploader"
+            multiple
+            style="margin: 8px 0px; font-size: 14px"
+          /><br />
+        </div>
+
+        <div class="w-3/4" style="margin-bottom: 40px">
+          <h3 class="fz-14">Upload queue</h3>
+          <p class="fz-14">Queue length: {{ uploader?.queue?.length }}</p>
+
+          <table class="table" style="min-height: 90px !important">
+            <thead>
+              <tr>
+                <th width="50%" style="color: #3f3b3b">Name</th>
+                <th style="color: #3f3b3b">Size</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <td>
+                  <strong>{{ item?.file?.name }}</strong>
+                </td>
+                <td *ngIf="uploader.options.isHTML5" nowrap>
+                  {{ item?.file?.size / 1024 / 1024 | number : ".2" }} MB
+                </td>
+                <td nowrap>
+                  <button
+                    type="button"
+                    class="btn-remove-item"
+                    (click)="item.remove()"
+                  >
+                    <fa-icon [icon]="faTrash"></fa-icon> Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <button
+              type="button"
+              class="btn btn-remove-queue"
+              (click)="uploader.clearQueue()"
+              [disabled]="!uploader.queue.length"
+            >
+              <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Thời gian tour - điểm đến - địa điểm nổi bật - phương tiện di chuyển -->
+
+    <h1
+      class="page-title-3"
+      style="border-top: 1px solid #ccc; padding: 16px 0px 0px"
+    >
+      Thời gian tour - điểm đến - địa điểm nổi bật - phương tiện di chuyển
+    </h1>
+    <div>
+      <div class="flex space-x-6">
+        <div style="width: 80%">
+          <mat-form-field class="example-chip-list" style="width: 100%">
+            <mat-label>
+              <span class="fz-14 font-primary">Tour Trọn Gói bao gồm</span>
+            </mat-label>
             <mat-chip-grid #chipGrid aria-label="Fruit selection">
               <mat-chip-row
-                *ngFor="let fruit of fruits"
-                (removed)="remove(fruit)"
+                *ngFor="let utility of utilities"
+                (removed)="remove(utility)"
               >
-                {{ fruit }}
-                <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                {{ utility }}
+                <button matChipRemove [attr.aria-label]="'remove ' + utility">
                   <mat-icon>cancel</mat-icon>
                 </button>
               </mat-chip-row>
             </mat-chip-grid>
             <input
               placeholder="Nhập tiện ích..."
-              #fruitInput
-              [formControl]="fruitCtrl"
+              #utilityInput
+              [formControl]="this.fruitCtrl"
               [matChipInputFor]="chipGrid"
               [matAutocomplete]="auto"
               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -73,10 +173,151 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-        </form>
+        </div>
+
+        <div>
+          <mat-form-field class="example-chip-list">
+            <mat-label>
+              <span class="fz-14 font-primary">Thời gian tour</span></mat-label
+            >
+            <mat-chip-grid #chipGrid2 aria-label="duration selection">
+              <mat-chip-row
+                *ngFor="let duration of durations"
+                (removed)="removeDuration(duration)"
+              >
+                {{ duration }}
+                <button matChipRemove [attr.aria-label]="'remove ' + duration">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input
+              placeholder="Nhập"
+              #durationInput
+              [formControl]="durationCtrl"
+              [matChipInputFor]="chipGrid2"
+              [matAutocomplete]="auto2"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addDuration($event)"
+            />
+            <mat-autocomplete
+              #auto2="matAutocomplete"
+              (optionSelected)="selectedDuration($event)"
+            >
+              <mat-option
+                *ngFor="let duration of filteredDurations | async"
+                [value]="duration"
+              >
+                {{ duration }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="example-chip-list">
+            <mat-label>
+              <span class="fz-14 font-primary">Điểm đến</span>
+            </mat-label>
+            <mat-chip-grid #chipGrid3 aria-label="duration selection">
+              <mat-chip-row
+                *ngFor="let destination of destinations"
+                (removed)="removeDestination(destination)"
+              >
+                {{ destination }}
+                <button
+                  matChipRemove
+                  [attr.aria-label]="'remove ' + destination"
+                >
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input
+              placeholder="Nhập"
+              #destinationInput
+              [formControl]="destinationCtrl"
+              [matChipInputFor]="chipGrid3"
+              [matAutocomplete]="auto3"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addDestination($event)"
+            />
+            <mat-autocomplete
+              #auto3="matAutocomplete"
+              (optionSelected)="selectedDestination($event)"
+            >
+              <mat-option
+                *ngFor="let destination of filteredDestinations | async"
+                [value]="destination"
+              >
+                {{ destination }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <!-- <form></form> -->
       </div>
     </div>
 
+    <div style="padding: 8px 0px 0px">
+      <div class="w-full flex items-center space-x-6">
+        <mat-form-field class="example-chip-list w-3/4">
+          <mat-label
+            ><span class="font-primary fz-14">
+              Địa điểm nổi bật trong tour</span
+            ></mat-label
+          >
+          <mat-chip-grid #chipGrid4 aria-label="duration selection">
+            <mat-chip-row
+              *ngFor="let topPlace of topPlaces"
+              (removed)="removeTopPlace(topPlace)"
+            >
+              {{ topPlace }}
+              <button matChipRemove [attr.aria-label]="'remove ' + topPlace">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input
+            placeholder="Nhập"
+            #topPlaceInput
+            [formControl]="topPlaceCtrl"
+            [matChipInputFor]="chipGrid4"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="addTopPlace($event)"
+          />
+        </mat-form-field>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>
+              <span class="font-primary fz-14">Phương tiện di chuyển</span>
+            </mat-label>
+            <mat-select multiple formControlName="transport">
+              <mat-option value="1"
+                ><span class="fz-14 font-primary"> Máy bay</span></mat-option
+              >
+              <mat-option value="2">
+                <span class="fz-14 font-primary"> Xe bus</span></mat-option
+              >
+              <mat-option value="3">
+                <span class="fz-14 font-primary"> Tàu hỏa</span></mat-option
+              >
+              <mat-option value="3">
+                <span class="fz-14 font-primary"> Thuyền</span></mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <h1
+      class="page-title-3"
+      style="border-top: 1px solid #ccc; padding: 16px 0px 0px"
+    >
+      Mô tả - giá tour
+    </h1>
     <div>
       <div class="flex flex-col">
         <label
@@ -92,8 +333,8 @@
         <textarea
           name="note"
           id="note"
-          rows="3"
-          formControlName="note"
+          rows="4"
+          formControlName="description"
           class="tour-description"
         ></textarea>
       </div>
@@ -104,26 +345,221 @@
         <label for="" style="width: 150px; font-size: 15px"
           >Giá người lớn</label
         >
-        <input
-          type="number"
-          placeholder="Type here"
-          class="input input-bordered w-full max-w-xs"
-        />
+        <div class="flex space-x-2 items-center">
+          <input
+            type="number"
+            placeholder="Nhập tiền"
+            class="input input-bordered w-full max-w-xs"
+            formControlName="priceAdult"
+          />
+          <label>VND</label>
+        </div>
       </div>
       <div class="form-control">
         <label for="" style="width: 150px; font-size: 15px">Giá trẻ em </label>
-        <input
-          type="text"
-          placeholder="Type here"
-          class="input input-bordered w-full max-w-xs"
-        />
+        <div class="flex space-x-2 items-center">
+          <input
+            type="number"
+            placeholder="Nhập tiền"
+            class="input input-bordered w-full max-w-xs"
+            formControlName="priceChild"
+          />
+          <label>VND</label>
+        </div>
       </div>
     </div>
     <div
-      style="border-top: 1px solid #ccc; padding: 20px 0px; margin-top: 16px"
+      style="
+        border-top: 1px solid #ccc;
+        padding: 16px 0px 8px;
+        margin-top: 16px;
+      "
     >
-      <h1 class="page-title-2">Chương trình tour</h1>
-      <div></div>
+      <h1 class="page-title-3">Chương trình tour</h1>
+    </div>
+
+    <div formArrayName="itineraries">
+      <div
+        class=""
+        style="margin-bottom: 10px; padding-bottom: 20px"
+        *ngFor="let items of itineraries.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <p
+          style="
+            font-size: 16px;
+            color: var(--text-primary-color);
+            font-weight: 600;
+            margin-bottom: 6px;
+          "
+        >
+          Lịch trình {{ i + 1 }}
+        </p>
+        <div class="form-control" style="width: 40%">
+          <label for="time-day">Thời gian</label>
+          <input
+            type="text"
+            formControlName="timeTravel"
+            class="input input-bordered w-full"
+            placeholder="VD: Ngày 1"
+            id="time-day"
+          />
+        </div>
+        <div class="form-control" style="">
+          <label for="title-day">Tiêu đề</label>
+          <input
+            type="text"
+            formControlName="title"
+            class="input input-bordered w-full"
+            placeholder="VD:  Đà Nẵng - Bà Nà Hills - Biển Mỹ Khê (Ăn Sáng, Tối)"
+            id="title-day"
+          />
+        </div>
+        <div class="form-control" style="margin-top: 8px">
+          <label
+            for="note"
+            style="
+              font-size: 15px;
+              color: var(--text-primary-color);
+              font-weight: 500;
+              margin-bottom: 6px;
+            "
+            >Mô tả</label
+          >
+          <textarea
+            name="note"
+            id="note"
+            rows="4"
+            formControlName="content"
+            class="tour-description"
+          ></textarea>
+        </div>
+        <input
+          style="margin-top: 8px"
+          class="fz-14"
+          type="file"
+          (change)="onImagePicked($event, i)"
+        />
+        <button
+          (click)="deleteItem(i)"
+          class="btn-primary-tour"
+          style="float: right; padding: 6px 20px; margin-top: 5px"
+        >
+          <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
+          Xóa
+        </button>
+      </div>
+    </div>
+
+    <button
+      class="btn-default-app"
+      (click)="addItem()"
+      style="margin-bottom: 16px"
+    >
+      <!-- <fa-icon [icon]="faPlus" class="me-1"></fa-icon>  -->
+      <fa-icon [icon]="faPlus" class="me-1"></fa-icon> Thêm mới
+    </button>
+    <!-- Danh sách lịch trình -->
+    <h1
+      class="page-title-3"
+      style="border-top: 1px solid #ccc; padding: 16px 0px 0px"
+    >
+      Lịch khởi hành
+    </h1>
+    <div formArrayName="schedules">
+      <div
+        class=""
+        style="padding-bottom: 20px"
+        *ngFor="let items of scheduleArray.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <p
+          style="
+            font-size: 16px;
+            color: var(--text-primary-color);
+            font-weight: 600;
+            margin-bottom: 6px;
+          "
+        >
+          Lịch khởi hành {{ i + 1 }}
+        </p>
+        <mat-form-field appearance="fill" class="example-form-field">
+          <mat-label>
+            <span class="fz-14 font-primary">Nhập khoảng thời gian</span>
+          </mat-label>
+          <mat-date-range-input [rangePicker]="rangePicker">
+            <input
+              class="fz-14"
+              matStartDate
+              placeholder="Khởi hành"
+              formControlName="departureDate"
+              [min]="minDate"
+            />
+            <input
+              class="fz-14"
+              matEndDate
+              placeholder="Trở về"
+              formControlName="returnDate"
+              [min]="minDate"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="rangePicker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker>
+            <mat-date-range-picker-actions>
+              <button mat-button matDateRangePickerCancel>Cancel</button>
+              <button mat-raised-button color="primary" matDateRangePickerApply>
+                Apply
+              </button>
+            </mat-date-range-picker-actions>
+          </mat-date-range-picker>
+        </mat-form-field>
+        <!-- <p
+        style="
+          font-size: 16px;
+          color: var(--text-primary-color);
+          font-weight: 600;
+          margin-bottom: 6px;
+        "
+      >
+        Lịch trình {{ i + 1 }}
+      </p>
+      <div class="form-control" style="width: 40%">
+        <label for="time-day">Thời gian</label>
+        <input
+          type="text"
+          formControlName="date"
+          class="input input-bordered w-full"
+          placeholder="VD: Ngày 1"
+          id="time-day"
+        />
+      </div> -->
+
+        <button
+          (click)="removeSchedule(i)"
+          class="btn-primary-tour"
+          style="float: right; padding: 7px 20px; margin-top: 4px"
+        >
+          <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
+          Xóa
+        </button>
+      </div>
+
+      <!-- Nút thêm mới lịch trình -->
+      <button mat-raised-button color="primary" (click)="addSchedule()">
+        <fa-icon [icon]="faPlus" class="me-1"></fa-icon> Thêm Lịch Trình
+      </button>
+    </div>
+    <div class="flex justify-center items-center">
+      <button
+        class="btn-primary-tour"
+        style="margin-top: 20px; padding: 14px 46px; font-size: 16px"
+        (click)="createNewTour()"
+      >
+        Lưu
+      </button>
     </div>
   </form>
 </div>

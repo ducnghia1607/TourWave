@@ -89,6 +89,7 @@
                   <mat-panel-title>
                     <div class="flex items-center">
                       <img
+                        *ngIf="itinerary.images.length > 0"
                         src="{{ itinerary.images[0].url }}"
                         alt=""
                         class="avatar-small"
@@ -116,12 +117,13 @@
                     style="margin-top: 24px"
                   >
                     <img
+                      *ngIf="image.url"
                       src="{{ image.url }}"
-                      alt="{{ image.caption }}"
+                      alt="{{ image.caption ?? 'image' }}"
                       style="width: 100%"
                     />
                     <figcaption class="text-center mt-4">
-                      <p>{{ image.caption }}</p>
+                      <p>{{ image.caption ?? "" }}</p>
                     </figcaption>
                   </figure>
                 </div>
@@ -158,10 +160,24 @@
             (selectedRowChange)="selectedRowChangeSchedulesHandle($event)"
             [schedules]="tourDetail.schedules"
             (departureDateChange)="departureDateChangeHandle($event)"
+            [price]="tourDetail.priceAdult"
           ></app-tour-detail-schedule>
         </div>
         <div class="tour-notes mt-4 tour-content-wrapper" id="tour-notices">
           <app-tour-detail-notice></app-tour-detail-notice>
+        </div>
+
+        <div
+          class="tour-reviews mt-4 tour-content-wrapper"
+          id="tour-reviews"
+          *ngIf="reviews.length > 0"
+        >
+          <app-tour-detail-review
+            [reviews]="reviews"
+            [tourId]="tourDetail.id"
+            [tourTitle]="tourDetail.title"
+            [canReview]="canReview"
+          ></app-tour-detail-review>
         </div>
       </div>
 

@@ -129,7 +129,7 @@
   display: none !important;
 }
 .tour-sidebar .mat-mdc-form-field-infix {
-  width: 20px;
+  width: 0px;
 }
 /* .tour-sidebar .mat-mdc-form-field {
   width: 60px !important;

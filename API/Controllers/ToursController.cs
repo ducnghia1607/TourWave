@@ -9,6 +9,7 @@ using Core.Interfaces;
 using Core.Specification;
 using Core.Specifications;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers;
 
 using Tour = Core.Entities.Tour;
-public class ToursController(IUnitOfWork unit,IMapper mapper) : BaseApiController
+public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photoService,ITourService tourService) : BaseApiController
 {
 
     [HttpGet]
@@ -54,9 +55,9 @@ public class ToursController(IUnitOfWork unit,IMapper mapper) : BaseApiControlle
     [HttpGet("{id:int}")] // api/tours/2
     public async Task<ActionResult<Tour>> GetTour(int id)
     {
-        //var spec = new TourDetailWithItineraryandSchedule(id);
-        //var tour = await repo.GetEntityWithSpec(spec);
-        var tour = await unit.Repository<Tour>().GetByIdAsync(id);
+        var spec = new TourDetailWithItineraryandSchedule(id);
+        var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        //var tour = await unit.Repository<Tour>().GetByIdAsync(id);
         if (tour == null)
         {
             return NotFound();
@@ -90,7 +91,7 @@ public class ToursController(IUnitOfWork unit,IMapper mapper) : BaseApiControlle
     }
 
     [HttpGet("{title}/{tourCode}")] // api/tours/2
-    public async Task<ActionResult<Tour>> GetTourDetailByTitle(string title,string tourCode, [FromQuery]string date)
+    public async Task<ActionResult<Tour>> GetTourDetailByTitle(string title,string tourCode, [FromQuery]string ?date)
     {
         var spec = new TourDetailWithitineraryAndScheduleByTitle(title,tourCode,date);
         var tour = await  unit.Repository<Tour>().GetEntityWithSpec(spec);
@@ -117,7 +118,11 @@ public class ToursController(IUnitOfWork unit,IMapper mapper) : BaseApiControlle
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<Tour>> CreateTour(Tour tour){
-        unit.Repository<Tour>().Add(tour);
+        if(tour != null)
+        {
+            tour.TourCode = await tourService.GenerateNewTourCode();
+            unit.Repository<Tour>().Add(tour);
+        }
         if(await unit.Complete()){
             return CreatedAtAction("GetTour",new {id = tour.Id},tour);
         };
@@ -206,5 +211,50 @@ public class ToursController(IUnitOfWork unit,IMapper mapper) : BaseApiControlle
         var data = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
         return Ok(data);
         //return Ok(data);
+    }
+
+    [HttpPost("add-tour-image/{tourId:int}")]  // api /users/2
+    public async Task<ActionResult<ImageDto>> AddPhoto(IFormFile file,[FromRoute]int tourId)
+    {
+        //var username = User.GetUserName();
+        //var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
+        //if (user == null) return NotFound();
+        var tour = await unit.Repository<Tour>().GetByIdAsync(tourId);
+        var result = photoService.AddImageAsync(file);
+        if (result.Result.Error != null) return BadRequest(result.Result.Error.Message);
+
+        var photo = new Image
+        {
+            Url = result.Result.SecureUrl.AbsoluteUri,
+            PublicId = result.Result.PublicId,
+        };
+    //if (user.Photos.Count == 0) photo.isMain = true;
+    // EF tracks that user
+    //user.Photos.Add(photo);
+        tour.Images.Add(photo);
+        if (await unit.Complete()){
+            var actionName = nameof(GetTour);
+            var createdResource = mapper.Map<ImageDto>(photo); // new created data 
+            var routeValues = new { id = tour.Id }; // api/users/{username} link assign to location header
+            return CreatedAtAction(actionName, routeValues, createdResource);
+        }
+
+           
+            return BadRequest("Adding photo failed");
+    }
+    [HttpGet("tour-types")]
+    public async Task<ActionResult<IReadOnlyList<TourTypeDto>>> GetAllTourTypes()
+    {
+        var types = await unit.Repository<TourType>().ListAllAsync();
+        
+        return Ok(mapper.Map<IReadOnlyList<TourType>, IReadOnlyList<TourTypeDto>>(types));
+    }
+    [HttpGet("check-can-review")]
+    public async Task<bool> CheckCanReview([FromQuery] int tourId,[FromQuery] int uid){
+        var spec = new CheckCanReviewSpecification(tourId,uid);
+        var booking = await unit.Repository<Booking>().GetEntityWithSpec(spec);
+        var checkAlreadyReview = await tourService.CheckAlreadyReview(tourId, uid);
+        if (booking != null && !checkAlreadyReview) return true;
+        return false;
     }
 }

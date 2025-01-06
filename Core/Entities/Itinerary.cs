@@ -12,6 +12,6 @@ namespace Core.Entities
         public string Content{get;set;} 
         public List<Image> ?Images {get;set;}  = new ();
         public int TourId {get;set;}
-        public Tour Tour {get;set;}
+        public Tour ?Tour {get;set;}
     }
 }

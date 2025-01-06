@@ -45,7 +45,8 @@
         <span class="font-weight-bold">Giá tiền:</span>
         {{
           booking.numAdults * booking.pricePerAdult +
-            booking.numChildren * booking.pricePerChild | currency
+            booking.numChildren * booking.pricePerChild
+            | currency : "VND" : "symbol" : "1.0-0"
         }}
       </p>
     </div>

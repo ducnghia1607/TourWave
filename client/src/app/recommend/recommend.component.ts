@@ -9,6 +9,11 @@ import { TourToRecommend } from '../shared/models/TourToRecommend';
 import { TourWithType } from '../shared/models/TourWithType';
 import { Schedule } from '../shared/models/Schedule';
 import { Pagination } from '../shared/models/Pagination';
+import { BookingRecommendation } from '../shared/models/BookingRecommendation';
+import { User } from '../shared/models/User';
+import { AccountRoutingModule } from '../account/account-routing.module';
+import { AccountService } from '../account/account.service';
+import { Tour } from '../shared/models/Tour';
 
 @Component({
   selector: 'app-recommend',
@@ -20,17 +25,26 @@ export class RecommendComponent implements OnInit {
     private fb: FormBuilder,
     private currencyPipe: CurrencyPipe,
     private recommendService: RecommendService,
+    private accountService: AccountService,
     private datePipe: DatePipe
   ) {
     this.getAllTourTypeHobby();
     // this.getAllTourToRecommend();
   }
+
   ngOnInit(): void {
     // this.budgetForm.get('budget')?.valueChanges.subscribe((value) => {
     //   this.budgetForm
     //     .get('budget')
     //     ?.setValue(this.formatCurrency(value), { emitEvent: false });
     // });
+
+    this.accountService.currentUser$.subscribe((res) => {
+      if (res) {
+        this.user = res;
+        if (this.user) this.getAllBookingForRecommendation(this.user.id);
+      }
+    });
   }
   faDongSign = faDongSign as IconProp;
   toppings = new FormControl('');
@@ -41,6 +55,7 @@ export class RecommendComponent implements OnInit {
   tourTypeHobby: TourTypeHobby[] = [];
   tourToRecommend!: TourToRecommend[];
   tourRePagination!: Pagination<TourToRecommend[]>;
+  user!: User;
   hobbies = [
     {
       name: 'Du lịch nghỉ dưỡng',
@@ -83,7 +98,28 @@ export class RecommendComponent implements OnInit {
       id: '10',
     },
   ];
-
+  averagePrice!: number;
+  countBooking!: number;
+  bookings: BookingRecommendation[] = [];
+  getAllBookingForRecommendation(uid: number) {
+    this.recommendService.getAllBookingForUser(uid).subscribe({
+      next: (res) => {
+        var count = res.length;
+        this.bookings = res;
+        console.log(this.bookings);
+        var sum = 0;
+        for (let i = 0; i < res.length; i++) {
+          sum +=
+            res[i].pricePerAdult * res[i].numAdults +
+            res[i].pricePerChild * res[i].numChildren;
+        }
+        this.averagePrice = sum / count;
+        this.countBooking = count;
+        console.log(res, this.averagePrice);
+      },
+      error: (err) => console.log(err),
+    });
+  }
   getAllTourTypeHobby() {
     return this.recommendService.getAllTourTypeHobby().subscribe({
       next: (res) => {
@@ -140,10 +176,33 @@ export class RecommendComponent implements OnInit {
                   element.tourWithType,
                   this.tourTypeHobby
                 );
+            if (this.bookings.length == 0) {
+              element.historySuitability = 0;
+            } else {
+              var countTourType = 0;
+              for (let i = 0; i < this.bookings.length; i++) {
+                if (
+                  element.tourWithType[0].tourTypeId ==
+                  this.bookings[i].tour.tourWithType[0].tourTypeId
+                ) {
+                  countTourType = countTourType + 1;
+                  break;
+                }
+              }
+              var history1 = countTourType / this.bookings.length;
+              var history2 =
+                1 -
+                Math.abs(
+                  (element.priceAdult - this.averagePrice) / this.averagePrice
+                );
+              var historySuitability = history1 * 0.3 + history2 * 0.7;
+              element.historySuitability = historySuitability;
+            }
             element.totalSuitability = this.calculateTotalSuitability(
               element.hobbySuitability,
               element.priceSuitability,
-              element.dateSuitability
+              element.dateSuitability,
+              element.historySuitability
             );
 
             console.log(this.tourToRecommend);
@@ -229,7 +288,12 @@ export class RecommendComponent implements OnInit {
     return sum / count;
   }
 
-  calculateTotalSuitability(hobbyS: number, priceS: number, dateS: number) {
-    return hobbyS * 0.2 + priceS * 0.4 + dateS * 0.6; // date:0.2
+  calculateTotalSuitability(
+    hobbyS: number,
+    priceS: number,
+    dateS: number,
+    historyS: number
+  ) {
+    return hobbyS * 0.2 + priceS * 0.4 + dateS * 0.2 + 0.2 * historyS; // date:0.2
   }
 }

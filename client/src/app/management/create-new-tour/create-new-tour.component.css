@@ -1,7 +1,7 @@
 .create-tour-wrapper .form-control input {
   display: block;
   width: 100%;
-  height: 40px;
+  height: 48px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -21,6 +21,10 @@
   box-shadow: inset 0 0 0 0 white;
   border-color: #d2d6de;
   font-size: 15px;
+}
+
+.create-tour-wrapper .first-block .mat-mdc-text-field-wrapper {
+  max-height: 48px;
 }
 
 .create-tour-wrapper .form-control label {
@@ -47,7 +51,7 @@
   padding: 0 24px 0px !important;
 }
 .create-tour-wrapper .mat-mdc-form-field {
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .create-tour-wrapper textarea {
@@ -69,4 +73,35 @@
   border-color: #d2d6de;
   font-size: 14px;
   padding: 6px 12px;
+}
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.nv-file-over {
+  border: dotted 3px red;
+} /* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+.btn-remove-queue {
+  color: #fff;
+  font-size: 14px;
+  background-color: var(--secondary-color);
+  text-align: center;
+  height: 40px !important;
+  min-height: 30px !important;
+  margin-top: 4px;
+}
+.btn-remove-item {
+  color: #fff;
+  font-size: 14px;
+  background-color: var(--secondary-color);
+  text-align: center;
+  padding: 3px;
+  border-radius: 2px;
 }

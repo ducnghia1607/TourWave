@@ -15,6 +15,7 @@ namespace Core.Specifications
         {
             AddInclude(t => t.Images);
             AddInclude(t => t.Itineraries);
+            AddInclude(t => t.TourWithType);
             AddNestedInclude("Itineraries.Images");
             // AddInclude(t => t.Schedules);
             if (string.IsNullOrEmpty(date) || date=="null")
@@ -25,7 +26,8 @@ namespace Core.Specifications
             {
                 AddInclude(t => t.Schedules.Where(s => s.DepartureDate >= DateOnly.Parse(date)));
             }
-           
+            AddNestedInclude("Schedules.Bookings");
+
         }
     }
 }

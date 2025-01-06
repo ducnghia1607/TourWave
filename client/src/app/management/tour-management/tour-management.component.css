@@ -79,8 +79,8 @@ table {
   font-size: 15px !important;
 }
 
-.example-container .mat-mdc-form-field-infix {
-  width: 270px !important;
+.tour-management-form .mat-mdc-form-field-infix {
+  width: 255px !important;
 }
 
 .action > button {
