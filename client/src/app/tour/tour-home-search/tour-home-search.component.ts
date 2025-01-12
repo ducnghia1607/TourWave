@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 })
 export class TourHomeSearchComponent implements OnInit {
   searchTourResult: Tour[] = [];
+  searchDestinationResult: string[] = [];
   selectedTourCode: string = '';
   inputSubject: Subject<string> = new Subject<string>();
   departures: Departure[] = [];
@@ -33,8 +34,9 @@ export class TourHomeSearchComponent implements OnInit {
         switchMap((searchTerm) => this.tourService.getSearchResult(searchTerm))
       )
       .subscribe({
-        next: (res) => {
-          this.searchTourResult = res;
+        next: (res: any) => {
+          this.searchTourResult = res.tours;
+          this.searchDestinationResult = res.destinations;
           this.showResultSearch = true;
         },
         error: (err) => console.log(err),
@@ -73,6 +75,7 @@ export class TourHomeSearchComponent implements OnInit {
     this.showMenuLocation = false;
     if (this.searchKeyword == '') {
       this.searchTourResult = [];
+      this.searchDestinationResult = [];
       this.showMenuLocation = true;
       return;
     }

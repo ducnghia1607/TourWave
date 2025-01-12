@@ -30,13 +30,15 @@ public class BaseSpecification<T> : ISpecification<T>
     public int Take {get;private set;}
 
     public bool IsPagingEnabled {get;private set;}
-
+    public bool IsDistinct { get;private set;}
     public List<Expression<Func<T, object>>>? Includes {get;private set;} = new ();
 
     public Expression<Func<T, object>>? Select {get;private set;} 
     // public List<Func<IQueryable<T>, Func<T, object>>> NestedIncludes { get; } 
     // = new List<Func<IQueryable<T>, Func<T, object>>>();
         public List<string> ThenIncludes { get;private set; } = new ();
+
+
     protected void AddOrderBy(Expression<Func<T, object>> orderByExpression){
         OrderBy = orderByExpression;
     }
@@ -58,11 +60,30 @@ public class BaseSpecification<T> : ISpecification<T>
         Skip = skip;
         Take = take;
     }
+
+    protected void ApplyDistinct()
+    {
+        IsDistinct = true;
+    }
     IQueryable<T> ISpecification<T>.ApplyCriteria(IQueryable<T> query)
     {
         if(Criteria != null){
             query = query.Where(Criteria);
         }
         return query;
+    }
+}
+
+public class BaseSpecification<T, TResult>(Expression<Func<T, bool>> criteria) : BaseSpecification<T>(criteria), ISpecification<T, TResult>
+{
+    public BaseSpecification() : this(null!)
+    {
+        
+    }
+
+    public Expression<Func<T, TResult>>? SelectResult { get; private set; }
+    protected void AddSelect(Expression<Func<T, TResult>> selectExpression)
+    {
+        SelectResult = selectExpression;
     }
 }

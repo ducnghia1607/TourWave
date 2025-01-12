@@ -15,5 +15,12 @@ public interface ISpecification<T>
      int Skip{get;}
      int Take{get;}
      bool IsPagingEnabled{get;}
+     bool IsDistinct { get; }
      IQueryable<T> ApplyCriteria(IQueryable<T> query);
+}
+
+
+public interface ISpecification<T,TResult> : ISpecification<T>
+{
+    Expression<Func<T,TResult>> ? SelectResult { get; }
 }

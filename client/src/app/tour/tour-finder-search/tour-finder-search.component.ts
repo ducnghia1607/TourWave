@@ -24,6 +24,7 @@ export class TourFinderSearchComponent implements OnChanges {
   @Input() departureInput: string = '';
   @Input() dateInput: string = '';
   searchTourResult: Tour[] = [];
+  searchDestinationResult: string[] = [];
   selectedTourCode: string = '';
   inputSubject: Subject<string> = new Subject<string>();
   departures: Departure[] = [];
@@ -60,8 +61,9 @@ export class TourFinderSearchComponent implements OnChanges {
         switchMap((searchTerm) => this.tourService.getSearchResult(searchTerm))
       )
       .subscribe({
-        next: (res) => {
-          this.searchTourResult = res;
+        next: (res: any) => {
+          this.searchTourResult = res.tours;
+          this.searchDestinationResult = res.destinations;
           this.showResultSearch = true;
         },
         error: (err) => console.log(err),
@@ -91,6 +93,7 @@ export class TourFinderSearchComponent implements OnChanges {
     this.showMenuLocation = false;
     if (this.searchKeyword == '') {
       this.searchTourResult = [];
+      this.searchDestinationResult = [];
       this.showMenuLocation = true;
       return;
     }

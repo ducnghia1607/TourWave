@@ -50,6 +50,7 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { Booking } from 'src/app/shared/models/Booking';
 import { TourDetailReviewComponent } from '../tour-detail-review/tour-detail-review.component';
 import { ReviewResponse } from 'src/app/shared/models/ReviewResponse';
+import { TourType } from 'src/app/shared/models/TourType';
 
 @Component({
   selector: 'app-tour-detail',
@@ -97,6 +98,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   showBlackBackGround = false;
   consulting!: Consulting;
   booking!: Booking;
+  tourTypes: TourType[] = [];
+  tourTypeStr: string = '';
   @ViewChild(TourDetailNavbarComponent, { static: false })
   tourNavbar!: TourDetailNavbarComponent;
   @ViewChild(MatAccordion) accordion!: MatAccordion;
@@ -138,6 +141,21 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     this.recentVistedTours = JSON.parse(
       localStorage.getItem('recentVisitedTours') || '[]'
     ).slice(0, 3);
+    this.tourService.getAllTourTypes().subscribe((res) => {
+      this.tourTypes = res;
+      if (
+        this.tourTypes.length > 0 &&
+        this.tourDetail.tourWithType.length > 0
+      ) {
+        this.tourDetail.tourWithType.forEach((element) => {
+          var tourType = this.tourTypes.find((x) => x.id == element.tourTypeId);
+          if (tourType) {
+            this.tourTypeStr += tourType.name + ', ';
+          }
+        });
+        this.tourTypeStr = this.tourTypeStr.slice(0, -2);
+      }
+    });
   }
   openDialog() {
     const dialogRef = this.dialog.open(TourConsultingDialogComponent, {
@@ -226,7 +244,6 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
             new Date(a.departureDate).getTime() -
             new Date(b.departureDate).getTime()
         );
-
         this.getAllReview(this.tourDetail.id);
         if (this.user && this.user.id)
           this.checkCanReview(this.tourDetail.id, this.user.id);

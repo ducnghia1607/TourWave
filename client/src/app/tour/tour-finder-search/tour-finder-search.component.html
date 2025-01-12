@@ -159,10 +159,28 @@
       <div
         class="absolute w-full z-10 search-result-wrapper shadow-sm"
         [class.hidden]="!showResultSearch"
-        *ngIf="searchTourResult.length > 0"
+        *ngIf="
+          searchDestinationResult.length > 0 || searchTourResult.length > 0
+        "
       >
-        <div class="">
+        <div class="" *ngIf="searchDestinationResult.length > 0">
           <!-- Ở trên chứa 1 thẻ div chứa  các địa điểm  khi click thì dùng hàm khác -->
+          <p class="text-search-note">Thành phố,Quốc gia,Địa điểm du lịch</p>
+          <div
+            *ngFor="let destination of searchDestinationResult"
+            class="flex items-center search-result-item"
+            (click)="selecteTour(destination, '')"
+          >
+            <fa-icon [icon]="faLocation"></fa-icon>
+            <p
+              class="ms-4"
+              [innerHTML]="destination | highlight : searchKeyword"
+            ></p>
+          </div>
+        </div>
+        <div class="" *ngIf="searchTourResult.length > 0">
+          <!-- Ở trên chứa 1 thẻ div chứa  các địa điểm  khi click thì dùng hàm khác -->
+          <p class="text-search-note">Tours</p>
           <div
             *ngFor="let tour of searchTourResult"
             class="flex items-center search-result-item"

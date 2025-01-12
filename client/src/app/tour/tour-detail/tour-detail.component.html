@@ -65,6 +65,17 @@
         <div class="tour-description mt-4 tour-content-wrapper">
           <h2 class="page-subtitle">Trải nghiệm thú vị trong tour</h2>
           {{ tourDetail.description }}
+          <div>
+            <ul>
+              <li class="fz-16 mt-2" *ngIf="tourDetail.topPlaces.length > 0">
+                <b class="me-1">Điểm tham quan:</b
+                >{{ tourDetail.topPlaces.join(", ") }}
+              </li>
+              <li class="fz-16 mt-2" *ngIf="tourTypeStr != ''">
+                <b class="me-1">Chủ đề:</b>{{ tourTypeStr }}
+              </li>
+            </ul>
+          </div>
         </div>
         <div
           class="tour-itineraries mt-4 tour-content-wrapper"

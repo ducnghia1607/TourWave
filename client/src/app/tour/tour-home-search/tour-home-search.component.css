@@ -128,7 +128,7 @@
   left: 0;
 }
 .search-result-wrapper {
-  padding: 10px 0px;
+  padding: 0px 0px 10px;
 }
 .location-menu-wrapper .title {
   margin-bottom: 10px;
@@ -188,4 +188,12 @@
 .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined)
   .mat-mdc-form-field-infix {
   padding-top: 22px;
+}
+
+.text-search-note {
+  padding: 6px 15px;
+  background-color: rgba(204, 204, 204, 0.27);
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--primary-color);
 }
