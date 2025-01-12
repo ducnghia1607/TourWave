@@ -11,6 +11,11 @@ export const tourDetailResolver: ResolveFn<TourDetail> = (route, state) => {
   //   route.paramMap.get('tourCode')!,
   //   route.queryParamMap.get('date')!
   // );
+  var tour = tourSerivce.getTour(
+    route.paramMap.get('title')!,
+    route.paramMap.get('tourCode')!,
+    route.queryParamMap.get('date')!
+  );
   return tourSerivce.getTour(
     route.paramMap.get('title')!,
     route.paramMap.get('tourCode')!,

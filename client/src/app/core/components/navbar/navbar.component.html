@@ -71,22 +71,16 @@
               </div>
             </div>
             <div class="othermenu" *ngIf="user != null">
-              <!-- <ul>
+              <ul>
                 <li>
-                  <a [routerLink]="'auth/profile'">Hồ sơ của tôi</a>
+                  <a [routerLink]="'dashboard/profile'">Hồ sơ của tôi</a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="">Nhận xét của tôi</a>
-                </li>
-              </ul> -->
+                </li> -->
+              </ul>
               <div class="w-full flex justify-center items-center mt-2">
-                <button
-                  class="btn-logout"
-                  routerLink="/tours"
-                  (click)="logout()"
-                >
-                  Đăng xuất
-                </button>
+                <button class="btn-logout" (click)="logout()">Đăng xuất</button>
               </div>
             </div>
           </mat-menu>

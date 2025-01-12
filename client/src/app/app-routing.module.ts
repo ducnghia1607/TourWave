@@ -29,6 +29,11 @@ const routes: Routes = [
       import('./account/account.module').then((m) => m.AccountModule),
   },
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: 'management',
     loadChildren: () =>
       import('./management/management.module').then((m) => m.ManagementModule),

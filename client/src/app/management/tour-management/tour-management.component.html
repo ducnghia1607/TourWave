@@ -26,7 +26,7 @@
       class="action flex items-center justify-between absolute right-0 space-x-3"
       style="margin-bottom: 23px"
     >
-      <button>
+      <button [routerLink]="['/management/create-new-tour']">
         <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
         Thêm mới
       </button>
@@ -36,10 +36,10 @@
         Xem
       </button>
 
-      <!-- <button (click)="deleteTour()">
+      <button (click)="deleteTour()">
         <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
         Xóa
-      </button> -->
+      </button>
     </div>
   </div>
   <div style="overflow: auto; height: 500px">

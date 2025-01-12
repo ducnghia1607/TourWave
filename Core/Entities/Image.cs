@@ -12,8 +12,8 @@ public class Image : BaseEntity
     public Tour ?Tour {get;set;}
     public int ?ItineraryId { get; set; }
     public Itinerary ?Itinerary {get;set;}
-
-    
     public int ?ReviewId { get; set; }
     public Review ?Review {get;set;}
+        public int ?AppUserId { get; set; }
+    public AppUser ?AppUser {get;set;}
 }

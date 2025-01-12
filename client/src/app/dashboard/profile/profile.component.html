@@ -1,0 +1,313 @@
+<div class="common-wrapper profile-wrapper">
+  <div class="container">
+    <div style="width: 80%" *ngIf="this.user">
+      <div class="flex justify-between items-center bg-white box-content mb-4">
+        <div>
+          <h1 class="page-title-3">Thông tin cá nhân</h1>
+          <p class="fz-16" style="color: #828282">
+            Lưu thông tin của Quý khách để đặt dịch vụ nhanh hơn
+          </p>
+        </div>
+        <img src="" alt="" />
+      </div>
+      <form [formGroup]="profileForm">
+        <div
+          class="grid grid-cols-[200px_minmax(380px,_1fr)_100px] bg-white box-content gap-y-4"
+        >
+          <!-- FullName -->
+          <p>Họ và tên</p>
+          <div>
+            <p *ngIf="editId != '1'">{{ user.fullName }}</p>
+            <div class="form-control" *ngIf="editId == '1' && editMode">
+              <label for="">Họ và tên <span style="color: red">*</span></label>
+              <input
+                type="text"
+                class="profile-input"
+                formControlName="fullName"
+              />
+              <div
+                *ngIf="
+                  profileForm.controls.fullName.invalid &&
+                  (profileForm.controls.fullName.dirty ||
+                    profileForm.controls.fullName.touched)
+                "
+              >
+                <p
+                  style="font-size: 12px; color: red"
+                  *ngIf="
+                    profileForm.controls.fullName.errors &&
+                    profileForm.controls.fullName.errors['required']
+                  "
+                >
+                  Họ và tên không được để trống
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('1')"
+              *ngIf="editId != '1'"
+              [class.deactive]="editId != '1' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '1' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button
+                class="btn-primary-tour"
+                (click)="saveProfileClick('1')"
+                [disabled]="profileForm.invalid"
+              >
+                Lưu
+              </button>
+            </div>
+          </div>
+          <div class="divider-small col-span-3"></div>
+
+          <!-- Email -->
+          <p>Địa chỉ email</p>
+          <div>
+            <p
+              *ngIf="editId != '2'"
+              [class.empty-info]="user.email == '' || user.email == null"
+            >
+              {{
+                user.email != "" && user.email != null
+                  ? user.email
+                  : "Nhập email của bạn"
+              }}
+            </p>
+            <div class="form-control" *ngIf="editId == '2' && editMode">
+              <label for="">Địa chỉ email </label>
+              <input
+                type="text"
+                class="profile-input"
+                formControlName="email"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('2')"
+              *ngIf="editId != '2'"
+              [class.deactive]="editId != '2' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '2' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button class="btn-primary-tour" (click)="saveProfileClick('2')">
+                Lưu
+              </button>
+            </div>
+          </div>
+
+          <div class="divider-small col-span-3"></div>
+
+          <!-- Phone -->
+          <p>Số điện thoại</p>
+          <div>
+            <p
+              *ngIf="editId != '3'"
+              [class.empty-info]="user.phone == '' || user.phone == null"
+            >
+              {{
+                user.phone != "" && user.phone != null
+                  ? user.phone
+                  : "Thêm số điện thoại của bạn"
+              }}
+            </p>
+            <div class="form-control" *ngIf="editId == '3' && editMode">
+              <label for="">Số điện thoại</label>
+              <input
+                type="text"
+                class="profile-input"
+                formControlName="phone"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('3')"
+              *ngIf="editId != '3'"
+              [class.deactive]="editId != '3' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '3' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button class="btn-primary-tour" (click)="saveProfileClick('3')">
+                Lưu
+              </button>
+            </div>
+          </div>
+
+          <div class="divider-small col-span-3"></div>
+
+          <!-- Date of birth -->
+          <p>Ngày sinh</p>
+          <div>
+            <p
+              *ngIf="editId != '4'"
+              [class.empty-info]="
+                user.dateOfBirth == '' || user.dateOfBirth == null
+              "
+            >
+              {{
+                user.dateOfBirth != "" && user.dateOfBirth != null
+                  ? (user.dateOfBirth | date : "dd/MM/yyyy")
+                  : "Nhập ngày sinh của bạn"
+              }}
+            </p>
+            <div class="form-control" *ngIf="editId == '4' && editMode">
+              <label for="">Ngày sinh</label>
+              <mat-form-field>
+                <mat-label>Chọn ngày</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="dateOfBirth"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('4')"
+              *ngIf="editId != '4'"
+              [class.deactive]="editId != '4' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '4' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button class="btn-primary-tour" (click)="saveProfileClick('4')">
+                Lưu
+              </button>
+            </div>
+          </div>
+
+          <div class="divider-small col-span-3"></div>
+
+          <!-- Gender -->
+          <p>Giới tính</p>
+          <div>
+            <p
+              *ngIf="editId != '5'"
+              [class.empty-info]="user.gender == '' || user.gender == null"
+            >
+              {{
+                user.gender == "" || user.gender == null
+                  ? "Nhập giới tính của bạn"
+                  : user.gender == "male"
+                  ? "Quý ông"
+                  : "Quý bà"
+              }}
+            </p>
+            <div class="form-control" *ngIf="editId == '5' && editMode">
+              <label for="">Giới tính</label>
+              <select
+                class="select select-bordered w-full max-w-xs"
+                formControlName="gender"
+              >
+                <option value="male">Quý ông</option>
+                <option value="female">Quý bà</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('5')"
+              *ngIf="editId != '5'"
+              [class.deactive]="editId != '5' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '5' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button class="btn-primary-tour" (click)="saveProfileClick('5')">
+                Lưu
+              </button>
+            </div>
+          </div>
+
+          <div class="divider-small col-span-3"></div>
+
+          <!-- Address  -->
+          <p>Địa chỉ</p>
+          <div>
+            <p
+              *ngIf="editId != '6'"
+              [class.empty-info]="user.address == '' || user.address == null"
+            >
+              {{
+                user.address == "" || user.address == null
+                  ? "Nhập địa chỉ"
+                  : user.address
+              }}
+            </p>
+            <div class="form-control" *ngIf="editId == '6' && editMode">
+              <label for="">Địa chỉ</label>
+              <input
+                type="text"
+                class="profile-input"
+                formControlName="address"
+              />
+            </div>
+          </div>
+          <div>
+            <button
+              class="action-link"
+              (click)="editProfileClick('6')"
+              *ngIf="editId != '6'"
+              [class.deactive]="editId != '6' && editMode"
+              type="button"
+            >
+              Chỉnh sửa
+            </button>
+            <div
+              *ngIf="editId == '6' && editMode"
+              class="flex flex-col items-end"
+            >
+              <a class="action-link" (click)="cancelEditClick()">Hủy</a>
+              <button class="btn-primary-tour" (click)="saveProfileClick('6')">
+                Lưu
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

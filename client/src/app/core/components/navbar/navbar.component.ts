@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) {}
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe((res) => {
-      if (res) this.user = res;
+      this.user = res;
     });
   }
   faCoffee = faCoffee as IconProp;
@@ -44,7 +44,8 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
-    window.location.reload();
+    this.router.navigate(['/tours']);
+    // window.location.reload();
   }
   loginBtnClick() {
     if (window.location.pathname != '/tours') {

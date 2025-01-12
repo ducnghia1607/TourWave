@@ -63,6 +63,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -158,9 +161,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AppUserId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ClientSecret")
                         .HasColumnType("nvarchar(max)");
 
@@ -226,8 +226,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("AppUserId1");
-
                     b.HasIndex("ScheduleId");
 
                     b.HasIndex("TourId");
@@ -270,6 +268,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TourId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -312,6 +311,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Caption")
                         .HasColumnType("nvarchar(max)");
 
@@ -332,6 +334,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.HasIndex("ItineraryId");
 
@@ -401,7 +407,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Core.Entities.Schedule", b =>
@@ -573,33 +579,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("TourWithTypes");
                 });
 
-            modelBuilder.Entity("Core.Entities.UserPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
-
-                    b.ToTable("UserPhotos");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -710,25 +689,20 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Booking", b =>
                 {
                     b.HasOne("Core.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.AppUser", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("AppUserId1");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Schedule", "Schedule")
                         .WithMany("Bookings")
                         .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Bookings")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -746,7 +720,9 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Consultings")
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
 
@@ -755,17 +731,26 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Image", b =>
                 {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithOne("Image")
+                        .HasForeignKey("Core.Entities.Image", "AppUserId");
+
                     b.HasOne("Core.Entities.Itinerary", "Itinerary")
                         .WithMany("Images")
-                        .HasForeignKey("ItineraryId");
+                        .HasForeignKey("ItineraryId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Core.Entities.Review", "Review")
                         .WithMany("Images")
-                        .HasForeignKey("ReviewId");
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Images")
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Itinerary");
 
@@ -839,27 +824,18 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("TourWithType")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.TourType", "TourType")
                         .WithMany("TourWithType")
                         .HasForeignKey("TourTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tour");
 
                     b.Navigation("TourType");
-                });
-
-            modelBuilder.Entity("Core.Entities.UserPhoto", b =>
-                {
-                    b.HasOne("Core.Entities.AppUser", "AppUser")
-                        .WithOne("UserPhoto")
-                        .HasForeignKey("Core.Entities.UserPhoto", "AppUserId");
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -907,11 +883,11 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("Bookings");
 
+                    b.Navigation("Image");
+
                     b.Navigation("Reviews");
 
                     b.Navigation("UserConsulting");
-
-                    b.Navigation("UserPhoto");
 
                     b.Navigation("UserRoles");
                 });

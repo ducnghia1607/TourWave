@@ -63,6 +63,17 @@ public class TourSpecification : BaseSpecification<Tour>
                 break;
 
         }
+
+}
+        public TourSpecification(int id) : base(x => x.Id == id){
+        AddInclude(x => x.Images);
+        AddInclude(x => x.Itineraries);
+        // AddInclude(x => x.Reviews);
+        // AddInclude(x => x.Consultings);
+        // AddInclude(x => x.Bookings);
+        AddInclude(x => x.TourWithType);
+        AddNestedInclude("Itineraries.Images");
+        AddNestedInclude("Reviews.Images");
     }
 
 

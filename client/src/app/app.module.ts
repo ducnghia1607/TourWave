@@ -19,6 +19,7 @@ import { LoadingInterceptor } from './core/interceptor/loading.interceptor';
 import { AccountModule } from './account/account.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 registerLocaleData(localeVi, 'vi-VN');
 @NgModule({
@@ -32,6 +33,7 @@ registerLocaleData(localeVi, 'vi-VN');
     TourDetailComponent,
     RecommendModule,
     FormsModule,
+    DashboardModule,
     ReactiveFormsModule,
     NgxSpinnerModule.forRoot({
       type: 'ball-clip-rotate',

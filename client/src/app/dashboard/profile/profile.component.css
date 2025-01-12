@@ -1,0 +1,56 @@
+.action-link {
+  color: #2f80ed;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.profile-wrapper .btn-primary-tour {
+  padding: 5px 20px !important;
+}
+
+.box-content {
+  padding: 16px 24px;
+}
+
+.profile-input {
+  width: 360px;
+  height: 44px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: 0;
+  padding: 0 16px;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.profile-wrapper .form-control label {
+  font-size: 16px;
+  color: #828282;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.profile-input:focus,
+.profile-input:hover {
+  border-color: #00d9fc !important;
+  box-shadow: 0 0 0 4px rgba(50, 193, 255, 0.15);
+}
+
+.divider-small {
+  height: 1px;
+  width: 100%;
+  background-color: #e9eaec;
+}
+
+.action-link.deactive {
+  color: #a2a2a2;
+  cursor: not-allowed;
+}
+
+.empty-info {
+  color: #828282;
+}
+
+::ng-deep .profile-wrapper .mat-mdc-text-field-wrapper {
+  width: 240px;
+}

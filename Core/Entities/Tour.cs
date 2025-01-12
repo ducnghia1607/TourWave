@@ -23,7 +23,7 @@ public string ? ModifiedBy { get; set; }
 public List<Image>?Images { get; set; } = new ();
  public List<Itinerary> Itineraries { get; set; } = new ();
  public ICollection<TourWithType>  TourWithType {get;set; } = [];
- public List<Schedule>? Schedules{get;set;} = new ();
+    public List<Schedule>? Schedules{get;set;} = new ();
  public List<Consulting> ?Consultings { get; set; } = new();
  public List<Booking> ?Bookings { get; set; } = new();
  public List<Review> ?Reviews { get; set; } = new();

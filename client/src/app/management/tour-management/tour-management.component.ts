@@ -121,7 +121,7 @@ export class TourManagementComponent {
   }
   currentTourCode!: string;
   currentTourTitle!: string;
-  currentTourId!: string;
+  currentTourId!: number;
   clickedRows = new Set<Tour>();
 
   OnRowClicked(row: any) {
@@ -153,9 +153,12 @@ export class TourManagementComponent {
       if (confirm == '2') {
         return;
       } else {
-        if (this.currentTourId === '') return;
+        if (this.currentTourId === 0) return;
         this.tourService.deleteTour(this.currentTourId).subscribe((res) => {
           console.log(res);
+          this.data = this.data.filter((tour) => tour.id != this.currentTourId);
+          this.currentTourCode = '';
+          this.currentTourId = 0;
         });
       }
     });

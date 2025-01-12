@@ -1,15 +1,19 @@
-﻿using Core.Interfaces;
+﻿using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Infrastructure.Services
 {
-    public class TourService(TourContext context) : ITourService
+    public class TourService(TourContext context,IPhotoService photoService) : ITourService
     {
         public async Task<string> GenerateNewTourCode()
         {
@@ -29,5 +33,44 @@ namespace Infrastructure.Services
             return false;
 
         }
+
+        public async Task TourWTToRemove(int tourId)
+        {
+            
+            var item =  await context.TourWithTypes.Where(x => x.TourId == tourId).ToListAsync();
+            context.TourWithTypes.RemoveRange(item);
+        }
+        public IDbContextTransaction GetTransaction()
+        {
+            return context.Database.BeginTransaction();
+        }
+
+        public  void DeleteImageForEntity(Tour tour)
+        {
+            try{
+                if(tour != null)
+                {
+                    var itineraries = tour.Itineraries;
+                    foreach(var itinerary in itineraries)
+                    {
+                        if(itinerary.Images.Count > 0)
+                        context.Images.RemoveRange(itinerary.Images);
+                    }
+                    context.Itinerarys.RemoveRange(itineraries);
+                    var reviews = tour.Reviews;
+                    foreach (var review in reviews)
+                    {
+                        if(review.Images.Count > 0)
+                        context.Images.RemoveRange(review.Images);
+                    }
+                    context.Itinerarys.RemoveRange(itineraries);
+                    context.Reviews.RemoveRange(reviews);
+                }
+
+            }catch(Exception ex){
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

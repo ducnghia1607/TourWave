@@ -221,8 +221,15 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
     this.activedRoute.data.subscribe({
       next: (data) => {
         this.tourDetail = data['tourDetail'];
+        this.tourDetail.schedules = this.tourDetail.schedules.sort(
+          (a, b) =>
+            new Date(a.departureDate).getTime() -
+            new Date(b.departureDate).getTime()
+        );
+
         this.getAllReview(this.tourDetail.id);
-        this.checkCanReview(this.tourDetail.id, this.user.id);
+        if (this.user && this.user.id)
+          this.checkCanReview(this.tourDetail.id, this.user.id);
         console.log(this.reviews);
         this.breadcrumbService.set('@tourTitle', this.tourDetail.title);
 

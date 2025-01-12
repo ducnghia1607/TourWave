@@ -182,3 +182,9 @@ body {
 .fz-20 {
   font-size: 20px;
 }
+
+.common-wrapper {
+  padding: 85px 0 60px;
+  background-color: var(--primary-section-color);
+  min-height: calc(100vh - 268px);
+}

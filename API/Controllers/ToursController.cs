@@ -144,15 +144,33 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
     [Authorize]
         [HttpDelete("{id:int}")] // api/
     public async Task<ActionResult> DeleteTour(int id){
-        var tour = await unit.Repository<Tour>().GetByIdAsync(id);
-        if(tour == null){
-            return NotFound();
+        var transaction = tourService.GetTransaction();
+        try{
+            var spec = new TourSpecification( id);
+            var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+            List<Image> imageToDelete = new List<Image>();
+            imageToDelete = [.. tour.Images,..tour.Itineraries.SelectMany(x => x.Images),..tour.Reviews.SelectMany(x => x.Images)];
+            if (tour == null){
+                return NotFound();
+            }
+                //await tourService.TourWTToRemove(tour.Id);
+            tourService.DeleteImageForEntity(tour);
+            unit.Repository<Tour>().Remove(tour);
+            if(await unit.Complete()){
+                transaction.Commit();
+                foreach(var image in imageToDelete)
+                {
+                    if(image != null && !string.IsNullOrEmpty(image.PublicId))
+                    await photoService.DeleteImageAsync(image.PublicId);
+                }
+                return NoContent();
+            }
+           return BadRequest("Problem deleting the tour");
         }
-        unit.Repository<Tour>().Remove(tour);
-        if(await unit.Complete()){
-            return NoContent();
+        catch(Exception ex){
+            transaction.Rollback();
+            return BadRequest(ex.Message);
         }
-        return BadRequest("Problem deleting the tour");
     }
 
     public bool TourExists(int id){

@@ -73,4 +73,8 @@ export class AccountService {
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
   }
+
+  updateAccountInfo(uid: number, update: object) {
+    return this.http.put<User>(this.baseUrl + 'account/' + uid, update);
+  }
 }

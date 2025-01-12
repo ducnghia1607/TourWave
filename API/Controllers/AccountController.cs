@@ -15,7 +15,7 @@ using System.Reflection;
 namespace API.Controllers
 {
     
-    public class AccountController(ITokenService tokenService, IMapper mapper, UserManager<AppUser> userManager) : BaseApiController
+    public class AccountController(ITokenService tokenService, IMapper mapper, UserManager<AppUser> userManager,IUnitOfWork unit) : BaseApiController
     {
 
         [HttpPost("register")]  // api/account/register
@@ -43,7 +43,10 @@ namespace API.Controllers
                 Token = await tokenService.CreateToken(user),
                 PhotoUrl = "",
                 Gender = "",
-                DateOfBirth = null
+                DateOfBirth = null,
+                FullName = user.FullName,
+                Email = user.Email,
+                Phone = user.PhoneNumber
             };
         }
 
@@ -51,7 +54,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto account)
         {
             var user = await userManager.Users
-            .Include(x => x.UserPhoto)
+            .Include(x => x.Image)
             .SingleOrDefaultAsync(user => user.UserName == account.UserName);
 
             //     var user = await _userManager.Users
@@ -68,9 +71,14 @@ namespace API.Controllers
             {
                 UserName = user.UserName,
                 Token = await tokenService.CreateToken(user),
-                PhotoUrl = user.UserPhoto != null ?  user.UserPhoto.Url : "",
+                PhotoUrl = user.Image != null ?  user.Image.Url : "",
                 Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth
+                DateOfBirth = user.DateOfBirth,
+                FullName = user.FullName,
+                Address = user.Address
+                ,
+                Email = user.Email,
+                Phone = user.PhoneNumber
             };
 
         }
@@ -93,13 +101,63 @@ namespace API.Controllers
             {
                 UserName = user.UserName,
                 Token = await tokenService.CreateToken(user),
-                PhotoUrl = user.UserPhoto != null ? user.UserPhoto.Url : "",
+                PhotoUrl = user.Image != null ? user.Image.Url : "",
                 Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth
+                DateOfBirth = user.DateOfBirth,
+                FullName = user.FullName,
+                Address = user.Address,
+                Email = user.Email
+                ,
+                Phone = user.PhoneNumber
             };
 
         }
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<UserDto>> UpdateAccountInfo([FromBody] UpdateAccountDto update, [FromRoute] int id) 
+        {
+            var user = await userManager.FindByIdAsync(Convert.ToString(id)); 
+            if (user == null) return NotFound();
+            if (update.id=="1")
+            {
+                user.FullName = update.update;
+            }else if(update.id == "2")
+            {
+                user.Email = update.update;
+            }
+            else if (update.id == "3")
+            {
+                user.PhoneNumber = update.update;
+            }
+            else if (update.id == "4")
+            {
+                user.DateOfBirth = DateOnly.Parse(update.update);
+            }
+            else if (update.id == "5")
+            {
+                user.Gender = update.update;
+            }
+            else if (update.id == "6")
+            {
+                user.Address = update.update;
+            }
 
+            var result = await userManager.UpdateAsync(user);
+            if (result.Errors.Any()) return BadRequest(result.Errors);
+           
+            return new UserDto
+            {
+                UserName = user.UserName,
+                Token = await tokenService.CreateToken(user),
+                PhotoUrl = user.Image != null ? user.Image.Url : "",
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+                FullName = user.FullName,
+                Address = user.Address,
+                Email = user.Email,
+                Phone = user.PhoneNumber
+            };
+
+        }
 
         public async Task<bool> UserExists(string username)
         {

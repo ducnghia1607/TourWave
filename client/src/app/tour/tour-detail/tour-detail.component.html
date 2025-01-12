@@ -188,6 +188,7 @@
           <p class="tour-sidebar-subtitle">Chọn Lịch Trình và Xem Giá:</p>
           <div class="flex items-center justify-between space-x-4 mb-3">
             <div
+              *ngIf="firstBoxWhiteDate != null"
               class="box-white active"
               #boxwhite
               [class.active]="
@@ -205,6 +206,7 @@
             <div
               class="box-white"
               #boxwhite
+              *ngIf="secondBoxWhiteDate != null"
               [class.active]="
                 secondBoxWhiteDate?.toDateString() ==
                 this.selectedDate.toDateString()
@@ -220,6 +222,7 @@
             <div
               class="box-white"
               #boxwhite
+              *ngIf="thirdBoxWhiteDate != null"
               [class.active]="
                 thirdBoxWhiteDate?.toDateString() ==
                 this.selectedDate.toDateString()

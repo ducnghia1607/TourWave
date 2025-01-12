@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TourContext))]
-    [Migration("20250104083512_AddStatusConsulting")]
-    partial class AddStatusConsulting
+    [Migration("20250110033819_RefactorDatabase")]
+    partial class RefactorDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,9 +161,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AppUserId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ClientSecret")
                         .HasColumnType("nvarchar(max)");
 
@@ -172,6 +169,21 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateOnly>("DepartureDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumAdults")
                         .HasColumnType("int");
@@ -186,6 +198,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PricePerAdult")
@@ -209,8 +225,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("AppUserId1");
 
                     b.HasIndex("ScheduleId");
 
@@ -254,6 +268,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TourId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -296,6 +311,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Caption")
                         .HasColumnType("nvarchar(max)");
 
@@ -305,7 +323,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ReviewId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TourId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
@@ -314,7 +336,13 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId")
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
+
                     b.HasIndex("ItineraryId");
+
+                    b.HasIndex("ReviewId");
 
                     b.HasIndex("TourId");
 
@@ -351,6 +379,38 @@ namespace Infrastructure.Migrations
                     b.ToTable("Itinerarys");
                 });
 
+            modelBuilder.Entity("Core.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("Core.Entities.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -361,9 +421,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateOnly>("DepartureDate")
                         .HasColumnType("date");
-
-                    b.Property<int>("RemainingSpot")
-                        .HasColumnType("int");
 
                     b.Property<DateOnly>("ReturnDate")
                         .HasColumnType("date");
@@ -386,13 +443,13 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Availability")
+                    b.Property<bool?>("Availability")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Capacity")
+                    b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -413,7 +470,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
@@ -427,6 +484,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopPlaces")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TourCode")
@@ -518,33 +578,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("TourTypeId");
 
                     b.ToTable("TourWithTypes");
-                });
-
-            modelBuilder.Entity("Core.Entities.UserPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
-
-                    b.ToTable("UserPhotos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -657,25 +690,20 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Booking", b =>
                 {
                     b.HasOne("Core.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.AppUser", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("AppUserId1");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Schedule", "Schedule")
                         .WithMany("Bookings")
                         .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Bookings")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -693,7 +721,9 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Consultings")
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
 
@@ -702,15 +732,31 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Image", b =>
                 {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithOne("Image")
+                        .HasForeignKey("Core.Entities.Image", "AppUserId");
+
                     b.HasOne("Core.Entities.Itinerary", "Itinerary")
                         .WithMany("Images")
-                        .HasForeignKey("ItineraryId");
+                        .HasForeignKey("ItineraryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Core.Entities.Review", "Review")
+                        .WithMany("Images")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("Images")
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Itinerary");
+
+                    b.Navigation("Review");
 
                     b.Navigation("Tour");
                 });
@@ -722,6 +768,25 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tour");
+                });
+
+            modelBuilder.Entity("Core.Entities.Review", b =>
+                {
+                    b.HasOne("Core.Entities.AppUser", "AppUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Tour", "Tour")
+                        .WithMany("Reviews")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Tour");
                 });
@@ -761,27 +826,18 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.Entities.Tour", "Tour")
                         .WithMany("TourWithType")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.TourType", "TourType")
                         .WithMany("TourWithType")
                         .HasForeignKey("TourTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tour");
 
                     b.Navigation("TourType");
-                });
-
-            modelBuilder.Entity("Core.Entities.UserPhoto", b =>
-                {
-                    b.HasOne("Core.Entities.AppUser", "AppUser")
-                        .WithOne("UserPhoto")
-                        .HasForeignKey("Core.Entities.UserPhoto", "AppUserId");
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -829,14 +885,21 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("Bookings");
 
-                    b.Navigation("UserConsulting");
+                    b.Navigation("Image");
 
-                    b.Navigation("UserPhoto");
+                    b.Navigation("Reviews");
+
+                    b.Navigation("UserConsulting");
 
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Core.Entities.Itinerary", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Core.Entities.Review", b =>
                 {
                     b.Navigation("Images");
                 });
@@ -855,6 +918,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Itineraries");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Schedules");
 
