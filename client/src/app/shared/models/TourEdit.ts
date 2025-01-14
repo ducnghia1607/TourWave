@@ -1,10 +1,8 @@
 import { Itinerary } from './Itinarary';
-import { ReviewResponse } from './ReviewResponse';
+import { ItineraryUpdate } from './ItineraryUpdate';
 import { Schedule } from './Schedule';
-import { Tour } from './Tour';
-import { TourWithType } from './TourWithType';
 
-export interface TourDetail extends Tour {
+export interface TourEdit {
   id: number;
   title: string;
   tourCode: string;
@@ -17,13 +15,17 @@ export interface TourDetail extends Tour {
   destination: string;
   utilities: string[];
   images: Image[];
-  itineraries: Itinerary[];
+  itineraries: ItineraryUpdate[];
   schedules: Schedule[];
-  reviews: ReviewResponse[];
-  tourWithType: TourWithType[];
+  tourWithType: string[];
+  transport: string[];
+  topPlaces: string[];
+  createdAt: Date;
 }
 
 export interface Image {
+  id: number;
   url: string;
   caption: string;
+  publicId: string;
 }

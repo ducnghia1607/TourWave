@@ -19,6 +19,7 @@ import { Tour } from 'src/app/shared/models/Tour';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TourService } from 'src/app/tour/tour.service';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-tour-management',
@@ -166,23 +167,22 @@ export class TourManagementComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
+  editTour() {
+    if (this.currentTourId == 0 || this.currentTourCode === '') return;
+    this.router.navigate(['/management/edit-tour/', this.currentTourId]);
+  }
 
+  editScheduleTour() {
+    if (this.currentTourId == 0 || this.currentTourCode === '') return;
+    this.router.navigate([
+      '/management/edit-schedule-tour/',
+      this.currentTourId,
+    ]);
+  }
   faEye = faEye as IconProp;
   faTrash = faTrash as IconProp;
-
   faCheckCircle = faCheckCircle as IconProp;
   faPlus = faPlus as IconProp;
   faPenToSquare = faPenToSquare as IconProp;
-  // viewDetailBooking(id: number) {
-  //   this.managementService.getBooking(id).subscribe((res) => {
-  //     if (res) {
-  //       this.booking = res;
-  //       this.dialog.open(BookingDialogViewComponent, {
-  //         data: {
-  //           booking: this.booking,
-  //         },
-  //       });
-  //     }
-  //   });
-  // }
+  faCalender = faCalendar as IconProp;
 }

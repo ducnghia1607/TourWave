@@ -14,6 +14,7 @@ import { BookingResponse } from '../shared/models/BookingResponse';
 import { TourType } from '../shared/models/TourType';
 import { ReviewResponse } from '../shared/models/ReviewResponse';
 import { Review } from '../shared/models/Review';
+import { TourEdit } from '../shared/models/TourEdit';
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +41,10 @@ export class TourService {
     return this.http.get<TourDetail>(this.baseUrl + 'tours/' + id);
   }
 
+  getTourToEdit(id: string) {
+    return this.http.get<TourEdit>(this.baseUrl + 'tours/edit-tour/' + id);
+  }
+
   getTour(title: string, tourCode: string, date: string) {
     return this.http.get<TourDetail>(
       this.baseUrl + 'tours/' + title + '/' + tourCode + '?date=' + date
@@ -47,7 +52,7 @@ export class TourService {
   }
 
   getSearchResult(searchTerm: string) {
-    return this.http.get<Tour[]>(
+    return this.http.get(
       this.baseUrl + 'tours/search-temp?keyword=' + searchTerm
     );
   }
@@ -140,13 +145,6 @@ export class TourService {
     return this.http.get<TourType[]>(this.baseUrl + 'tours/tour-types');
   }
 
-  createNewTour(tour: any) {
-    return this.http.post<any>(this.baseUrl + 'tours', tour);
-  }
-  deleteTour(tourId: any) {
-    return this.http.delete(this.baseUrl + 'tours/' + tourId);
-  }
-
   getAllReviews(tourId: number) {
     return this.http.get<ReviewResponse[]>(
       this.baseUrl + 'reviews?tourId=' + tourId
@@ -160,6 +158,45 @@ export class TourService {
   checkCanReview(tourId: number, uid: number) {
     return this.http.get<boolean>(
       this.baseUrl + 'tours/check-can-review?tourId=' + tourId + '&uid=' + uid
+    );
+  }
+
+  createNewTour(tour: any) {
+    return this.http.post<any>(this.baseUrl + 'tours', tour);
+  }
+  deleteTour(tourId: any) {
+    return this.http.delete(this.baseUrl + 'tours/' + tourId);
+  }
+  updateTour(tour: any) {
+    return this.http.put<any>(
+      this.baseUrl + 'tours/update-tour/' + tour.id,
+      tour
+    );
+  }
+
+  deleteImageForTourGallery(tourId: number, imageId: number) {
+    return this.http.delete(
+      this.baseUrl +
+        'tours/tour-image-gallery?tourId=' +
+        tourId +
+        '&imageId=' +
+        imageId
+    );
+  }
+
+  getAllScheduleForTour(tourId: string) {
+    return this.http.get<Schedule[]>(this.baseUrl + 'schedules/' + tourId);
+  }
+
+  addSchedulesForTour(tourId: number, schedules: Schedule[]) {
+    return this.http.post<any>(
+      this.baseUrl + 'tours/add-schedules/' + tourId,
+      schedules
+    );
+  }
+  deleteScheduleForTour(tourId: number, scheduleId: number) {
+    return this.http.delete(
+      this.baseUrl + 'tours/' + tourId + '/schedules/' + scheduleId
     );
   }
 }

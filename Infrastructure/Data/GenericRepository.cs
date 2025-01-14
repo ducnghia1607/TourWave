@@ -84,4 +84,9 @@ public class GenericRepository<T>(TourContext context) : IGenericRepository<T> w
     {
         return await ApplySpecification(spec).ToListAsync();
     }
+
+    public void AddRange(List<T> entity)
+    {
+        context.Set<T>().AddRange(entity);
+    }
 }

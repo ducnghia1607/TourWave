@@ -206,6 +206,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
       );
       return new Date(x.departureDate).getTime() == this.selectedDate.getTime();
     });
+    if (!schedule) return;
     var booking = {
       tourId: this.tourDetail.id,
       appUserId: this.user.id,

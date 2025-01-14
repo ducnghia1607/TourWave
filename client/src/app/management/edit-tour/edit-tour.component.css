@@ -1,4 +1,4 @@
-.create-tour-wrapper .form-control input {
+.edit-tour-wrapper .form-control input {
   display: block;
   width: 100%;
   height: 48px;
@@ -23,38 +23,35 @@
   font-size: 15px;
 }
 
-.create-tour-wrapper .first-block .mat-mdc-text-field-wrapper {
+.edit-tour-wrapper .first-block .mat-mdc-text-field-wrapper {
   max-height: 48px;
 }
 
-.create-tour-wrapper .form-control label {
+.edit-tour-wrapper .form-control label {
   font-size: 15px;
   color: var(--text-primary-color);
   font-weight: 500;
   margin-bottom: 6px;
 }
 
-.create-tour-wrapper .form-control input:focus {
+.edit-tour-wrapper .form-control input:focus {
   outline: 1px solid var(--text-primary-color);
   outline-offset: -2px;
 }
 
-.create-tour-wrapper .form-control input::placeholder {
+.edit-tour-wrapper .form-control input::placeholder {
   font-size: 13px;
 }
 
-.create-tour-wrapper .form-control {
+.edit-tour-wrapper .form-control {
   margin-bottom: 8px;
 }
-::ng-deep .create-tour-wrapper .mat-mdc-select {
-  font-size: 14px;
-}
 
-::ng-deep .mat-mdc-dialog-container .mdc-dialog__title {
+::ng-deep .edit-tour-wrapper .mat-mdc-dialog-container .mdc-dialog__title {
   padding: 0 24px 0px !important;
 }
 
-.create-tour-wrapper textarea {
+.edit-tour-wrapper textarea {
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
@@ -104,4 +101,8 @@
   text-align: center;
   padding: 3px;
   border-radius: 2px;
+}
+
+::ng-deep .edit-tour-wrapper .mat-mdc-select {
+  font-size: 14px;
 }

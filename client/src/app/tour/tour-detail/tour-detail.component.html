@@ -64,7 +64,7 @@
         </div>
         <div class="tour-description mt-4 tour-content-wrapper">
           <h2 class="page-subtitle">Trải nghiệm thú vị trong tour</h2>
-          {{ tourDetail.description }}
+          <div [innerHTML]="tourDetail.description"></div>
           <div>
             <ul>
               <li class="fz-16 mt-2" *ngIf="tourDetail.topPlaces.length > 0">
@@ -120,8 +120,8 @@
                 </mat-expansion-panel-header>
 
                 <div>
-                  <div>
-                    <p>{{ itinerary.content }}</p>
+                  <div [innerHTML]="itinerary.content">
+                    <!-- <p >{{ itinerary.content }}</p> -->
                   </div>
                   <figure
                     *ngFor="let image of itinerary.images"

@@ -43,6 +43,10 @@ namespace API.DataHelpers
                  .ForMember(dest => dest.TourTitle, o => o.MapFrom(src => src.Tour.Title))
 
                 ;
+
+            CreateMap<Tour, TourEditDto>().ForMember(dest => dest.TourWithType,
+                     o => o.MapFrom(src => src.TourWithType.Select(x => x.TourTypeId).ToList()))
+                .ForMember(dest => dest.Transport,o=> o.MapFrom(src => src.Transport.Split(',', System.StringSplitOptions.None).ToList()  ));
             // CreateMap<Tour, TourDto>().ForMember(dest => dest.DepartureDate, o => o.MapFrom(src => src.Schedules.FirstOrDefault().DepartureDate.ToString()));
         }
 

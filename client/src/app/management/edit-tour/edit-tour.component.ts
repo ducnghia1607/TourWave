@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import {
   Component,
@@ -7,58 +7,71 @@ import {
   inject,
   OnInit,
   ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import {
-  FormArray,
-  FormBuilder,
-  FormControl,
   FormGroup,
+  FormBuilder,
   Validators,
+  FormArray,
+  FormControl,
 } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faBackward,
-  faPlus,
   faTrashCan,
+  faPlus,
+  faClose,
+  faBackward,
 } from '@fortawesome/free-solid-svg-icons';
 import { EditorComponent } from '@tinymce/tinymce-angular';
-import { duration } from 'moment';
-import { FileItem, FileUploader } from 'ng2-file-upload';
-import { startWith, map, Observable, take } from 'rxjs';
+import { FileUploader } from 'ng2-file-upload';
+import { take, startWith, map, Observable } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { Departure } from 'src/app/shared/models/Departure';
+import { Itinerary } from 'src/app/shared/models/Itinarary';
+import { ItineraryUpdate } from 'src/app/shared/models/ItineraryUpdate';
+import { Schedule } from 'src/app/shared/models/Schedule';
+import { TourDetail } from 'src/app/shared/models/TourDetail';
+import { TourEdit } from 'src/app/shared/models/TourEdit';
 import { TourType } from 'src/app/shared/models/TourType';
 import { User } from 'src/app/shared/models/User';
 import { TourService } from 'src/app/tour/tour.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-create-new-tour',
-  templateUrl: './create-new-tour.component.html',
-  styleUrls: ['./create-new-tour.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-edit-tour',
+  templateUrl: './edit-tour.component.html',
+  styleUrls: ['./edit-tour.component.css'],
 })
-export class CreateNewTourComponent implements OnInit {
+export class EditTourComponent implements OnInit {
   departures: Departure[] = [];
   baseUrl = environment.apiUrl;
   user!: User;
   faTrash = faTrashCan as IconProp;
   faPlus = faPlus as IconProp;
   faBackward = faBackward as IconProp;
+  faClose = faClose as IconProp;
   tourForm!: FormGroup;
   minDate: Date = new Date();
   tourTypes: TourType[] = [];
-  content!: string;
+  tourEdit!: TourEdit;
+  imageIdGalleryToDelete: number[] = [];
+  imageIdItineraryToDelete: number[] = [];
+  init: EditorComponent['init'] = {
+    plugins: 'lists link image table code help wordcount',
+  };
+  goBack() {
+    this.router.navigateByUrl('/management/tours');
+  }
   constructor(
     private tourService: TourService,
     private fb: FormBuilder,
     private accountService: AccountService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
@@ -66,11 +79,20 @@ export class CreateNewTourComponent implements OnInit {
       }
     });
     this.tourService.getAllTourTypes().subscribe((res) => {
-      if (res) this.tourTypes = res;
+      if (res) {
+        this.tourTypes = res;
+        if (this.tourEdit) {
+          this.tourForm.patchValue(this.tourEdit);
+          // this.patchSchedules(this.tourEdit.schedules);
+          this.patchItineraries(this.tourEdit.itineraries);
+          // this.tourForm.patchValue({
+          //   tourWithType: this.tourEdit.tourWithType,
+          // });
+        }
+      }
     });
     this.tourForm = this.fb.group({
       title: ['', Validators.required],
-      content: ['', Validators.required],
       departure: ['', Validators.required],
       tourWithType: ['', Validators.required],
       transport: ['', Validators.required],
@@ -103,20 +125,89 @@ export class CreateNewTourComponent implements OnInit {
       )
     );
   }
-  init: EditorComponent['init'] = {
-    plugins: 'lists link image table code help wordcount',
-  };
-  goBack() {
-    this.router.navigateByUrl('/management/tours');
+
+  deleteImageForTourGallery(imageId: number) {
+    this.imageIdGalleryToDelete.push(imageId);
+    this.tourEdit.images = this.tourEdit.images.filter((x) => x.id != imageId);
+    // this.tourService
+    //   .deleteImageForTourGallery(this.tourEdit.id, imageId)
+    //   .subscribe((res) => {
+    //     this.tourEdit.images = this.tourEdit.images.filter(
+    //       (x) => x.id != imageId
+    //     );
+    //     console.log(res);
+    //   });
   }
-  createNewTour() {
-    console.log(this.tourForm.value);
-    // console.log(
-    //   this.utilities,
-    //   this.destinations,
-    //   this.durations,
-    //   this.topPlaces
-    // );
+  deleteImageItinerary(idx: number, imageId: number) {
+    this.imageIdGalleryToDelete.push(imageId);
+    this.itineraries.at(idx).patchValue({ images: null });
+  }
+
+  // patchSchedules(schedules: Schedule[]) {
+  //   const schedulesArray = this.tourForm.get('schedules') as FormArray;
+  //   schedulesArray.clear(); // Xóa FormArray cũ nếu có
+
+  //   schedules.forEach((schedule) => {
+  //     schedulesArray.push(
+  //       this.fb.group({
+  //         departureDate: schedule.departureDate,
+  //         returnDate: schedule.returnDate,
+  //       })
+  //     );
+  //   });
+  // }
+
+  // Hàm thêm giá trị vào FormArray itineraries
+  patchItineraries(itineraries: ItineraryUpdate[]) {
+    const itinerariesArray = this.tourForm.get('itineraries') as FormArray;
+    itinerariesArray.clear(); // Xóa FormArray cũ nếu có
+
+    itineraries.forEach((itinerary) => {
+      itinerariesArray.push(
+        this.fb.group({
+          id: itinerary.id,
+          timeTravel: itinerary.timeTravel,
+          title: itinerary.title,
+          content: itinerary.content,
+          images: itinerary.images[0],
+        })
+      );
+    });
+  }
+  ngOnInit(): void {
+    this.tourService.getAllDepartures().subscribe({
+      next: (res) => {
+        this.departures = res;
+        this.allDestinations = this.departures.map((d) => d.name);
+        console.log(this.allDestinations);
+      },
+      error: (err) => console.log(err),
+    });
+
+    this.activatedRoute.data.subscribe({
+      next: (data) => {
+        this.tourEdit = data['tourEdit'];
+        this.utilities = this.tourEdit.utilities;
+        this.topPlaces = this.tourEdit.topPlaces;
+        this.destinations = this.tourEdit.destination.split(',');
+        this.durations = this.tourEdit.duration.split(',');
+        console.log(this.tourEdit);
+        // var tour = {
+        //   ...this.tourForm.value,
+        //   utilities: this.utilities,
+        //   destination: this.destinations.toString(),
+        //   topPlaces: this.topPlaces,
+        //   duration: this.durations.toString(),
+        //   transport: this.tourForm.controls['transport'].value.toString(),
+        //   createdAt: new Date(),
+        //   tourWithType: tourwithtype,
+        //   schedules: schedulesToSave,
+        //   itineraries: itinerariesToSave,
+        // };
+      },
+    });
+  }
+  updateTour() {
     var tourwithtype: object[] = [];
     this.tourForm.controls['tourWithType'].value.forEach((element: string) => {
       tourwithtype.push({
@@ -131,48 +222,71 @@ export class CreateNewTourComponent implements OnInit {
       (x: any) => {
         return {
           ...x,
-          images: null,
+          images:
+            x.images != null && x.images.id != null
+              ? [
+                  {
+                    id: x.images.id,
+                    publicId: x.images.publicId,
+                    url: x.images.url,
+                    itineraryId: x.id,
+                  },
+                ]
+              : null,
         };
       }
     );
-    // var schedulesToSave = this.tourForm.controls['schedules'].value.map(
-    //   (x: any) => {
-    //     return {
-    //       departureDate: this.datePipe.transform(
-    //         new Date(x.departureDate),
-    //         'yyyy-MM-dd'
-    //       ),
-    //       returnDate: this.datePipe.transform(
-    //         new Date(x.returnDate),
-    //         'yyyy-MM-dd'
-    //       ),
-    //     };
-    //   }
-    // );
-
-    // schedules: schedulesToSave,
-
     var tour = {
+      id: this.tourEdit.id,
       ...this.tourForm.value,
       utilities: this.utilities,
       destination: this.destinations.toString(),
       topPlaces: this.topPlaces,
       duration: this.durations.toString(),
       transport: this.tourForm.controls['transport'].value.toString(),
-      createdAt: new Date(),
+      createdAt: this.tourEdit.createdAt,
       tourWithType: tourwithtype,
       itineraries: itinerariesToSave,
     };
+    console.log(tour);
 
-    this.tourService.createNewTour(tour).subscribe((res: any) => {
+    this.tourService.updateTour(tour).subscribe((res: any) => {
       if (res) {
-        this.uploader.setOptions({
-          url: this.baseUrl + 'tours/add-tour-image/' + res.id,
+        console.log(res);
+        // Add new image for tour gallery
+        if (this.uploader.queue.length > 0) {
+          this.uploader.setOptions({
+            url: this.baseUrl + 'tours/add-tour-image/' + res.id,
+          });
+          this.uploader.uploadAll();
+        }
+        this.imageIdGalleryToDelete.forEach((imageId) => {
+          this.tourService
+            .deleteImageForTourGallery(this.tourEdit.id, imageId)
+            .subscribe((res) => {
+              // this.tourEdit.images = this.tourEdit.images.filter(
+              //   (x) => x.id != imageId
+              // );
+              console.log(res);
+            });
         });
+        if (this.imageIdGalleryToDelete.length > 0) {
+        }
         var itinerariesStore = [...res.itineraries];
         console.log(itinerariesStore);
-        this.uploader.uploadAll();
         for (let i = 0; i < itinerariesStore.length; i++) {
+          if (
+            imageItineraries[i] == null ||
+            imageItineraries[i].id != null ||
+            imageItineraries[i].id == ''
+          ) {
+            {
+              continue;
+            }
+          }
+          // if (itinerariesStore[i].images.length == 0) {
+          //   continue;
+          // }
           const uploaderDynamic = new FileUploader({
             url:
               this.baseUrl +
@@ -191,23 +305,27 @@ export class CreateNewTourComponent implements OnInit {
           uploaderDynamic.onAfterAddingFile = (file) => {
             file.withCredentials = false;
           };
+
           uploaderDynamic.addToQueue([imageItineraries[i]]);
           uploaderDynamic.uploadAll();
+          if (i == itinerariesStore.length - 1) {
+          }
         }
         this.router.navigateByUrl('/management/tours');
 
         this.uploader.onCompleteAll = () => {
-          console.log('Upload completed');
+          // this.router.navigateByUrl('/management/tours');
+          // console.log('Upload completed');
         };
       }
     });
-    console.log(tour, tourwithtype);
   }
 
   get itineraries(): FormArray {
     return this.tourForm.get('itineraries') as FormArray;
   }
   deleteItem(index: number) {
+    this.imageIdItineraryToDelete.push(this.itineraries.at(index).value.images);
     this.itineraries.removeAt(index);
   }
 
@@ -230,18 +348,9 @@ export class CreateNewTourComponent implements OnInit {
       const file = files[0];
       this.itineraries.controls[idx].patchValue({ images: file });
     }
-    console.log(this.itineraries.controls[idx].value);
-  }
 
-  ngOnInit(): void {
-    this.tourService.getAllDepartures().subscribe({
-      next: (res) => {
-        this.departures = res;
-        this.allDestinations = this.departures.map((d) => d.name);
-        console.log(this.allDestinations);
-      },
-      error: (err) => console.log(err),
-    });
+    console.log(this.itineraries.controls[idx].value);
+    // Here we use only the first file (single file)
   }
 
   durationCtrl = new FormControl(''); // Input value control

@@ -14,6 +14,8 @@ namespace Infrastructure.Config
         public void Configure(EntityTypeBuilder<Schedule> builder)
         {
             builder.HasMany(s => s.Bookings).WithOne(s => s.Schedule).IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+            builder.Property(s => s.PriceAdult).HasColumnType("decimal(18,2)");
+            builder.Property(s => s.PriceChild).HasColumnType("decimal(18,2)");
         }
     }
 }

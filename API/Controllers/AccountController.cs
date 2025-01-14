@@ -30,6 +30,7 @@ namespace API.Controllers
                 Gender = "",
                 FullName = account.FullName,
                 UserName = account.UserName.ToLower(),
+                Email = account.Email,
             };
 
             var result = await userManager.CreateAsync(user, account.Password);

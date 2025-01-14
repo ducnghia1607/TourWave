@@ -42,7 +42,7 @@ const routes: Routes = [
     path: 'trips',
     component: MyTripComponent,
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: 'tours', pathMatch: 'full' },
 ];
 
 @NgModule({

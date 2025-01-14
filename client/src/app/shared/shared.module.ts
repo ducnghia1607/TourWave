@@ -32,6 +32,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FileUploadModule } from 'ng2-file-upload';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 @NgModule({
   declarations: [
     HighlightPipe,
@@ -71,6 +73,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     MatChipsModule,
     MatAutocompleteModule,
     FileUploadModule,
+    EditorModule,
   ],
   exports: [
     FontAwesomeModule,
@@ -105,6 +108,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     MatChipsModule,
     MatAutocompleteModule,
     FileUploadModule,
+    EditorModule,
   ],
 })
 export class SharedModule {

@@ -15,5 +15,6 @@ namespace Core.Interfaces
        Task TourWTToRemove(int tourId);
         IDbContextTransaction GetTransaction();
          void DeleteImageForEntity(Tour tour);
+        Task UpdateTour(TourUpdate tourUpdate, Tour tour);
     }
 }

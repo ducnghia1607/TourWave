@@ -13,5 +13,10 @@ namespace Core.Specifications
         public SchedulesWithFilter(string date,string tourId) : base(s => s.DepartureDate >= DateOnly.Parse(date) && s.Tour.Id == int.Parse(tourId)) 
         {
         }
+
+        public SchedulesWithFilter(int tourId) : base(s => s.Tour.Id == tourId)
+        {
+
+        }
     }
 }

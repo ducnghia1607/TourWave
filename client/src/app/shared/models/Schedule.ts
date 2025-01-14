@@ -3,5 +3,6 @@ export interface Schedule {
   departureDate: string;
   returnDate: string;
   remainingSpot: number;
-  price: number;
+  priceAdult: number;
+  priceChild: number;
 }

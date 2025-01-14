@@ -12,9 +12,11 @@ import { ConsultingDialogViewComponent } from './consulting-dialog-view/consulti
 import { BookingDialogViewComponent } from './booking-dialog-view/booking-dialog-view.component';
 import { CreateNewTourComponent } from './create-new-tour/create-new-tour.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { EditTourComponent } from './edit-tour/edit-tour.component';
+import { EditScheduleTourComponent } from './edit-schedule-tour/edit-schedule-tour.component';
 
 @NgModule({
-  declarations: [ManagementComponent, ManagementSidebarComponent, TourManagementComponent, ConsultingManagementComponent, BookingManagementComponent, ConsultingDialogViewComponent, BookingDialogViewComponent, CreateNewTourComponent, ConfirmDialogComponent],
+  declarations: [ManagementComponent, ManagementSidebarComponent, TourManagementComponent, ConsultingManagementComponent, BookingManagementComponent, ConsultingDialogViewComponent, BookingDialogViewComponent, CreateNewTourComponent, ConfirmDialogComponent, EditTourComponent, EditScheduleTourComponent],
   imports: [CommonModule, ManagementRoutingModule, SharedModule],
 })
 export class ManagementModule {}

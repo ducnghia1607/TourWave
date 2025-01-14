@@ -27,6 +27,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@stripe/stripe-js": "^5.4.0",
+    "@tinymce/tinymce-angular": "^8.0.1",
     "moment": "^2.30.1",
     "ng-gallery": "^12.0.0-beta.4",
     "ng2-file-upload": "^6.0.0",

@@ -10,6 +10,8 @@ namespace Core.Entities
     {
         public DateOnly DepartureDate { get; set; }
         public DateOnly ReturnDate { get; set; }
+        public decimal PriceAdult { get; set; }
+        public decimal PriceChild { get; set; }
         public int TourId {get;set;}
         public Tour ?Tour {get;set;}
 

@@ -1,12 +1,11 @@
-<div class="create-tour-wrapper">
+<div class="edit-tour-wrapper">
   <div class="flex justify-between items-center">
-    <h1 class="page-title-2">Tạo mới tour</h1>
+    <h1 class="page-title-2">Chỉnh sửa tour</h1>
     <button class="btn-primary-tour" (click)="goBack()">
       <fa-icon [icon]="faBackward"></fa-icon>
       Trở về
     </button>
   </div>
-
   <form action="" [formGroup]="tourForm">
     <!-- Tên tour - Khởi hành từ - Loại tour -->
     <div class="first-block">
@@ -45,10 +44,10 @@
           <label>Loại tour</label>
           <mat-form-field appearance="fill">
             <!-- <mat-label>
-              <span class="fz-14 font-primary">Loại tour</span>
-            </mat-label> -->
+                <span class="fz-14 font-primary">Loại tour</span>
+              </mat-label> -->
             <mat-select multiple formControlName="tourWithType">
-              <mat-option *ngFor="let type of tourTypes" [value]="type.id">
+              <mat-option *ngFor="let type of tourTypes" value="{{ type.id }}">
                 <span class="fz-14 font-primary"> {{ type.name }}</span>
               </mat-option>
             </mat-select>
@@ -62,7 +61,7 @@
       class="second-block"
       style="border-top: 1px solid #ccc; padding: 20px 0px"
     >
-      <h1 class="page-title-3">Thêm bộ sưu tập ảnh cho tour</h1>
+      <h1 class="page-title-3">Bộ sưu tập ảnh của tour</h1>
       <div class="flex justify-between items-start space-x-8">
         <div class="w-1/4">
           <h3 class="fz-14" style="margin-bottom: 8px">Select files</h3>
@@ -88,6 +87,24 @@
         </div>
 
         <div class="w-3/4" style="margin-bottom: 40px">
+          <div class="old-gallery-tour grid grid-cols-5 gap-x-2 mb-2 gap-y-4">
+            <div *ngFor="let image of tourEdit.images">
+              <div class="relative" style="width: 120px; height: 100px">
+                <img
+                  src="{{ image.url }}"
+                  alt=""
+                  width="120px"
+                  height="100px"
+                />
+                <fa-icon
+                  [icon]="faClose"
+                  class="absolute top-[-12px] right-[-8px] cursor-pointer p-2"
+                  style="color: red"
+                  (click)="deleteImageForTourGallery(image.id)"
+                ></fa-icon>
+              </div>
+            </div>
+          </div>
           <h3 class="fz-14">Upload queue</h3>
           <p class="fz-14">Queue length: {{ uploader?.queue?.length }}</p>
 
@@ -337,6 +354,13 @@
           "
           >Mô tả</label
         >
+        <!-- <textarea
+          name="note"
+          id="note"
+          rows="4"
+          formControlName="description"
+          class="tour-description"
+        ></textarea> -->
         <editor
           formControlName="description"
           [init]="init"
@@ -431,16 +455,47 @@
             "
             >Mô tả</label
           >
+          <!-- <textarea
+            name="note"
+            id="note"
+            rows="4"
+            formControlName="content"
+            class="tour-description"
+          ></textarea> -->
           <editor
             formControlName="content"
             [init]="init"
             apiKey="qmdoa1drx5q0iz81j3t6iz3psk8t23df8r7ky273g5dm1wky"
           />
         </div>
+        <div>
+          <label for="image" style="font-size: 15px; font-weight: 500"
+            >Hình ảnh</label
+          >
+          <div
+            class="flex items-center space-x-2 relative"
+            style="width: 120px; height: 100px"
+            *ngIf="items.get('images')?.value != null"
+          >
+            <img
+              src="{{ items.get('images')?.value.url }}"
+              alt="Ảnh mới"
+              width="120px"
+              height="100px"
+            />
+            <fa-icon
+              [icon]="faClose"
+              class="absolute top-[-12px] right-[-8px] cursor-pointer p-2"
+              style="color: red"
+              (click)="deleteImageItinerary(i, items.get('images')?.value.id)"
+            ></fa-icon>
+          </div>
+        </div>
         <input
           style="margin-top: 8px"
           class="fz-14"
           type="file"
+          *ngIf="items.get('images')?.value == null"
           (change)="onImagePicked($event, i)"
         />
         <button
@@ -449,7 +504,7 @@
           style="float: right; padding: 4px 16px; margin-top: 5px"
         >
           <fa-icon [icon]="faTrash" class="me-1 fz-14"></fa-icon>
-          <span class="fz-14"> <span class="fz-14">Xóa</span></span>
+          <span class="fz-14">Xóa</span>
         </button>
       </div>
     </div>
@@ -467,7 +522,7 @@
       <button
         class="btn-primary-tour"
         style="margin-top: 20px; padding: 14px 46px; font-size: 16px"
-        (click)="createNewTour()"
+        (click)="updateTour()"
       >
         Lưu
       </button>

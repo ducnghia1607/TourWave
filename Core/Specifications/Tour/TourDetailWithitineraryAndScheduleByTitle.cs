@@ -11,7 +11,7 @@ namespace Core.Specifications
     public class TourDetailWithitineraryAndScheduleByTitle : BaseSpecification<Core.Entities.Tour>
     {
 
-        public TourDetailWithitineraryAndScheduleByTitle(string title, string tourCode,string ?date) : base(t => t.Title.ToLower() == title.ToLower() || t.TourCode.ToLower() == tourCode.ToLower())
+        public TourDetailWithitineraryAndScheduleByTitle(string title, string tourCode,string ?date) : base(t => t.Title.ToLower() == title.ToLower() &&  t.TourCode.ToLower() == tourCode.ToLower())
         {
             AddInclude(t => t.Images);
             AddInclude(t => t.Itineraries);

@@ -1,0 +1,282 @@
+<div class="edit-schedule-wrapper">
+  <div class="flex justify-between items-center">
+    <h1 class="page-title-3">Lịch khởi hành</h1>
+    <button class="btn-primary-tour" (click)="goBack()">
+      <fa-icon [icon]="faBackward"></fa-icon>
+      Trở về
+    </button>
+  </div>
+  <div class="flex space-x-4 items-center">
+    <div class="flex space-x-3 items-center">
+      <p
+        style="
+          color: var(--text-primary-color);
+          font-weight: 600;
+          font-size: 16px;
+        "
+      >
+        Tên tour:
+      </p>
+      <p>{{ tourEdit.title }}</p>
+    </div>
+    <div class="flex space-x-3 items-center">
+      <p
+        style="
+          color: var(--text-primary-color);
+          font-weight: 600;
+          font-size: 16px;
+        "
+      >
+        Mã tour:
+      </p>
+      <p>{{ tourEdit.tourCode }}</p>
+    </div>
+
+    <div class="flex space-x-3 items-center">
+      <p
+        style="
+          color: var(--text-primary-color);
+          font-weight: 600;
+          font-size: 16px;
+        "
+      >
+        Thời lượng tour:
+      </p>
+      <p>{{ tourEdit.duration }}</p>
+    </div>
+  </div>
+  <div class="flex space-x-4 items-center">
+    <div class="flex space-x-3 items-center">
+      <p
+        style="
+          color: var(--text-primary-color);
+          font-weight: 600;
+          font-size: 16px;
+        "
+      >
+        Điểm khởi hành:
+      </p>
+      <p>{{ tourEdit.departure }}</p>
+    </div>
+
+    <div class="flex space-x-3 items-center">
+      <p
+        style="
+          color: var(--text-primary-color);
+          font-weight: 600;
+          font-size: 16px;
+        "
+      >
+        Điểm đến:
+      </p>
+      <p>{{ tourEdit.destination }}</p>
+    </div>
+  </div>
+
+  <div class="schedules mt-4">
+    <form [formGroup]="tourForm" class="schedules-form">
+      <div formArrayName="schedules">
+        <!-- Nút thêm mới lịch trình -->
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addSchedule()"
+          style="margin-bottom: 16px"
+        >
+          <fa-icon [icon]="faPlus" class="me-1"></fa-icon> Thêm Lịch Trình
+        </button>
+        <div
+          class=""
+          *ngFor="let items of scheduleArray.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <p
+            style="
+              font-size: 16px;
+              color: var(--text-primary-color);
+              font-weight: 600;
+              margin-bottom: 6px;
+            "
+          >
+            Lịch khởi hành {{ i + 1 }}
+          </p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-7">
+              <mat-form-field appearance="fill" class="example-form-field">
+                <mat-label>
+                  <span class="fz-14 font-primary">Nhập khoảng thời gian</span>
+                </mat-label>
+                <mat-date-range-input [rangePicker]="rangePicker">
+                  <input
+                    class="fz-14"
+                    matStartDate
+                    placeholder="Khởi hành"
+                    formControlName="departureDate"
+                  />
+                  <input
+                    class="fz-14"
+                    matEndDate
+                    placeholder="Trở về"
+                    formControlName="returnDate"
+                  />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="rangePicker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #rangePicker>
+                  <mat-date-range-picker-actions>
+                    <button mat-button matDateRangePickerCancel>Cancel</button>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      matDateRangePickerApply
+                    >
+                      Apply
+                    </button>
+                  </mat-date-range-picker-actions>
+                </mat-date-range-picker>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  ><span class="fz-14 font-primary">Giá người lớn</span>
+                </mat-label>
+                <input type="number" matInput formControlName="priceAdult" />
+                <span matSuffix
+                  ><fa-icon [icon]="faDongSign"></fa-icon> &nbsp;</span
+                >
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <mat-label
+                  ><span class="fz-14 font-primary">Giá trẻ em</span>
+                </mat-label>
+                <input type="number" matInput formControlName="priceChild" />
+                <span matSuffix
+                  ><fa-icon [icon]="faDongSign"></fa-icon> &nbsp;</span
+                >
+              </mat-form-field>
+            </div>
+            <button
+              (click)="removeSchedule(i)"
+              class="btn-primary-tour float-right"
+              style="padding: 4px 16px; margin-bottom: 22px"
+            >
+              <fa-icon [icon]="faTrash" class="me-1 fz-14"></fa-icon>
+              <span class="fz-14">Xóa</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="" *ngIf="scheduleArray.controls.length > 0">
+      <button
+        class="btn-primary-tour"
+        style="padding: 8px 32px; font-size: 16px"
+        (click)="createNewSchedule()"
+      >
+        Lưu
+      </button>
+    </div>
+    <div class="mt-6">
+      <div class="float-right">
+        <mat-form-field class="example-full-width">
+          <mat-label><span class="fz-14">Ngày khởi hành</span></mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="selectedDate"
+            (dateChange)="onDateChange($event)"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <table
+        mat-table
+        [dataSource]="schedules"
+        matSort
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Position Column -->
+        <ng-container matColumnDef="Ngày khởi hành">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Ngày khởi hành
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.departureDate | date : "EEEEE, dd/MM/YYYY" }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Ngày về">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày về</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.returnDate | date : "EEEEE, dd/MM/YYYY" }}
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Tình trạng chỗ">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Tình trạng chỗ
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{
+              element.remainingSpot == 0
+                ? "Hết chỗ"
+                : element.remainingSpot < 8
+                ? "Liên hệ"
+                : "Còn " + element.remainingSpot + " chỗ"
+            }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Giá người lớn">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Giá người lớn
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.priceAdult | currency : "VND" : "symbol" : "1.0-0" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Giá trẻ em">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Giá trẻ em</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.priceChild | currency : "VND" : "symbol" : "1.0-0" }}
+          </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Hành động">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
+          <td mat-cell *matCellDef="let element">
+            <fa-icon
+              [icon]="faPenToSquare"
+              style="color: green; margin-right: 16px"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faTrash"
+              style="color: red"
+              (click)="deleteScheduleForTour()"
+            ></fa-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="OnRowClicked(row)"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- [class.row-is-clicked]="clickedRows.has(row)" -->

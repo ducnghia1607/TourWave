@@ -17,7 +17,7 @@
 
     <button
       class="btn btn-primary-tour"
-      style="padding: 0px 50px; margin: 0px 40px 23px"
+      style="padding: 0px 35px; margin: 0px 40px 23px"
       (click)="searchButtonClicked()"
     >
       Tìm
@@ -26,16 +26,22 @@
       class="action flex items-center justify-between absolute right-0 space-x-3"
       style="margin-bottom: 23px"
     >
-      <button [routerLink]="['/management/create-new-tour']">
-        <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
-        Thêm mới
-      </button>
-
       <button (click)="goToTourDetail()">
         <fa-icon [icon]="faEye" class="me-1"></fa-icon>
         Xem
       </button>
-
+      <button [routerLink]="['/management/create-new-tour']">
+        <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
+        Thêm mới
+      </button>
+      <button (click)="editTour()">
+        <fa-icon [icon]="faPenToSquare" class="me-1"></fa-icon>
+        Chỉnh sửa
+      </button>
+      <button (click)="editScheduleTour()">
+        <fa-icon [icon]="faCalender" class="me-1"></fa-icon>
+        Lịch khởi hành tour
+      </button>
       <button (click)="deleteTour()">
         <fa-icon [icon]="faTrash" class="me-1"></fa-icon>
         Xóa

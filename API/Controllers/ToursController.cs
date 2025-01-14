@@ -8,6 +8,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specification;
 using Core.Specifications;
+using Core.Specifications.NewFolder;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -65,6 +66,19 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
         return tour;
         //    return mapper.Map<Tour,TourDetailDto>(tour);
     }
+    [HttpGet("edit-tour/{id:int}")] // api/tours/2
+    public async Task<ActionResult<TourEditDto>> GetTourToEdit(int id)
+    {
+        var spec = new TourDetailWithItineraryandSchedule(id);
+        var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        //var tour = await unit.Repository<Tour>().GetByIdAsync(id);
+        if (tour == null)
+        {
+            return NotFound();
+        }
+        return mapper.Map<Tour,TourEditDto>(tour);
+        //    return mapper.Map<Tour,TourDetailDto>(tour);
+    }
 
     //[HttpGet("{title}")]  // api /users/2
     //public async Task<ActionResult<Tour>> GetTour([FromRoute(Name = "title")]  string name)
@@ -104,16 +118,26 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
     }
 
     [HttpGet("search-temp")]
-        public async Task<ActionResult<TourDto>> GetTourByTitle([FromQuery]string keyword)
+        public async Task<ActionResult<Dictionary<string,object>>> GetTourByTitle([FromQuery]string keyword)
     {
         var spec = new TourWithTemporarySearch(keyword);
-        var tours = await  unit.Repository<Tour>().ListAsyncWithSpec(spec);
-        if (tours == null)
+        var items = await  unit.Repository<Tour>().ListAsyncWithSpec(spec);
+        var tours = mapper.Map<IReadOnlyList<Tour>, IReadOnlyList<TourDto>>(items);
+        //if (tours == null)
+        //{
+        //    return NotFound();
+        //}
+        var specTour = new TourDestinationSpecification(keyword);
+        var tourDes = await unit.Repository<Tour>().ListAsyncWithSpec(specTour);
+        var specDe = new DepartureSpecification(keyword);
+        var departure = await unit.Repository<Departure>().ListAsyncWithSpec(specDe);
+        var destinations = tourDes.Union(departure);
+        var dictionary = new Dictionary<string, object>
         {
-            return NotFound();
-        }
-        var items = mapper.Map<IReadOnlyList<Tour>,IReadOnlyList<TourDto>>(tours);
-        return Ok(items);
+            { "tours",tours},
+            { "destinations",destinations},
+        };
+        return Ok(dictionary);
     }
     [Authorize]
     [HttpPost]
@@ -142,7 +166,7 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
     }
 
     [Authorize]
-        [HttpDelete("{id:int}")] // api/
+    [HttpDelete("{id:int}")] // api/
     public async Task<ActionResult> DeleteTour(int id){
         var transaction = tourService.GetTransaction();
         try{
@@ -173,6 +197,101 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
         }
     }
 
+    [Authorize]
+    [HttpDelete("tour-image-gallery")] // api/
+    public async Task<ActionResult> DeleteImageForTourGallery([FromQuery]int tourId, [FromQuery] int imageId )
+    {
+        var transaction = tourService.GetTransaction();
+        try
+        {
+            var spec = new TourSpecification(tourId);
+            var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+            if (tour == null )
+            {
+                return NotFound();
+            }
+            var imageToDelete = tour.Images.FirstOrDefault(x => x.Id == imageId);
+            if (imageToDelete == null)
+            {
+                return NotFound();
+            }
+            unit.Repository<Image>().Remove(imageToDelete);
+            if (await unit.Complete())
+            {
+                transaction.Commit();
+                await photoService.DeleteImageAsync(imageToDelete.PublicId);
+                return NoContent();
+            }
+            return BadRequest("Problem deleting the tour");
+        }
+        catch (Exception ex)
+        {
+            transaction.Rollback();
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpDelete("tour-itinerary-image")] // api/
+    public async Task<ActionResult> DeleteImageForTourItinerary([FromQuery] int tourId, [FromQuery] int itineraryId, [FromQuery] int imageId)
+    {
+        var transaction = tourService.GetTransaction();
+        try
+        {
+            var spec = new TourSpecification(tourId);
+            var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+            if (tour == null)
+            {
+                return NotFound();
+            }
+            var itinerary = tour.Itineraries.FirstOrDefault(x => x.Id == itineraryId);
+            if(itinerary == null)
+            {
+                return NotFound();
+            }
+    
+            var imageToDelete = itinerary.Images.FirstOrDefault(x => x.Id == imageId);
+            if (imageToDelete == null)
+            {
+                return NotFound();
+            }
+            unit.Repository<Image>().Remove(imageToDelete);
+            if (await unit.Complete())
+            {
+                transaction.Commit();
+                await photoService.DeleteImageAsync(imageToDelete.PublicId);
+                return NoContent();
+            }
+            return BadRequest("Problem deleting the tour");
+        }
+        catch (Exception ex)
+        {
+            transaction.Rollback();
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("update-tour/{tourId:int}")]
+    public async Task<ActionResult<Tour>> UpdateTour([FromRoute] int tourId,TourUpdate tourUpdate)
+    {
+        var spec = new TourSpecification(tourId);
+        var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        if (tour == null) return NotFound();
+        await tourService.UpdateTour(tourUpdate,tour);
+        tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        return tour;
+    }
+
+    [HttpGet("destination")] // Return list of destination when user are searching
+    public async Task<ActionResult<List<string>>> GetListOfDestination(string keyword)
+    {
+        var specTour = new TourDestinationSpecification(keyword);
+        var tourDes = await unit.Repository<Tour>().ListAsyncWithSpec(specTour);
+        var specDe = new DepartureSpecification(keyword);
+        var departure = await unit.Repository<Departure>().ListAsyncWithSpec(specDe);
+        var data = tourDes.Union(departure);
+         return Ok(data);
+    }
     public bool TourExists(int id){
         return unit.Repository<Tour>().Exists(id);
     }
@@ -274,5 +393,44 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
         var checkAlreadyReview = await tourService.CheckAlreadyReview(tourId, uid);
         if (booking != null && !checkAlreadyReview) return true;
         return false;
+    }
+
+    [HttpPost("add-schedules/{id:int}")]
+    public async Task<ActionResult> AddSchedulesForTour([FromRoute] int id, List<Schedule> schedules)
+    {
+        var spec = new TourDetailWithItineraryandSchedule(id);
+        var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        if (tour == null) return NotFound();
+        if (tour.Schedules == null)
+        {
+            tour.Schedules = new List<Schedule>();
+        }
+        tour.Schedules.AddRange(schedules);
+        if (await unit.Complete())
+        {
+            return CreatedAtAction(nameof(GetTour), new { id = tour.Id }, tour.Schedules);
+        }
+        //unit.Repository<Schedule>().AddRange(schedules);
+        return BadRequest("Problem creating new tour");
+    }
+
+    [HttpDelete("{tourId:int}/schedules/{scheduleId:int}")]
+    public async Task<ActionResult> AddSchedulesForTour([FromRoute] int tourId, [FromRoute] int scheduleId)
+    {
+        var spec = new TourDetailWithItineraryandSchedule(tourId);
+        var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
+        if (tour == null) return NotFound();
+        if (tour.Schedules == null)
+        {
+            tour.Schedules = new List<Schedule>();
+        }
+        var scheduleToRemove = tour.Schedules.Find(x => x.Id == scheduleId);
+        if(scheduleToRemove != null)
+        tour.Schedules.Remove(scheduleToRemove);
+        if (await unit.Complete())
+        {
+            return NoContent();
+        }
+        return BadRequest("Problem deleting schedule");
     }
 }
