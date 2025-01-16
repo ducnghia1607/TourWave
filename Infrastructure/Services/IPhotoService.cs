@@ -31,7 +31,7 @@ namespace Infrastructure.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Width(600).Height(500).Crop("fill"),
+                    Transformation = new Transformation().Width(600).Height(450).Crop("thumb").Gravity("auto").Quality("auto:good"),
                     Folder = "tour-wave"
                 };
 

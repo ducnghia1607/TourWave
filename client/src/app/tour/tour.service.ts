@@ -15,12 +15,14 @@ import { TourType } from '../shared/models/TourType';
 import { ReviewResponse } from '../shared/models/ReviewResponse';
 import { Review } from '../shared/models/Review';
 import { TourEdit } from '../shared/models/TourEdit';
+import { ScheduleParams } from '../shared/models/ScheduleParams';
 @Injectable({
   providedIn: 'root',
 })
 export class TourService {
   baseUrl = environment.apiUrl;
   tourParams: TourParams = new TourParams();
+  scheduleParams: ScheduleParams = new ScheduleParams();
   tourPagination?: Pagination<Tour[]>;
   recentVistedTours = new BehaviorSubject<Tour[] | null>(null);
   recentVistedToursSource$ = this.recentVistedTours.asObservable();
@@ -118,6 +120,13 @@ export class TourService {
     this.tourParams = params;
   }
 
+  getScheduleParams() {
+    return this.scheduleParams;
+  }
+  setScheduleParams(params: ScheduleParams) {
+    this.scheduleParams = params;
+  }
+
   getSchedulesWithFilter(date: string, tourId: number) {
     return this.http.get<Schedule[]>(
       this.baseUrl + 'schedules?date=' + date + '&tourId=' + tourId
@@ -184,8 +193,24 @@ export class TourService {
     );
   }
 
-  getAllScheduleForTour(tourId: string) {
-    return this.http.get<Schedule[]>(this.baseUrl + 'schedules/' + tourId);
+  getAllScheduleForTour(tourId: number) {
+    var params = new HttpParams();
+    if (this.scheduleParams.sortActive)
+      params = params.append('sort', this.scheduleParams.sortActive);
+    if (this.scheduleParams.sortDirection)
+      params = params.append('order', this.scheduleParams.sortDirection);
+    if (this.scheduleParams.selectedDate)
+      params = params.append('date', this.scheduleParams.selectedDate);
+    params = params.append('page', this.scheduleParams.pageIndex);
+    // var queryStringValue = `?sort=${sort}&order=${order}&page=${page + 1}`;
+    // if (selectedDate) queryStringValue += `&date=${selectedDate}`;
+    // else queryStringValue += `&date=`;
+    return this.http.get<Pagination<Schedule[]>>(
+      this.baseUrl + 'schedules/' + tourId,
+      {
+        params: params,
+      }
+    );
   }
 
   addSchedulesForTour(tourId: number, schedules: Schedule[]) {
@@ -197,6 +222,12 @@ export class TourService {
   deleteScheduleForTour(tourId: number, scheduleId: number) {
     return this.http.delete(
       this.baseUrl + 'tours/' + tourId + '/schedules/' + scheduleId
+    );
+  }
+  updateScheduleForTour(id: number, tourId: number, schedule: any) {
+    return this.http.put(
+      this.baseUrl + 'schedules/' + id + '?tourId=' + tourId,
+      schedule
     );
   }
 }

@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', component: TourComponent, data: { breadcrumb: 'Home' } },
   { path: 'tour-item', component: TourItemComponent },
   {
-    path: ':title/:tourCode',
+    path: ':tourId',
     component: TourDetailComponent,
     resolve: { tourDetail: tourDetailResolver },
     data: {
@@ -20,7 +20,7 @@ const routes: Routes = [
     },
   },
   {
-    path: ':departure',
+    path: 'tour-finder/:departure',
     component: TourFinderComponent,
     data: {
       breadcrumb: {

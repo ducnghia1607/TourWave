@@ -14,7 +14,7 @@ namespace Core.Specifications
         {
             AddInclude(x => x.TourWithType);
             AddInclude(x => x.Images);
-            AddInclude(x => x.Schedules);
+            AddInclude(t => t.Schedules.Where(s => s.DepartureDate >= DateOnly.FromDateTime(DateTime.Now)));
         }
     }
 }

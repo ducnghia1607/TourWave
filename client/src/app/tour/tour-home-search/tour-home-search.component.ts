@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 export class TourHomeSearchComponent implements OnInit {
   searchTourResult: Tour[] = [];
   searchDestinationResult: string[] = [];
-  selectedTourCode: string = '';
+  currentTourId: number = 0;
   inputSubject: Subject<string> = new Subject<string>();
   departures: Departure[] = [];
   selectedDeparture: string = '';
@@ -83,16 +83,16 @@ export class TourHomeSearchComponent implements OnInit {
     this.inputSubject.next(inputValue);
   }
 
-  selecteTour(tourTitle: string, tourCode: string) {
+  selecteTour(tourTitle: string, tourId: number) {
     this.searchKeyword = tourTitle;
-    this.selectedTourCode = tourCode;
+    this.currentTourId = tourId;
     this.showResultSearch = false;
     this.showMenuLocation = false;
   }
 
   searchButtonClicked() {
     if (this.searchKeyword != '') {
-      if (this.selectedTourCode != '') {
+      if (this.currentTourId != 0) {
         const navigationExtras: NavigationExtras = {
           queryParams: {
             date:
@@ -100,10 +100,7 @@ export class TourHomeSearchComponent implements OnInit {
               this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
           },
         };
-        this.router.navigate(
-          ['/tours', this.searchKeyword, this.selectedTourCode],
-          navigationExtras
-        );
+        this.router.navigate(['/tours', this.currentTourId], navigationExtras);
       } else {
         const navigationExtras: NavigationExtras = {
           queryParams: {
@@ -114,7 +111,10 @@ export class TourHomeSearchComponent implements OnInit {
             search: this.searchKeyword,
           },
         };
-        this.router.navigate(['/tours', this.searchKeyword], navigationExtras);
+        this.router.navigate(
+          ['/tours/tour-finder', this.searchKeyword],
+          navigationExtras
+        );
       }
     }
   }

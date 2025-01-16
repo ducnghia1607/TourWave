@@ -117,8 +117,7 @@ export class MyTripComponent implements AfterViewInit {
   }
 
   OnRowClicked($event: any) {
-    if ($event)
-      this.router.navigate(['/tours', $event.tourTitle, $event.tourCode]);
+    if ($event) this.router.navigate(['/tours', $event.id]);
   }
 
   // ngOnInit(): void {}

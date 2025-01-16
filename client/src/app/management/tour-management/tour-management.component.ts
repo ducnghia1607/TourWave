@@ -142,11 +142,7 @@ export class TourManagementComponent {
   }
   goToTourDetail() {
     if (this.currentTourCode === '' || this.currentTourTitle === '') return;
-    this.router.navigate([
-      '/tours',
-      this.currentTourTitle,
-      this.currentTourCode,
-    ]);
+    this.router.navigate(['/tours', this.currentTourId]);
   }
   deleteTour() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);

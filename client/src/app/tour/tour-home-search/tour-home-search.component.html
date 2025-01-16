@@ -180,7 +180,7 @@
             <div
               *ngFor="let destination of searchDestinationResult"
               class="flex items-center search-result-item"
-              (click)="selecteTour(destination, '')"
+              (click)="selecteTour(destination, 0)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +205,7 @@
             <div
               *ngFor="let tour of searchTourResult"
               class="flex items-center search-result-item"
-              (click)="selecteTour(tour.title, tour.tourCode)"
+              (click)="selecteTour(tour.title, tour.id)"
             >
               <fa-icon [icon]="faFlag"></fa-icon>
               <p

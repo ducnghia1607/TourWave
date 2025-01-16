@@ -45,26 +45,17 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
        return Ok(pagination);
         // return await CreatePagedResult(repo,spec,specParams.PageIndex,specParams.PageSize);
     }
-    // [HttpGet("{id:int}")] // api/tours/2
-    // public async Task<ActionResult<Tour>> GetTour(int id){
-    //     var tour = await repo.GetByIdAsync(id);
-    //     if(tour == null){
-    //         return NotFound();
-    //     }
-    //    return tour;
-    // }  
+
     [HttpGet("{id:int}")] // api/tours/2
-    public async Task<ActionResult<Tour>> GetTour(int id)
+    public async Task<ActionResult<Tour>> GetTour(int id, [FromQuery] string? date)
     {
-        var spec = new TourDetailWithItineraryandSchedule(id);
+        var spec = new TourDetailWithItineraryandSchedule(id, date);
         var tour = await unit.Repository<Tour>().GetEntityWithSpec(spec);
-        //var tour = await unit.Repository<Tour>().GetByIdAsync(id);
         if (tour == null)
         {
             return NotFound();
         }
         return tour;
-        //    return mapper.Map<Tour,TourDetailDto>(tour);
     }
     [HttpGet("edit-tour/{id:int}")] // api/tours/2
     public async Task<ActionResult<TourEditDto>> GetTourToEdit(int id)

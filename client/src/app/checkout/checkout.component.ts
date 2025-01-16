@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StripeService } from '../core/services/stripe.service';
 import { ConfirmationToken } from '@stripe/stripe-js';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 import { BookingService } from '../core/services/booking.service';
 import { Booking } from '../shared/models/Booking';
 import {
@@ -14,6 +14,8 @@ import { Tour } from '../shared/models/Tour';
 import { TourService } from '../tour/tour.service';
 import { ActivatedRoute } from '@angular/router';
 import { TourDetail } from '../shared/models/TourDetail';
+import { AccountService } from '../account/account.service';
+import { User } from '../shared/models/User';
 
 @Component({
   selector: 'app-checkout',
@@ -23,7 +25,7 @@ import { TourDetail } from '../shared/models/TourDetail';
 export class CheckoutComponent implements OnInit {
   confirmationToken!: ConfirmationToken;
   clientFormGroup = this._formBuilder.group({
-    gender: ['1', Validators.required],
+    gender: ['male', Validators.required],
     fullName: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['', Validators.required],
@@ -36,18 +38,31 @@ export class CheckoutComponent implements OnInit {
   paymentUrl!: SafeResourceUrl;
   booking!: Booking;
   tour!: TourDetail;
+  user!: User;
   constructor(
     private _formBuilder: FormBuilder,
     private stripeService: StripeService,
     private bookingService: BookingService,
     private domSanitizer: DomSanitizer,
     private tourService: TourService,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private accountService: AccountService
   ) {
     this.bookingService.currentBooking$.subscribe(async (res) => {
       if (res) {
         // var paymentElements = await this.stripeService.createPaymentElement();
         // paymentElements.mount('#payment-element');
+      }
+    });
+    this.accountService.currentUser$.pipe(take(1)).subscribe((res) => {
+      if (res) {
+        this.user = res;
+        this.clientFormGroup.patchValue({
+          gender: this.user.gender,
+          fullName: this.user.fullName,
+          phone: this.user.phone,
+          email: this.user.email,
+        });
       }
     });
     // this.tourService.getTourById(this.booking.tourId).subscribe((res)=>{

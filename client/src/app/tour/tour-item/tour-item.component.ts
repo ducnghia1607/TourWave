@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpUrlEncodingCodec } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faCar,
@@ -8,7 +7,6 @@ import {
   faPlane,
   faTrain,
 } from '@fortawesome/free-solid-svg-icons';
-import { StringUtility } from 'src/app/shared/models/StringUtility';
 import { Tour } from 'src/app/shared/models/Tour';
 
 @Component({

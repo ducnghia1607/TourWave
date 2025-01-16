@@ -1,6 +1,6 @@
 <div
   class="flex tour-visted-item space-x-3 relative"
-  (click)="navigateToTourDetail(tour.title, tour.tourCode)"
+  [routerLink]="['/tours', tour.id]"
 >
   <img src="{{ tour.imageUrl }}" alt="" width="120px" height="120px" />
   <div class="flex flex-col justify-between py-2 pr-2">

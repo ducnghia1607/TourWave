@@ -86,10 +86,11 @@
   position: relative;
   min-height: 1px;
   padding: 15px;
+  min-width: 325px;
 }
 
 .tour-sidebar-title {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   color: #003c71;
   margin-bottom: 10px;
@@ -110,7 +111,7 @@
   border-radius: 4px;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
   position: relative;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 .box-white.quantity-ajust {
@@ -183,7 +184,7 @@ button.example-custom-date-class > span {
   padding: 12px 10px;
   color: #fff;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 17px;
   min-width: 134px;
   height: 47px;
   color: #fff;
@@ -227,7 +228,7 @@ button.example-custom-date-class > span {
 .tour-sidebar .total-price {
   color: #ffbd00;
   font-weight: bold;
-  font-size: 27px;
+  font-size: 26px;
 }
 
 .affix {
@@ -277,4 +278,17 @@ button.example-custom-date-class > span {
 .bg-shadow.show {
   display: block;
   visibility: visible;
+}
+
+.gallery {
+  display: block;
+  position: relative;
+}
+.gallery .thumbnails {
+  position: absolute;
+  left: 0; /* Ensure positioning for "left" works */
+}
+
+.person-type {
+  font-size: 14px;
 }

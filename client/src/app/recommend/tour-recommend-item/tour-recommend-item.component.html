@@ -23,13 +23,7 @@
         }}</span>
         <button
           class="btn btn-view me-1"
-          (click)="
-            goToViewTour(
-              tour.title,
-              tour.tourCode,
-              tour.schedules[0].departureDate
-            )
-          "
+          (click)="goToViewTour(tour.id, tour.schedules)"
         >
           Xem Tour
           <fa-icon [icon]="faGreaterThan" style="font-size: 16px"></fa-icon>

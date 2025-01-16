@@ -17,7 +17,7 @@ export class TourFinderItemComponent {
   faClock = faClock as IconProp;
   faGreaterThan = faGreaterThan as IconProp;
   constructor(private router: Router, private datePipe: DatePipe) {}
-  goToViewTour(tourTitle: string, tourCode: string, date: string) {
+  goToViewTour(tourId: number, date: string) {
     // console.log(tourTitle, tourCode, date);
     this.setRecentVistedTour();
     const navigationExtras: NavigationExtras = {
@@ -25,7 +25,7 @@ export class TourFinderItemComponent {
         date: date || this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
       },
     };
-    this.router.navigate(['/tours', tourTitle, tourCode], navigationExtras);
+    this.router.navigate(['/tours', tourId], navigationExtras);
   }
 
   setRecentVistedTour() {

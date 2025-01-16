@@ -8,7 +8,13 @@
     <div class="flex items-start relative">
       <div class="w-2/3">
         <div class="tour-gallery tour-content-wrapper" id="tour-gallery">
-          <gallery [items]="images" class="gallery"></gallery>
+          <gallery
+            [items]="images"
+            thumbPosition="left"
+            class="gallery"
+            [autoplay]="true"
+            autoplayInterval="6000"
+          ></gallery>
         </div>
         <div
           class="tour-utilities mt-4 tour-content-wrapper"
@@ -169,9 +175,11 @@
         >
           <app-tour-detail-schedule
             (selectedRowChange)="selectedRowChangeSchedulesHandle($event)"
-            [schedules]="tourDetail.schedules"
+            [schedules]="schedules"
+            [resultsLength]="resultsLength"
             (departureDateChange)="departureDateChangeHandle($event)"
-            [price]="tourDetail.priceAdult"
+            (pageChange)="pageChangeScheduleHandle($event)"
+            [tourPrice]="tourDetail.priceAdult"
           ></app-tour-detail-schedule>
         </div>
         <div class="tour-notes mt-4 tour-content-wrapper" id="tour-notices">
@@ -264,29 +272,7 @@
                 <mat-datepicker touchUi #picker [dateClass]="dateClass">
                 </mat-datepicker>
               </mat-form-field>
-              <!-- <p
-                class="absolute"
-                style="top: 0px; left: 8px; color: var(--sky-color)"
-              >
-                Tất cả
-              </p> -->
             </div>
-
-            <!-- <mat-form-field class="example-full-width">
-              <mat-label>Choose a date</mat-label>
-              <input
-                matInput
-                [matDatepicker]="picker1"
-                [min]="minDate"
-                [max]="maxDate"
-              />
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle
-                matIconSuffix
-                [for]="picker1"
-              ></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker1></mat-datepicker>
-            </mat-form-field> -->
           </div>
           <div
             class="box-white mb-3 quantity-ajust flex justify-between items-center"
@@ -298,9 +284,7 @@
             <div class="price">
               {{
                 adultNumber > 0
-                  ? "x " +
-                    (tourDetail.priceAdult
-                      | currency : "VND" : "symbol" : "1.0-0")
+                  ? "x " + (priceAdult | currency : "VND" : "symbol" : "1.0-0")
                   : ""
               }}
             </div>
@@ -324,9 +308,7 @@
             <div class="price">
               {{
                 childNumber > 0
-                  ? "x " +
-                    (tourDetail.priceChild
-                      | currency : "VND" : "symbol" : "1.0-0")
+                  ? "x " + (priceChild | currency : "VND" : "symbol" : "1.0-0")
                   : ""
               }}
             </div>
@@ -346,11 +328,11 @@
             </div>
           </div>
           <!-- <div class="box-white mb-3"></div> -->
-          <p class="text-sky-color mb-5">
+          <p class="text-sky-color mb-5 fz-14">
             <fa-icon [icon]="faInfo"></fa-icon> Liên hệ để xác nhận đặt chỗ
           </p>
           <div class="flex items-center justify-between mb-4">
-            <p>Tổng Giá Tour</p>
+            <p class="fz-15">Tổng Giá Tour</p>
             <p class="text-orange-color total-price">
               {{ totalPrice | currency : "VND" : "symbol" : "1.0-0" }}
             </p>
@@ -358,10 +340,10 @@
           <div
             class="sidebar-actions flex justify-between items-center mb-4 space-x-4"
           >
-            <button class="reachout-btn w-1/2" (click)="openDialog()">
+            <button class="reachout-btn w-1/2 fz-15" (click)="openDialog()">
               Liên hệ tư vấn
             </button>
-            <button class="booking-btn w-1/2" (click)="bookingTour()">
+            <button class="booking-btn w-1/2 fz-15" (click)="bookingTour()">
               Yêu cầu đặt
             </button>
           </div>

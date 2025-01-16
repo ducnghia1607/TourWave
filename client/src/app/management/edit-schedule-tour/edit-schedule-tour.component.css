@@ -48,6 +48,21 @@ table td {
   width: 180px !important;
 }
 
+.schedules .example-table-container .mat-mdc-form-field {
+  width: 168px !important;
+}
+
 .schedules .schedules-form .mat-mdc-form-field {
   width: unset !important;
+}
+
+.text-validator {
+  font-size: 10px;
+  color: red;
+  line-height: 1;
+}
+
+.deactive {
+  color: #a2a2a2 !important;
+  cursor: not-allowed;
 }

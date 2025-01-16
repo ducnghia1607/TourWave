@@ -17,7 +17,4 @@ export class TourRecentItemComponent {
   removeItemFromRecentVisitedTours(id: number) {
     this.removeRecentTour.emit(id);
   }
-  navigateToTourDetail(title: string, tourCode: string) {
-    this.router.navigate(['/tours', title, tourCode]);
-  }
 }

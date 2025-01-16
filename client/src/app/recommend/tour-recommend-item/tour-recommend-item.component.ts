@@ -7,7 +7,7 @@ import {
   faClock,
   faGreaterThan,
 } from '@fortawesome/free-solid-svg-icons';
-import { Tour } from 'src/app/shared/models/Tour';
+import { Schedule } from 'src/app/shared/models/Schedule';
 import { TourToRecommend } from 'src/app/shared/models/TourToRecommend';
 
 @Component({
@@ -21,14 +21,17 @@ export class TourRecommendItemComponent {
   faClock = faClock as IconProp;
   faGreaterThan = faGreaterThan as IconProp;
   constructor(private router: Router, private datePipe: DatePipe) {}
-  goToViewTour(tourTitle: string, tourCode: string, date: string) {
-    console.log(tourTitle, tourCode, date);
-
+  goToViewTour(tourId: number, schedules: Schedule[]) {
+    var date = '';
+    if (schedules.length == 0) {
+      date = schedules[0].departureDate;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        date: date || this.datePipe.transform(Date.now(), 'yyyy-MM-dd'),
+        date:
+          date == '' ? this.datePipe.transform(Date.now(), 'yyyy-MM-dd') : date,
       },
     };
-    this.router.navigate(['/tours', tourTitle, tourCode], navigationExtras);
+    this.router.navigate(['/tours', tourId], navigationExtras);
   }
 }

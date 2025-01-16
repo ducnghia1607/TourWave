@@ -102,41 +102,102 @@
           </p>
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-7">
-              <mat-form-field appearance="fill" class="example-form-field">
-                <mat-label>
-                  <span class="fz-14 font-primary">Nhập khoảng thời gian</span>
-                </mat-label>
-                <mat-date-range-input [rangePicker]="rangePicker">
-                  <input
-                    class="fz-14"
-                    matStartDate
-                    placeholder="Khởi hành"
-                    formControlName="departureDate"
-                  />
-                  <input
-                    class="fz-14"
-                    matEndDate
-                    placeholder="Trở về"
-                    formControlName="returnDate"
-                  />
-                </mat-date-range-input>
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="rangePicker"
-                ></mat-datepicker-toggle>
-                <mat-date-range-picker #rangePicker>
-                  <mat-date-range-picker-actions>
-                    <button mat-button matDateRangePickerCancel>Cancel</button>
-                    <button
-                      mat-raised-button
-                      color="primary"
-                      matDateRangePickerApply
+              <div>
+                <mat-form-field appearance="fill" class="example-form-field">
+                  <mat-label>
+                    <span class="fz-14 font-primary"
+                      >Nhập khoảng thời gian</span
                     >
-                      Apply
-                    </button>
-                  </mat-date-range-picker-actions>
-                </mat-date-range-picker>
-              </mat-form-field>
+                  </mat-label>
+                  <mat-date-range-input [rangePicker]="rangePicker">
+                    <input
+                      class="fz-14"
+                      matStartDate
+                      placeholder="Khởi hành"
+                      formControlName="departureDate"
+                    />
+                    <input
+                      class="fz-14"
+                      matEndDate
+                      placeholder="Trở về"
+                      formControlName="returnDate"
+                    />
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="rangePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-date-range-picker #rangePicker>
+                    <mat-date-range-picker-actions>
+                      <button mat-button matDateRangePickerCancel>
+                        Cancel
+                      </button>
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        matDateRangePickerApply
+                      >
+                        Apply
+                      </button>
+                    </mat-date-range-picker-actions>
+                  </mat-date-range-picker>
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    scheduleArray.controls.at(i)?.get('returnDate') &&
+                    (scheduleArray.controls.at(i)?.get('returnDate')?.invalid ||
+                      scheduleArray.controls.at(i)?.get('returnDate')?.touched)
+                  "
+                >
+                  <div
+                    *ngIf="scheduleArray.controls[i].get('returnDate')?.errors && scheduleArray.controls[i].get('returnDate')?.errors?.['required']"
+                  >
+                    <p class="text-validator">Ngày không được để trống</p>
+                  </div>
+
+                  <p
+                    class="text-validator"
+                    *ngIf="
+                scheduleArray.controls[i].get('returnDate')?.errors &&
+                scheduleArray.controls[i].get('returnDate')?.errors?.['notGreater']
+              "
+                  >
+                    Ngày về phải lớn hơn ngày khởi hành
+                  </p>
+                  <p
+                    class="text-validator"
+                    *ngIf="
+              scheduleArray.controls[i].get('returnDate')?.errors &&
+              scheduleArray.controls[i].get('returnDate')?.errors?.['notGreaterThanToday']
+            "
+                  >
+                    Ngày về phải lớn hơn hoặc bằng ngày hôm nay
+                  </p>
+                  <p
+                    class="text-validator"
+                    *ngIf="
+            scheduleArray.controls[i].get('departureDate')?.errors &&
+            scheduleArray.controls[i].get('departureDate')?.errors?.['notGreaterThanToday']
+          "
+                  >
+                    Ngày khởi hành phải lớn hơn hoặc bằng ngày hôm nay
+                  </p>
+                  <p
+                    class="text-validator"
+                    *ngIf="
+              scheduleArray.controls[i].get('returnDate')?.errors &&
+              scheduleArray.controls[i].get('returnDate')?.errors?.['notEqualDuration']
+            "
+                  >
+                    <span *ngIf="this.dayOfTour != 0">
+                      Ngày về không hợp lệ
+                    </span>
+                    <span *ngIf="this.dayOfTour == 0"
+                      >Ngày về phải trùng với ngày khởi hành
+                    </span>
+                  </p>
+                </div>
+              </div>
 
               <mat-form-field class="example-full-width">
                 <mat-label
@@ -176,11 +237,12 @@
         class="btn-primary-tour"
         style="padding: 8px 32px; font-size: 16px"
         (click)="createNewSchedule()"
+        [disabled]="scheduleArray.invalid"
       >
         Lưu
       </button>
     </div>
-    <div class="mt-6">
+    <div class="mt-4">
       <div class="float-right">
         <mat-form-field class="example-full-width">
           <mat-label><span class="fz-14">Ngày khởi hành</span></mat-label>
@@ -197,84 +259,340 @@
           <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <table
-        mat-table
-        [dataSource]="schedules"
-        matSort
-        class="mat-elevation-z8 demo-table"
-      >
-        <!-- Position Column -->
-        <ng-container matColumnDef="Ngày khởi hành">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Ngày khởi hành
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.departureDate | date : "EEEEE, dd/MM/YYYY" }}
-          </td>
-        </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="Ngày về">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày về</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.returnDate | date : "EEEEE, dd/MM/YYYY" }}
-          </td>
-        </ng-container>
+      <div style="overflow: auto; height: 500px; width: 100%">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-table-container">
+            <form [formGroup]="editScheduleForm">
+              <table
+                mat-table
+                [dataSource]="schedules"
+                matSort
+                matSortActive="departureDate"
+                matSortDisableClear
+                matSortDirection="desc"
+                class="mat-elevation-z8 demo-table"
+                formArrayName="schedules"
+              >
+                <!-- Position Column -->
+                <ng-container matColumnDef="departureDate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ngày khởi hành
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <span *ngIf="editScheduleId != element.id">{{
+                      element.departureDate | date : "EEEEE, dd/MM/YYYY"
+                    }}</span>
+                    <div
+                      class="form-control mt-3"
+                      *ngIf="editScheduleId == element.id && editMode"
+                    >
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Ngày khởi hành</mat-label>
+                        <input
+                          matInput
+                          [min]="minDate"
+                          [matDatepicker]="picker"
+                          formControlName="departureDate"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <div
+                        *ngIf="
+                          schedulesEdit.controls[i].get('departureDate') &&
+                          (schedulesEdit.controls[i].get('departureDate')
+                            ?.invalid ||
+                            schedulesEdit.controls[i].get('departureDate')
+                              ?.touched)
+                        "
+                      >
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                            schedulesEdit.controls[i].get('departureDate')?.errors &&
+                            schedulesEdit.controls[i].get('departureDate')?.errors?.['required']
+                          "
+                        >
+                          Ngày khởi hành không được để trống
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="Tình trạng chỗ">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Tình trạng chỗ
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{
-              element.remainingSpot == 0
-                ? "Hết chỗ"
-                : element.remainingSpot < 8
-                ? "Liên hệ"
-                : "Còn " + element.remainingSpot + " chỗ"
-            }}
-          </td>
-        </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="returnDate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ngày về
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <span *ngIf="editScheduleId != element.id">{{
+                      element.returnDate | date : "EEEEE, dd/MM/YYYY"
+                    }}</span>
+                    <div
+                      class="form-control mt-3"
+                      *ngIf="editScheduleId == element.id && editMode"
+                    >
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="fill"
+                      >
+                        <mat-label>Ngày về</mat-label>
+                        <input
+                          matInput
+                          [min]="minDate"
+                          [matDatepicker]="picker"
+                          formControlName="returnDate"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <div
+                        *ngIf="
+                          schedulesEdit.controls[i].get('returnDate') &&
+                          (schedulesEdit.controls[i].get('returnDate')
+                            ?.invalid ||
+                            schedulesEdit.controls[i].get('returnDate')
+                              ?.touched)
+                        "
+                      >
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                          schedulesEdit.controls[i].get('returnDate')?.errors &&
+                          schedulesEdit.controls[i].get('returnDate')?.errors?.['required']
+                        "
+                        >
+                          Ngày về không được để trống
+                        </p>
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                        schedulesEdit.controls[i].get('returnDate')?.errors &&
+                        schedulesEdit.controls[i].get('returnDate')?.errors?.['notGreater']
+                      "
+                        >
+                          Ngày về phải lớn hơn ngày khởi hành
+                        </p>
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                      schedulesEdit.controls[i].get('returnDate')?.errors &&
+                      schedulesEdit.controls[i].get('returnDate')?.errors?.['notEqualDuration']
+                    "
+                        >
+                          <span *ngIf="this.dayOfTour != 0">
+                            Ngày về không hợp lệ
+                          </span>
+                          <span *ngIf="this.dayOfTour == 0"
+                            >Ngày về phải trùng với ngày khởi hành
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
 
-        <ng-container matColumnDef="Giá người lớn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Giá người lớn
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.priceAdult | currency : "VND" : "symbol" : "1.0-0" }}
-          </td>
-        </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="remainingSpot">
+                  <th mat-header-cell *matHeaderCellDef>Tình trạng chỗ</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span> Còn {{ element.remainingSpot }} chỗ</span>
+                    <!-- <span
+                      *ngIf="editScheduleId == element.id && editMode"
+                      class="fz-15"
+                      >{{ element.remainingSpot }} chỗ</span
+                    > -->
+                  </td>
+                </ng-container>
 
-        <ng-container matColumnDef="Giá trẻ em">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Giá trẻ em</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.priceChild | currency : "VND" : "symbol" : "1.0-0" }}
-          </td>
-        </ng-container>
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="Hành động">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hành động</th>
-          <td mat-cell *matCellDef="let element">
-            <fa-icon
-              [icon]="faPenToSquare"
-              style="color: green; margin-right: 16px"
-            ></fa-icon>
-            <fa-icon
-              [icon]="faTrash"
-              style="color: red"
-              (click)="deleteScheduleForTour()"
-            ></fa-icon>
-          </td>
-        </ng-container>
+                <ng-container matColumnDef="priceAdult">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Giá người lớn
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <span *ngIf="editScheduleId != element.id">{{
+                      element.priceAdult | currency : "VND" : "symbol" : "1.0-0"
+                    }}</span>
+                    <div
+                      class="form-control mt-3"
+                      *ngIf="editScheduleId == element.id && editMode"
+                    >
+                      <mat-form-field class="example-full-width">
+                        <mat-label
+                          ><span class="fz-14 font-primary">Giá người lớn</span>
+                        </mat-label>
+                        <input
+                          type="number"
+                          matInput
+                          formControlName="priceAdult"
+                        />
+                        <span matSuffix
+                          ><fa-icon [icon]="faDongSign"></fa-icon> &nbsp;</span
+                        >
+                      </mat-form-field>
+                      <div
+                        *ngIf="
+                          schedulesEdit.controls[i].get('priceAdult') &&
+                          (schedulesEdit.controls[i].get('priceAdult')
+                            ?.invalid ||
+                            schedulesEdit.controls[i].get('priceAdult')
+                              ?.touched)
+                        "
+                      >
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                           schedulesEdit.controls[i].get('priceAdult')?.errors &&
+                           schedulesEdit.controls[i].get('priceAdult')?.errors?.['required']
+                         "
+                        >
+                          Giá người lớn không được để trống
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          (click)="OnRowClicked(row)"
-        ></tr>
-      </table>
+                <ng-container matColumnDef="priceChild">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Giá trẻ em
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <span *ngIf="editScheduleId != element.id">{{
+                      element.priceChild | currency : "VND" : "symbol" : "1.0-0"
+                    }}</span>
+                    <div
+                      class="form-control mt-3"
+                      *ngIf="editScheduleId == element.id && editMode"
+                    >
+                      <mat-form-field class="example-full-width">
+                        <mat-label
+                          ><span class="fz-14 font-primary">Giá trẻ em</span>
+                        </mat-label>
+                        <input
+                          type="number"
+                          matInput
+                          formControlName="priceAdult"
+                        />
+                        <span matSuffix
+                          ><fa-icon [icon]="faDongSign"></fa-icon> &nbsp;</span
+                        >
+                      </mat-form-field>
+                      <div
+                        *ngIf="
+                          schedulesEdit.controls[i].get('priceChild') &&
+                          (schedulesEdit.controls[i].get('priceChild')
+                            ?.invalid ||
+                            schedulesEdit.controls[i].get('priceChild')
+                              ?.touched)
+                        "
+                      >
+                        <p
+                          class="text-validator"
+                          *ngIf="
+                            schedulesEdit.controls[i].get('priceChild')?.errors &&
+                            schedulesEdit.controls[i].get('priceChild')?.errors?.['required']
+                          "
+                        >
+                          Giá trẻ em không được để trống
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Hành động</th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <div *ngIf="editScheduleId != element.id">
+                      <fa-icon
+                        [icon]="faPenToSquare"
+                        style="color: green; margin-right: 16px"
+                        (click)="editScheduleClick(element.id)"
+                        [class.deactive]="
+                          editScheduleId != element.id && editMode
+                        "
+                      ></fa-icon>
+                      <fa-icon
+                        *ngIf="element.departureDate >= datenow"
+                        [icon]="faTrash"
+                        style="color: red"
+                        (click)="deleteScheduleForTour()"
+                        [class.deactive]="
+                          editScheduleId != element.id && editMode
+                        "
+                      ></fa-icon>
+                    </div>
+                    <div
+                      *ngIf="editScheduleId == element.id && editMode"
+                      class="flex flex-col items-end"
+                    >
+                      <a
+                        class="action-link fz-14"
+                        style="
+                          line-height: 1;
+                          color: var(--blender-sky-color);
+                          padding: 0 8px;
+                        "
+                        (click)="cancelEditClick(i, element.id)"
+                        >Hủy</a
+                      >
+                      <button
+                        class="btn-primary-tour"
+                        style="padding: 0; line-height: 1; padding: 8px 16px"
+                        (click)="saveScheduleClick(element.id, i)"
+                        [disabled]="schedulesEdit.controls[i].invalid"
+                      >
+                        Lưu
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns; let index"
+                  (click)="OnRowClicked(row)"
+                ></tr>
+              </table>
+            </form>
+          </div>
+
+          <mat-paginator
+            [length]="resultsLength"
+            [pageSize]="10"
+            aria-label="Select page of GitHub search results"
+          ></mat-paginator>
+        </div>
+      </div>
     </div>
   </div>
 </div>

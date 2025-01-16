@@ -99,10 +99,10 @@ body {
 .page-subtitle {
   padding: 10px 0;
   margin-bottom: 10px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #3f3b3b;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 /* Ngx Gallery */
@@ -170,7 +170,9 @@ body {
 .fz-14 {
   font-size: 14px;
 }
-
+.fz-15 {
+  font-size: 15px;
+}
 .fz-16 {
   font-size: 16px;
 }
@@ -199,4 +201,11 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+.green-color {
+  color: #9fc43a;
+  font-weight: bold;
+}
+.red-color {
+  color: #e52822;
 }

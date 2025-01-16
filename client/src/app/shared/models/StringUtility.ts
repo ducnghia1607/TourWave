@@ -46,4 +46,15 @@ export class StringUtility {
     result = result.toLowerCase();
     return result;
   }
+
+  public static getDayOfTour(duration: string) {
+    const day = duration.trim();
+    if (duration == 'Trong ngày') return 0;
+    for (let i = 0; i < day.length; i++) {
+      if (isNaN(parseInt(day[i], 10))) {
+        return parseInt(day.substring(0, i), 10);
+      }
+    }
+    return -1;
+  }
 }

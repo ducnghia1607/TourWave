@@ -43,3 +43,7 @@ table td {
 .schedules .mat-mdc-form-field {
   width: 160px !important;
 }
+
+table tr > td {
+  font-size: 15px;
+}
