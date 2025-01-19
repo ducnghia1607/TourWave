@@ -12,11 +12,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Specifications\NewFolder1\" />
-    <Folder Include="Specifications\NewFolder2\" />
-    <Folder Include="Specifications\NewFolder3\" />
-    <Folder Include="Specifications\NewFolder\" />
-  </ItemGroup>
-
 </Project>

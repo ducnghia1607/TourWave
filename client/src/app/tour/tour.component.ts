@@ -80,7 +80,7 @@ export class TourComponent {
       },
     };
     if (link) {
-      this.router.navigate(['/tours', link], navigationExtras);
+      this.router.navigate(['/tours/tour-finder', link], navigationExtras);
     }
   }
 }

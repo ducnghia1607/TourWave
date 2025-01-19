@@ -153,6 +153,31 @@
                 formControlName="note"
               ></textarea>
             </div>
+
+            <div class="form-control items-center mt-4">
+              <label for="">Hình thức thanh toán</label>
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  id="payment_online"
+                  name="paymentType"
+                  value="1"
+                  class="radio radio-info"
+                  checked="checked"
+                  formControlName="paymentType"
+                />
+                <label for="male">Thanh toán online</label><br />
+                <input
+                  type="radio"
+                  id="payment_counter"
+                  name="paymentType"
+                  value="2"
+                  class="radio radio-info"
+                  formControlName="paymentType"
+                />
+                <label for="female">Thanh toán trực tiếp</label><br />
+              </div>
+            </div>
           </div>
         </div>
         <div>

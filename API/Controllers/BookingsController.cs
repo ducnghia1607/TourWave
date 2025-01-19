@@ -29,6 +29,11 @@ namespace API.Controllers
             unit.Repository<Booking>().Add(booking);
             if (await unit.Complete())
             {
+                if(booking.PaymentType == "2")
+                {
+                    
+                    return Ok(new { paymentUrl = "", id = booking.Id });
+                }
                 var paymentUrl = vnPayService.CreatePaymentUrl(booking);
                 return Ok(new { paymentUrl = paymentUrl, id = booking.Id });
                 //return CreatedAtAction("CreateBooking", new { id = booking.Id }, booking);

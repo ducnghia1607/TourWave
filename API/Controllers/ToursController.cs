@@ -120,9 +120,9 @@ public class ToursController(IUnitOfWork unit,IMapper mapper,IPhotoService photo
         //}
         var specTour = new TourDestinationSpecification(keyword);
         var tourDes = await unit.Repository<Tour>().ListAsyncWithSpec(specTour);
-        var specDe = new DepartureSpecification(keyword);
-        var departure = await unit.Repository<Departure>().ListAsyncWithSpec(specDe);
-        var destinations = tourDes.Union(departure);
+        var specPlace = new PlaceSpecification(keyword);
+        var places = await unit.Repository<Place>().ListAsyncWithSpec(specPlace);
+        var destinations = tourDes.Union(places);
         var dictionary = new Dictionary<string, object>
         {
             { "tours",tours},

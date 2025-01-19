@@ -3,7 +3,7 @@ export interface PaymentResponseModel {
   bankCode: string;
   amount: number;
   orderId: string;
-  transactioId: string;
+  transactionId: string;
   paymentMethod: string;
   terminalId: string;
   vnPayResponseCode: string;

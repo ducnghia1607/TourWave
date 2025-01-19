@@ -2,6 +2,7 @@
 using Azure;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +23,13 @@ namespace Infrastructure.Services
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitOfWork _unit;
-        public VnPayService(IConfiguration config, IHttpContextAccessor httpContextAccessor,IUnitOfWork unit)
+        private readonly IEmailService _emailService;
+        public VnPayService(IConfiguration config, IHttpContextAccessor httpContextAccessor,IUnitOfWork unit,IEmailService emailService)
         {
             _config = config;
             _httpContextAccessor = httpContextAccessor;
             _unit = unit;
+            _emailService = emailService;
         }
         public string CreatePaymentUrl(Booking booking)
         {
@@ -152,7 +155,8 @@ namespace Infrastructure.Services
 
                 bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
                 int bookingId = Convert.ToInt32(orderId);
-                var booking = await _unit.Repository<Booking>().GetByIdAsync(bookingId);
+                var spec = new BookingSpecification(bookingId);
+                var booking = await _unit.Repository<Booking>().GetEntityWithSpec(spec);
                 //var booking = await this.unit.Repository<Booking>().GetByIdAsync(bookingId);
 
                 if (checkSignature)
@@ -164,6 +168,8 @@ namespace Infrastructure.Services
                         //log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId, vnpayTranId);
                         response.VnPayResponseCode = "00";
                         booking.PaymentStatus = "1"; // Thành công
+                        response.Booking = booking;
+                        //this._emailService.SendEmailAsync(booking.Email, "Thanh toán thành công", "Test body");
                     }
                     else if(vnp_ResponseCode == "07")
                     {
@@ -261,6 +267,7 @@ namespace Infrastructure.Services
                     booking.PaymentStatus = "2";
                 }
                 this._unit.Repository<Booking>().Update(booking);
+                response.Booking = booking;
                 await _unit.Complete();
             }
             return response;

@@ -49,10 +49,10 @@ namespace API.Controllers
             }
 
             // Validate business rules
-            if (scheduleDto.DepartureDate >= scheduleDto.ReturnDate)
-            {
-                return BadRequest("Departure date must be earlier than return date.");
-            }
+            //if (scheduleDto.ReturnDate >= scheduleDto.DepartureDate)
+            //{
+            //    return BadRequest("Departure date must be earlier than return date.");
+            //}
             var spec = new ScheduleSpecification(id, tourId);
             var scheduleToUpdate = await unit.Repository<Schedule>().GetEntityWithSpec(spec);
             if (scheduleToUpdate == null) return NotFound();

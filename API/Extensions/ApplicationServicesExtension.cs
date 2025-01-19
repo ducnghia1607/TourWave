@@ -34,6 +34,7 @@ public static class ApplicationServicesExtension
         services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.AddScoped<IPaymentService,PaymentService>();
         services.AddScoped<IVnPayService,VnPayService>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ITourService,TourService>();
         services.AddScoped<IPhotoService,PhotoService>();
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));

@@ -16,6 +16,7 @@ export interface Booking {
   paymentIntentId: string;
   clientSecret: string;
   paymentMethodType: string;
+  paymentType: string;
   createDate: Date;
   status: string;
   fullName: string;
@@ -23,4 +24,5 @@ export interface Booking {
   email: string;
   gender: string;
   note?: string;
+  tour: Tour;
 }

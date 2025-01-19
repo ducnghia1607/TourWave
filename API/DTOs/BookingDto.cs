@@ -11,6 +11,8 @@ namespace API.DTOs
         public decimal PricePerAdult { get; set; }
         public string? PaymentStatus { get; set; }
         public string? TourTitle { get; set; }
+        public string? Departure { get; set; }
+        public string? Destination { get; set; }
         public string? TourCode { get; set; }
         //public int TourId { get; set; }
         public string FullName { get; set; }

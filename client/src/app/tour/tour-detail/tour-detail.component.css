@@ -9,7 +9,8 @@
 }
 
 .tour-itineraries .avatar-small {
-  width: 170px;
+  /* width: 170px; */
+  width: 120px;
   opacity: 1;
   transition: all 0.3s linear;
   object-fit: cover;

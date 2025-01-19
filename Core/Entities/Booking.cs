@@ -18,7 +18,8 @@ namespace Core.Entities
         public string Gender{get;set;}
         public string ?Note{get;set;}
 
-        public string ?PaymentStatus {get;set;}
+        public string? PaymentStatus { get; set; } = "0"; // 0 : Ch? thanh toán 1 : Thành công , 2: Th?t b?i
+        public string? PaymentType { get; set; } // 1 : Online 2: On-counter
         public string ?Status {get;set; }
         public Tour ?Tour { get; set; }
         public int TourId { get; set; }

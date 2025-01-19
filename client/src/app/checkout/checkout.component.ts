@@ -12,7 +12,7 @@ import {
 } from '@angular/platform-browser';
 import { Tour } from '../shared/models/Tour';
 import { TourService } from '../tour/tour.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TourDetail } from '../shared/models/TourDetail';
 import { AccountService } from '../account/account.service';
 import { User } from '../shared/models/User';
@@ -30,6 +30,7 @@ export class CheckoutComponent implements OnInit {
     phone: ['', Validators.required],
     email: ['', Validators.required],
     note: [''],
+    paymentType: ['1', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     secondCtrl: '',
@@ -46,7 +47,8 @@ export class CheckoutComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private tourService: TourService,
     private activedRoute: ActivatedRoute,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {
     this.bookingService.currentBooking$.subscribe(async (res) => {
       if (res) {
@@ -72,7 +74,7 @@ export class CheckoutComponent implements OnInit {
     const state = history.state;
     if (state && state.booking) {
       this.booking = state.booking;
-      console.log(this.booking);
+      // console.log(this.booking);
     }
     this.activedRoute.data.subscribe({
       next: (data) => {
@@ -82,17 +84,17 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  async getConfirmationToken() {
-    try {
-      // Check status stepper
-      const result = await this.stripeService.createConfirmationToken();
-      if (result.error) throw new Error(result.error.message);
-      this.confirmationToken = result.confirmationToken;
-      console.log(this.confirmationToken);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async getConfirmationToken() {
+  //   try {
+  //     // Check status stepper
+  //     const result = await this.stripeService.createConfirmationToken();
+  //     if (result.error) throw new Error(result.error.message);
+  //     this.confirmationToken = result.confirmationToken;
+  //     console.log(this.confirmationToken);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   // async selectionChangeHandle($event: any) {
   //   console.log($event);
@@ -138,11 +140,21 @@ export class CheckoutComponent implements OnInit {
     this.booking.note = this.clientFormGroup.controls['note'].value
       ? this.clientFormGroup.controls['note'].value
       : '';
+    this.booking.paymentType = this.clientFormGroup.controls['paymentType']
+      .value
+      ? this.clientFormGroup.controls['paymentType'].value
+      : '';
     this.bookingService.addNewBooking(this.booking).subscribe({
       next: (res) => {
         if (res) {
+          localStorage.setItem('email_sent', 'false');
           this.booking = { ...this.booking, id: res.id };
-          window.location.href = res.paymentUrl;
+          if (this.booking.paymentType == '2' || res.paymentUrl == '') {
+            const navigationExtras: NavigationExtras = {
+              state: { booking: this.booking },
+            };
+            this.router.navigateByUrl('checkout/result', navigationExtras);
+          } else window.location.href = res.paymentUrl;
           this.bookingService.setBooking(this.booking);
         }
       },

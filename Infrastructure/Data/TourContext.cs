@@ -30,6 +30,7 @@ IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     public DbSet<Consulting> Consultings { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<Review> Reviews { get; set; }
+    public DbSet<Place> Places { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

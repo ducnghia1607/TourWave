@@ -499,7 +499,7 @@
                         <input
                           type="number"
                           matInput
-                          formControlName="priceAdult"
+                          formControlName="priceChild"
                         />
                         <span matSuffix
                           ><fa-icon [icon]="faDongSign"></fa-icon> &nbsp;</span
@@ -533,6 +533,7 @@
                   <td mat-cell *matCellDef="let element; let i = index">
                     <div *ngIf="editScheduleId != element.id">
                       <fa-icon
+                        *ngIf="element.departureDate >= datenow"
                         [icon]="faPenToSquare"
                         style="color: green; margin-right: 16px"
                         (click)="editScheduleClick(element.id)"

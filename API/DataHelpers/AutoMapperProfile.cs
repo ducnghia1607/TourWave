@@ -27,6 +27,8 @@ namespace API.DataHelpers
             CreateMap<Booking, BookingDto>().ForMember(dest => dest.TourTitle,
                  o => o.MapFrom(src => src.Tour.Title))
                 .ForMember(dest => dest.TourCode, o => o.MapFrom(src => src.Tour.TourCode))
+                .ForMember(dest => dest.Departure, o => o.MapFrom(src => src.Tour.Departure))
+                .ForMember(dest => dest.Destination, o => o.MapFrom(src => src.Tour.Destination))
                 .ForMember(dest => dest.DepartureDate, o => o.MapFrom(src => src.DepartureDate.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.ReturnDate, o => o.MapFrom(src => src.ReturnDate.ToString("yyyy-MM-dd")))
 

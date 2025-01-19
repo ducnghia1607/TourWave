@@ -52,6 +52,7 @@ import { Booking } from 'src/app/shared/models/Booking';
 import { TourDetailReviewComponent } from '../tour-detail-review/tour-detail-review.component';
 import { ReviewResponse } from 'src/app/shared/models/ReviewResponse';
 import { TourType } from 'src/app/shared/models/TourType';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tour-detail',
@@ -111,7 +112,8 @@ export class TourDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private breadcrumbService: BreadcrumbService,
     public dialog: MatDialog,
     private accountService: AccountService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private toastService: ToastrService
   ) {
     if (document.scrollingElement) {
       document.scrollingElement.scrollTop = 0;
@@ -173,7 +175,12 @@ export class TourDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.consulting.appUserId = this.user ? this.user.id : 0;
         this.consulting.status = '0';
         this.tourService.createNewConsulting(this.consulting).subscribe({
-          next: (res) => console.log(res),
+          next: (res) => {
+            this.toastService.success(
+              'Thành công',
+              'Gửi yêu cầu tư vấn thành công'
+            );
+          },
           error: (err) => console.log(err),
         });
       }

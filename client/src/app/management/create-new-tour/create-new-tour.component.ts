@@ -171,7 +171,6 @@ export class CreateNewTourComponent implements OnInit {
         });
         var itinerariesStore = [...res.itineraries];
         console.log(itinerariesStore);
-        this.uploader.uploadAll();
         for (let i = 0; i < itinerariesStore.length; i++) {
           const uploaderDynamic = new FileUploader({
             url:
@@ -194,9 +193,9 @@ export class CreateNewTourComponent implements OnInit {
           uploaderDynamic.addToQueue([imageItineraries[i]]);
           uploaderDynamic.uploadAll();
         }
-        this.router.navigateByUrl('/management/tours');
-
+        this.uploader.uploadAll();
         this.uploader.onCompleteAll = () => {
+          this.router.navigateByUrl('/management/tours');
           console.log('Upload completed');
         };
       }
@@ -288,15 +287,16 @@ export class CreateNewTourComponent implements OnInit {
   allUtilities: string[] = [
     // List of option value
     'Vé máy bay',
+    'Xe Limousine',
     'Xe tham quan',
     'Khách sạn 3-4*',
-    'Vé tham quan',
     'Bảo hiểm du lịch',
     'Bữa ăn',
     'Hướng dẫn viên',
     'Khách Sạn 4*',
     'Cano',
     'Visa',
+    'Khách Sạn 5*',
   ];
 
   @ViewChild('utilityInput') fruitInput!: ElementRef<HTMLInputElement>;

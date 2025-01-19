@@ -203,9 +203,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 .green-color {
-  color: #9fc43a;
+  color: #9fc43a !important;
   font-weight: bold;
 }
 .red-color {
-  color: #e52822;
+  color: #e52822 !important;
 }

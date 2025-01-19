@@ -2,15 +2,22 @@
   <div class="container result" style="padding: 15px">
     <h1 class="page-title">Kết quả thanh toán</h1>
     <div>
-      <p *ngIf="response.description">{{ response.description }}</p>
-      <p *ngIf="response.terminalId">
-        Mã Website (Terminal Id): {{ response.terminalId }}
+      <p
+        *ngIf="response.description"
+        [class.green-color]="response.vnPayResponseCode == '00'"
+        [class.red-color]="response.vnPayResponseCode != '00'"
+      >
+        {{ response.description }}
+      </p>
+      <p *ngIf="response.vnPayResponseCode == '00'">
+        Thông tin thanh toán của quý khách đã được gửi qua email vui lòng kiểm
+        tra lại.Nếu có bất kỳ sai sót hãy liên hệ lại với chúng tôi.
       </p>
       <p *ngIf="response.orderId">
         Mã giao dịch thanh toán: {{ response.orderId }}
       </p>
-      <p *ngIf="response.transactioId">
-        Mã giao dịch tại VNPAY: {{ response.transactioId }}
+      <p *ngIf="response.transactionId">
+        Mã giao dịch tại VNPAY: {{ response.transactionId }}
       </p>
       <p *ngIf="response.amount">
         Số tiền thanh toán (VND):
@@ -18,6 +25,26 @@
       </p>
       <p *ngIf="response.bankCode">
         Ngân hàng thanh toán: {{ response.bankCode }}
+      </p>
+    </div>
+    <div class="result-action flex space-x-5">
+      <button class="btn btn-primary-tour" routerLink="/tours">
+        Quay về trang chủ
+      </button>
+      <button class="btn btn-primary-tour" routerLink="/trips">
+        Xem chuyến đi của bạn
+      </button>
+    </div>
+  </div>
+</div>
+<div class="result-wrapper" *ngIf="paymentType == '2'">
+  <div class="container result" style="padding: 15px">
+    <h1 class="page-title">Kết quả đặt tour</h1>
+    <div>
+      <p class="green-color">Bạn đã đặt tour thành công.</p>
+      <p>
+        Thông tin chi tiết đã được gửi qua email vui lòng kiểm tra lại.Nếu có
+        bất kỳ câu hỏi, hãy liên hệ lại với chúng tôi.
       </p>
     </div>
     <div class="result-action flex space-x-5">
